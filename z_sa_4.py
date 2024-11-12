@@ -181,7 +181,7 @@ class QTrainer(Trainer):
             inputs_ids_a = inputs["input_ids_a"][:, 1:]
             mask_q = inputs["attention_mask_q"]
             rational = model.generate(input_ids=torch.tensor(inputs_ids_q), attention_mask=torch.tensor(mask_q), \
-                                      max_new_tokens=script_args.max_length, min_new_tokens=10,\
+                                      max_new_tokens=script_args.max_length, \
                                       stop_strings="Question:", tokenizer=tokenizer)
             rational_decode = tokenizer.batch_decode(rational, skip_special_tokens=True)
             # print("rational_decode: ", rational_decode)

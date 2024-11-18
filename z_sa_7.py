@@ -143,7 +143,7 @@ training_args = TrainingArguments(
     save_steps=script_args.save_every_steps,
     gradient_accumulation_steps=script_args.gradient_accumulation_steps,
     gradient_checkpointing=script_args.gradient_checkpointing,
-    # deepspeed=script_args.deepspeed,
+    deepspeed=script_args.deepspeed,
     local_rank=script_args.local_rank,
     #remove_unused_columns=True,
     remove_unused_columns=False,
@@ -224,8 +224,8 @@ class QTrainer(Trainer):
             x_labels = deepcopy(x)
             x_labels[x_labels == tokenizer.pad_token_id] = -100
 
-            x_mask_zy = torch.cat([x_mask, torch.zeros((x_mask.shape[0], xzy.shape[1] - x.shape[1])).to(x_mask.device)], dim=1)
-            x_mask_z = torch.cat([x_mask, torch.zeros((x_mask.shape[0], xz.shape[1] - x.shape[1])).to(x_mask.device)], dim=1)
+            x_mask_zy = torch.cat([x_mask, torch.zeros((x_mask.shape[0], xzy.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
+            x_mask_z = torch.cat([x_mask, torch.zeros((x_mask.shape[0], xz.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
             # x_mask_zy = 1 - x_mask_zy
             # x_mask_z = 1 - x_mask_z
 

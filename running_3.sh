@@ -13,7 +13,7 @@ ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_en
     --output_suffix "" \
     --ent_coeff 0.05 \
     --num_beams 1\
-    --do_sample False \
+    --do_sample True \
     --temperature 0.8 \
     --max_length 256 \
     --save_every_steps 50 \

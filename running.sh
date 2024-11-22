@@ -6,7 +6,7 @@ cd xyzo
 conda env create -f environment.yaml
 conda activate yy
 
-CUDA_VISIBLE_DEVICES=4, ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
+ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
     --model_name google/gemma-2-9b-it  \
     --train_set_path openai/gsm8k \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \

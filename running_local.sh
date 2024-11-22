@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3 ACCELERATE_LOG_LEVEL=info accelerate launch   E_step_ent.py \
+    --model_name google/gemma-2-2b-it  \
+    --train_set_path openai/gsm8k \
+    --deepspeed ./deepspeed_configs/deepspeed_3.json \
+    --output_suffix "" \
+    --ent_coeff 0.05 \
+    --num_beams 1\
+    --do_sample False \
+    --temperature 1.0 \
+    --max_length 256 \
+    --save_every_steps 50 \
+    --per_device_train_batch_size 4

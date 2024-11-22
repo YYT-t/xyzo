@@ -1,0 +1,16 @@
+{"time":"2024-11-22T11:57:13.403668724-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-22T11:57:13.403689837-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241122_115713-qukp676m/logs/debug-core.log"}
+{"time":"2024-11-22T11:57:13.512269571-06:00","level":"INFO","msg":"created new stream","id":"qukp676m"}
+{"time":"2024-11-22T11:57:13.512442998-06:00","level":"INFO","msg":"stream: started","id":"qukp676m"}
+{"time":"2024-11-22T11:57:13.512460227-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"qukp676m"}}
+{"time":"2024-11-22T11:57:13.512544377-06:00","level":"INFO","msg":"sender: started","stream_id":"qukp676m"}
+{"time":"2024-11-22T11:57:13.512608716-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"qukp676m"}}
+{"time":"2024-11-22T11:57:13.908510915-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-22T12:07:29.69706414-06:00","level":"INFO","msg":"stream: closing","id":"qukp676m"}
+{"time":"2024-11-22T12:07:29.697119229-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-22T12:07:29.699152492-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-22T12:07:30.600536698-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-22T12:07:30.724530369-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"qukp676m"}}
+{"time":"2024-11-22T12:07:30.724620563-06:00","level":"INFO","msg":"sender: closed","stream_id":"qukp676m"}
+{"time":"2024-11-22T12:07:30.72460896-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"qukp676m"}}
+{"time":"2024-11-22T12:07:30.724758138-06:00","level":"INFO","msg":"stream: closed","id":"qukp676m"}

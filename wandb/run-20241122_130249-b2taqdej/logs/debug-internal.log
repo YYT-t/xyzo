@@ -1,0 +1,16 @@
+{"time":"2024-11-22T13:02:49.567734252-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-22T13:02:49.567755747-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241122_130249-b2taqdej/logs/debug-core.log"}
+{"time":"2024-11-22T13:02:49.682776422-06:00","level":"INFO","msg":"created new stream","id":"b2taqdej"}
+{"time":"2024-11-22T13:02:49.682866089-06:00","level":"INFO","msg":"stream: started","id":"b2taqdej"}
+{"time":"2024-11-22T13:02:49.68291585-06:00","level":"INFO","msg":"sender: started","stream_id":"b2taqdej"}
+{"time":"2024-11-22T13:02:49.682903188-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"b2taqdej"}}
+{"time":"2024-11-22T13:02:49.682895684-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"b2taqdej"}}
+{"time":"2024-11-22T13:02:49.89724325-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-22T13:10:20.932839204-06:00","level":"INFO","msg":"stream: closing","id":"b2taqdej"}
+{"time":"2024-11-22T13:10:20.932900177-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-22T13:10:20.933773406-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-22T13:10:21.43177772-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-22T13:10:21.579957853-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"b2taqdej"}}
+{"time":"2024-11-22T13:10:21.58006109-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"b2taqdej"}}
+{"time":"2024-11-22T13:10:21.580069049-06:00","level":"INFO","msg":"sender: closed","stream_id":"b2taqdej"}
+{"time":"2024-11-22T13:10:21.58015297-06:00","level":"INFO","msg":"stream: closed","id":"b2taqdej"}

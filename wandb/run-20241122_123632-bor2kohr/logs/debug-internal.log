@@ -1,0 +1,16 @@
+{"time":"2024-11-22T12:36:32.740976711-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-22T12:36:32.740991098-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241122_123632-bor2kohr/logs/debug-core.log"}
+{"time":"2024-11-22T12:36:32.854113918-06:00","level":"INFO","msg":"created new stream","id":"bor2kohr"}
+{"time":"2024-11-22T12:36:32.854173051-06:00","level":"INFO","msg":"stream: started","id":"bor2kohr"}
+{"time":"2024-11-22T12:36:32.854201378-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"bor2kohr"}}
+{"time":"2024-11-22T12:36:32.854278024-06:00","level":"INFO","msg":"sender: started","stream_id":"bor2kohr"}
+{"time":"2024-11-22T12:36:32.85436394-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"bor2kohr"}}
+{"time":"2024-11-22T12:36:32.998148635-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-22T12:46:57.186980118-06:00","level":"INFO","msg":"stream: closing","id":"bor2kohr"}
+{"time":"2024-11-22T12:46:57.18728458-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-22T12:46:57.188364022-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-22T12:46:57.493031178-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-22T12:46:57.566956475-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"bor2kohr"}}
+{"time":"2024-11-22T12:46:57.567036779-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"bor2kohr"}}
+{"time":"2024-11-22T12:46:57.567072965-06:00","level":"INFO","msg":"sender: closed","stream_id":"bor2kohr"}
+{"time":"2024-11-22T12:46:57.567321731-06:00","level":"INFO","msg":"stream: closed","id":"bor2kohr"}

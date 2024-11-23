@@ -6,9 +6,9 @@ cd xyzo
 conda env create -f environment.yaml
 conda activate yy
 
-ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
-    --model_name google/gemma-2-9b-it  \
-    --train_set_path openai/gsm8k \
+ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent_metamath.py \
+    --model_name google/gemma-1.1-7b-it  \
+    --train_set_path meta-math/MetaMathQA \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
     --ent_coeff 0.05 \

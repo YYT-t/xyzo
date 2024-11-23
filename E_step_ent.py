@@ -136,6 +136,8 @@ def tokenize(sample):
     sample["attention_mask_a"] = tokenized_a["attention_mask"]
     return sample
 
+train_dataset = load_dataset(train_path)#.shuffle(seed=42)
+print(train_dataset)
 train_dataset = load_dataset(train_path, "main")["train"]#.shuffle(seed=42)
 train_dataset = train_dataset.map(tokenize, num_proc=16)
 
@@ -270,7 +272,7 @@ class QTrainer(Trainer):
             # outputs = self.base_model(x, labels=x_labels, attention_mask=x_mask)
             # ce_loss_x, logits_x = outputs[:2]
             reward = - ce_loss.item() #- ce_loss_x.item()
-        log_Q = -model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
+        log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
         loss = -(reward - script_args.ent_coeff * log_Q.item()) * log_Q
         return loss
 
@@ -359,6 +361,6 @@ tokenizer.save_pretrained(ckpt_dir)
 subprocess.run([
     "huggingface-cli", "upload", 
     f"YYT-t/{trained_model_name}", 
-    output_name, 
+    ckpt_dir, 
     "--token", "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"
 ])

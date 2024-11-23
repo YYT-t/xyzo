@@ -1,6 +1,6 @@
-CUDA_VISIBLE_DEVICES=0,1,2,3 ACCELERATE_LOG_LEVEL=info accelerate launch   E_step_ent.py \
-    --model_name google/gemma-2-2b-it  \
-    --train_set_path openai/gsm8k \
+CUDA_VISIBLE_DEVICES=3,4 ACCELERATE_LOG_LEVEL=info accelerate launch   E_step_ent_metamath.py \
+    --model_name google/gemma-1.1-7b-it  \
+    --train_set_path meta-math/MetaMathQA \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
     --ent_coeff 0.05 \

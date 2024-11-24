@@ -11,10 +11,11 @@ ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_en
     --train_set_path meta-math/MetaMathQA \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
-    --ent_coeff 0.05 \
-    --num_beams 5\
+    --ent_coeff 1.0 \
+    --num_beams 1\
     --do_sample False \
     --temperature 0.8 \
+    --num_train_epochs 3 \
     --max_length 256 \
     --save_every_steps 50 \
     --gradient_accumulation_steps 1 \

@@ -136,9 +136,7 @@ def tokenize(sample):
     sample["attention_mask_a"] = tokenized_a["attention_mask"]
     return sample
 
-train_dataset = load_dataset(train_path)["train"]#.shuffle(seed=42)
-# print(train_dataset)
-# train_dataset = load_dataset(train_path, "main")["train"]#.shuffle(seed=42)
+train_dataset = load_dataset(train_path)["train"]
 train_dataset = train_dataset.map(tokenize, num_proc=16)
 
 
@@ -152,7 +150,7 @@ training_args = TrainingArguments(
   #  weight_decay=script_args.weight_decay,
     evaluation_strategy="steps",
     eval_steps=script_args.eval_every_steps,
-    save_strategy="steps",
+    save_strategy="epoch",
     save_steps=script_args.save_every_steps,
     gradient_accumulation_steps=script_args.gradient_accumulation_steps,
     gradient_checkpointing=script_args.gradient_checkpointing,
@@ -354,19 +352,16 @@ trainer = QTrainer(
 )
 
 print("trained_model_name:", trained_model_name)
-ckpt_dir = output_name + "/final_ckpt"
-print("ckpt_dir:", ckpt_dir)
-
-
 trainer.train()
-print("Saving last checkpoint of the model")
-trainer.save_model(ckpt_dir)
-tokenizer.save_pretrained(ckpt_dir)
 
-# push to hugging face
-subprocess.run([
+print("save different checkpoints:")
+for i in range(script_args.num_train_epochs):
+    ckpt_dir = f"{output_name}/checkpoint-{i+1}"
+    print("ckpt_dir:", ckpt_dir)
+    tokenizer.save_pretrained(ckpt_dir)
+    subprocess.run([
     "huggingface-cli", "upload", 
-    f"YYT-t/{trained_model_name}", 
+    f"YYT-t/{trained_model_name}_epoch_{i+1}", 
     ckpt_dir, 
     "--token", "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"
-])
+    ])

@@ -15,6 +15,7 @@ ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_en
     --num_beams 1\
     --do_sample True \
     --temperature 0.8 \
+    --num_train_epochs 3 \
     --max_length 256 \
     --save_every_steps 50 \
     --gradient_accumulation_steps 1 \

@@ -1,0 +1,16 @@
+{"time":"2024-11-24T21:48:45.959247316-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-24T21:48:45.959259763-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241124_214845-ebt17kmi/logs/debug-core.log"}
+{"time":"2024-11-24T21:48:46.268719648-06:00","level":"INFO","msg":"created new stream","id":"ebt17kmi"}
+{"time":"2024-11-24T21:48:46.268776569-06:00","level":"INFO","msg":"stream: started","id":"ebt17kmi"}
+{"time":"2024-11-24T21:48:46.268835308-06:00","level":"INFO","msg":"sender: started","stream_id":"ebt17kmi"}
+{"time":"2024-11-24T21:48:46.268789695-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ebt17kmi"}}
+{"time":"2024-11-24T21:48:46.268880896-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ebt17kmi"}}
+{"time":"2024-11-24T21:48:46.418410314-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-24T22:02:37.683836033-06:00","level":"INFO","msg":"stream: closing","id":"ebt17kmi"}
+{"time":"2024-11-24T22:02:37.683872229-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-24T22:02:37.684784994-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-24T22:02:38.003684868-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-24T22:02:38.07266652-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ebt17kmi"}}
+{"time":"2024-11-24T22:02:38.072766177-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ebt17kmi"}}
+{"time":"2024-11-24T22:02:38.072899835-06:00","level":"INFO","msg":"sender: closed","stream_id":"ebt17kmi"}
+{"time":"2024-11-24T22:02:38.072923495-06:00","level":"INFO","msg":"stream: closed","id":"ebt17kmi"}

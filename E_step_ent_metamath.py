@@ -121,7 +121,7 @@ train_path = script_args.train_set_path
 
 trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
-estep_{script_args.output_suffix}"
+estep_{script_args.output_suffix}_epoch{script_args.num_train_epochs}"
 
 output_name = f"./Q_models/{trained_model_name}"
 
@@ -138,7 +138,7 @@ def tokenize(sample):
 
 train_dataset = load_dataset(train_path)["train"]
 train_dataset = train_dataset.map(tokenize, num_proc=16)
-
+train_dataset = train_dataset.select(range(2))
 
 # Define the trainer
 training_args = TrainingArguments(
@@ -165,7 +165,11 @@ training_args = TrainingArguments(
     optim=script_args.optim,
     lr_scheduler_type=script_args.lr_scheduler_type,
     warmup_ratio=0.1,
-    report_to='wandb'
+    report_to='wandb',
+    # push_to_hub=True,
+    # hub_strategy="every_save",
+    # hub_model_id=f"YYT-t/2",
+    # hub_token="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"
 )
 
 model = AutoModelForCausalLM.from_pretrained(
@@ -354,14 +358,24 @@ trainer = QTrainer(
 print("trained_model_name:", trained_model_name)
 trainer.train()
 
-print("save different checkpoints:")
-for i in range(script_args.num_train_epochs):
-    ckpt_dir = f"{output_name}/checkpoint-{i+1}"
-    print("ckpt_dir:", ckpt_dir)
-    tokenizer.save_pretrained(ckpt_dir)
-    subprocess.run([
+ckpt_dir = output_name + "/final_ckpt"
+print("Saving last checkpoint of the model")
+trainer.save_model(ckpt_dir)
+tokenizer.save_pretrained(ckpt_dir)
+subprocess.run([
     "huggingface-cli", "upload", 
-    f"YYT-t/{trained_model_name}_epoch_{i+1}", 
+    f"YYT-t/{trained_model_name}", 
     ckpt_dir, 
     "--token", "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"
-    ])
+])
+# print("save different checkpoints:")
+# for i in range(script_args.num_train_epochs):
+#     ckpt_dir = f"{output_name}/checkpoint-{i+1}"
+#     print("ckpt_dir:", ckpt_dir)
+#     tokenizer.save_pretrained(ckpt_dir)
+#     subprocess.run([
+#     "huggingface-cli", "upload", 
+#     f"YYT-t/{trained_model_name}_epoch_{i+1}", 
+#     ckpt_dir, 
+#     "--token", "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"
+#     ])

@@ -138,7 +138,7 @@ def tokenize(sample):
 
 train_dataset = load_dataset(train_path)["train"]
 train_dataset = train_dataset.map(tokenize, num_proc=16)
-train_dataset = train_dataset.select(range(2))
+# train_dataset = train_dataset.select(range(2))
 
 # Define the trainer
 training_args = TrainingArguments(

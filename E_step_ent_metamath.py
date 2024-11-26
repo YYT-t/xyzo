@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
-
+from task_configs import task_config_check
 # import evaluate
 import numpy as np
 import torch
@@ -23,11 +23,11 @@ from transformers.utils import PaddingStrategy
 import pdb
 
 
-instruct_prompt = r"Answer the question based on the following example:"
-example1 = r"""Question: Jack is stranded on a desert island. He wants some salt to season his fish. He collects 2 liters of seawater in an old bucket. If the water is 20% salt, how many ml of salt will Jack get when all the water evaporates? Answer: First find how many liters of the seawater are salt: 2 liters * 20% = 0.4 liters Then multiply that amount by 1000 ml/liter to find the number of ml of salt Jack gets: 0.4 liters * 1000 ml/liter = 400 ml."""
-example2 = r"""Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name."""
-few_shot_cot_prompt = instruct_prompt + '\n' + example2 + f'\nQuestion: '  #'\n' + example1
-#few_shot_cot_prompt = ''
+#instruct_prompt = r"Answer the question based on the following example:"
+#example1 = r"""Question: Jack is stranded on a desert island. He wants some salt to season his fish. He collects 2 liters of seawater in an old bucket. If the water is 20% salt, how many ml of salt will Jack get when all the water evaporates? Answer: First find how many liters of the seawater are salt: 2 liters * 20% = 0.4 liters Then multiply that amount by 1000 ml/liter to find the number of ml of salt Jack gets: 0.4 liters * 1000 ml/liter = 400 ml."""
+#example2 = r"""Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name."""
+#few_shot_cot_prompt = instruct_prompt + '\n' + example2 + f'\nQuestion: '  #'\n' + example1
+
 # Define and parse arguments.
 @dataclass
 class ScriptArguments:
@@ -95,6 +95,14 @@ class ScriptArguments:
         default=999999,
         metadata={"help": "Eval the model every x steps"},
     )
+    prompt_path: Optional[str] = field(
+        default="prompts/math_prompt.txt",
+        metadata={"help": "path to get the cot prompt"},
+    )
+    Task_Type: Optional[str] = field(
+        default="math_metamath",
+        metadata={"help": "math or code"},
+    )
     ent_coeff: Optional[float] = field(default=0.05)
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
@@ -105,6 +113,8 @@ class ScriptArguments:
 parser = HfArgumentParser(ScriptArguments)
 script_args = parser.parse_args_into_dataclasses()[0]
 
+task_config = task_config_check(script_args.Task_Type)
+
 tokenizer_name = script_args.model_name
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_name) #AutoTokenizer
 
@@ -112,6 +122,10 @@ tokenizer.model_max_length = script_args.max_length
 tokenizer.truncation_side = "left"
 tokenizer.padding_side = "left"
 tokenizer.pad_token = tokenizer.eos_token
+
+
+# Get prompt
+
 
 # Get the dataset
 
@@ -124,7 +138,8 @@ beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.tem
 estep_{script_args.output_suffix}_epoch{script_args.num_train_epochs}"
 
 output_name = f"./Q_models/{trained_model_name}"
-
+train_dataset = load_dataset(train_path)["train"]
+"""
 def tokenize(sample):
     tokenized_q = tokenizer(few_shot_cot_prompt + sample['query'], truncation=True)
     answer_text = sample['response'].split('The answer is: ')[-1].strip()
@@ -135,9 +150,10 @@ def tokenize(sample):
     sample["input_ids_a"] = tokenized_a["input_ids"]
     sample["attention_mask_a"] = tokenized_a["attention_mask"]
     return sample
-
-train_dataset = load_dataset(train_path)["train"]
 train_dataset = train_dataset.map(tokenize, num_proc=16)
+"""
+
+train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16)
 # train_dataset = train_dataset.select(range(2))
 
 # Define the trainer
@@ -209,7 +225,8 @@ class QTrainer(Trainer):
             mask_q_l = inputs["attention_mask_q_l"]
             rational = model.generate(input_ids=inputs_ids_q_l, attention_mask=mask_q_l, \
                                       max_new_tokens=script_args.max_length, \
-                                      stop_strings="Question:", tokenizer=tokenizer,
+                                      #stop_strings="Question:", tokenizer=tokenizer,
+                                      stop_strings=task_config.stop_str_gen_z[0], tokenizer=tokenizer,
                                       do_sample=script_args.do_sample, temperature=script_args.temperature, top_k=50, top_p=0.95,
                                       num_beams=script_args.num_beams)
             query_decode = tokenizer.batch_decode(inputs_ids_q_l, skip_special_tokens=True)

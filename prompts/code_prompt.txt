@@ -1,0 +1,49 @@
+Provide the best response to a given instruction. Follow the following steps to craft your response to fill Example 2:
+1. First give a signal [Reasoning], then reason about the given instruction
+2. First give a signal [Implementation], then provide a high-quality solution for the instruction.
+
+## Example 1
+
+### Instruction
+Create a Python function to encode an integer into a sequence of encoded characters, where each character represents a 5-bit chunk of the integer. The ASCII value of each chunk character is formed by adding 63 to the 5-bit chunk's value. For all chunks except the last one, set the 6th bit to 1 to indicate continuation. Employ bitwise operations for this encoding process.
+The main function name is `encode_integer_to_chars`.
+
+### Response
+We will organize our response by two parts: [Reasoning] and [Implementation].
+
+[Reasoning]
+To encode an integer into a sequence of encoded characters based on the specified criteria, let's follow these steps:
+
+1. Break down the integer into 5-bit chunks: Extract 5-bit chunks from the integer using using `& 31` (`0x1F`), because the binary representation of `31` (`11111`) has the last five bits set, which will effectively extract the 5 bits we are interested in. We start from the least significant bits (LSB).
+2. Set continuation bit: For all chunks except the last one, set the 6th bit to 1 using `| 32` (`0x20`) because the binary representation of `32` (`100000`) has the 6th bit set to 1. This indicates that there's another continuation chunk following.
+3. Shift right: Right-shift the value by 5 to process the next 5 bits.
+4. Convert to characters: Use `ord` and `chr` to convert each chunk (now effectively 6 bits due to the continuation bit) into a character by adding 63 to its value. This ensures that the character is within a printable ASCII range.
+5. Assembly: Assemble these characters into the final encoded string while maintaining the order of the chunks through `reversed`.
+
+[Implementation]
+Here's how you can implement this function:
+
+```python
+def encode_integer_to_chars(value: int) -> str:
+    # Base case for 0
+    if value == 0:
+        return chr(63)
+
+    encoded_chars = []
+    while value > 0:
+        # Extract the 5-bit chunk and add 63 to its value
+        chunk = (value & 31) + 63
+        value >>= 5
+        # If there's still more of the value left, set the continuation bit
+        if value > 0:
+            chunk |= 32
+        encoded_chars.append(chr(chunk))
+
+    # Reverse the list of characters to start with the least significant chunk
+    # and join them into a single string
+    return ''.join(reversed(encoded_chars))
+```
+
+## Example 2
+
+### Instruction

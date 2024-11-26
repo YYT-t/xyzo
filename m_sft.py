@@ -5,7 +5,7 @@ from datasets import load_dataset
 from transformers import HfArgumentParser, TrainingArguments
 from trl import SFTTrainer
 import os
-
+from task_configs import task_config_check
 os.environ["HF_TOKEN"] = "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"
 
 # Define and parse arguments.
@@ -76,10 +76,14 @@ class ScriptArguments:
         default=None,#"flash_attention_2",
         metadata={"help": "Which attention implementation to use"},
     )
+    Task_Type: Optional[str] = field(
+        default="math_metamath",
+        metadata={"help": "math or code"},
+    )
 
 parser = HfArgumentParser(ScriptArguments)
 script_args = parser.parse_args_into_dataclasses()[0]
-
+task_config = task_config_check(script_args.Task_Type)
 # Define the trainer
 training_args = TrainingArguments(
     output_dir=script_args.output_dir,
@@ -115,15 +119,16 @@ model_kwargs = dict(
     torch_dtype=torch.bfloat16,
     use_cache=False if script_args.gradient_checkpointing else True
 )
-
+"""
 def cot_prefix(sample):
     sample["text"] = 'Question: ' + sample["question"] + ' Answer: ' + sample["answer"]
 #    sample["prompt"] = few_shot_cot_prompt + sample["question"]
 #    sample["completion"] = sample["rational_answer"]
     return sample
+"""
 train_dataset = load_dataset(script_args.train_set_path, split="train").shuffle(seed=42)
 column_names = list(train_dataset.features)
-train_dataset = train_dataset.map(cot_prefix, remove_columns=column_names, num_proc=16)
+train_dataset = train_dataset.map(task_config.M_sft_cot_prefix(), remove_columns=column_names, num_proc=16)
 
 trainer = SFTTrainer(
     model=script_args.model_name,

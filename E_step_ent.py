@@ -8,6 +8,7 @@ import torch.nn as nn
 from datasets import load_dataset
 import deepspeed
 from copy import deepcopy
+from task_configs import task_config_check
 # from peft import LoraConfig, TaskType, get_peft_model
 from transformers import (
     AutoModelForCausalLM,
@@ -23,11 +24,11 @@ from transformers.utils import PaddingStrategy
 import pdb
 
 
-instruct_prompt = r"Answer the question based on the following example:"
-example1 = r"""Question: Jack is stranded on a desert island. He wants some salt to season his fish. He collects 2 liters of seawater in an old bucket. If the water is 20% salt, how many ml of salt will Jack get when all the water evaporates? Answer: First find how many liters of the seawater are salt: 2 liters * 20% = 0.4 liters Then multiply that amount by 1000 ml/liter to find the number of ml of salt Jack gets: 0.4 liters * 1000 ml/liter = 400 ml."""
-example2 = r"""Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name."""
-few_shot_cot_prompt = instruct_prompt + '\n' + example2 + f'\nQuestion: '  #'\n' + example1
-#few_shot_cot_prompt = ''
+#instruct_prompt = r"Answer the question based on the following example:"
+#example1 = r"""Question: Jack is stranded on a desert island. He wants some salt to season his fish. He collects 2 liters of seawater in an old bucket. If the water is 20% salt, how many ml of salt will Jack get when all the water evaporates? Answer: First find how many liters of the seawater are salt: 2 liters * 20% = 0.4 liters Then multiply that amount by 1000 ml/liter to find the number of ml of salt Jack gets: 0.4 liters * 1000 ml/liter = 400 ml."""
+#example2 = r"""Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name."""
+#few_shot_cot_prompt = instruct_prompt + '\n' + example2 + f'\nQuestion: '  #'\n' + example1
+
 # Define and parse arguments.
 @dataclass
 class ScriptArguments:
@@ -95,6 +96,14 @@ class ScriptArguments:
         default=999999,
         metadata={"help": "Eval the model every x steps"},
     )
+    prompt_path: Optional[str] = field(
+        default="prompts/math_prompt.txt",
+        metadata={"help": "path to get the cot prompt"},
+    )
+    Task_Type: Optional[str] = field(
+        default="math",
+        metadata={"help": "math or code"},
+    )
     ent_coeff: Optional[float] = field(default=0.05)
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
@@ -112,6 +121,13 @@ tokenizer.model_max_length = script_args.max_length
 tokenizer.truncation_side = "left"
 tokenizer.padding_side = "left"
 tokenizer.pad_token = tokenizer.eos_token
+
+# Get prompt
+
+with open(script_args.prompt_path, "r") as file:
+    # Read the content of the file
+    few_shot_cot_prompt = file.read()
+
 
 # Get the dataset
 

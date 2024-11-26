@@ -19,7 +19,7 @@ dataset_ = dataset_.map(tokenize, num_proc=16)
 questions = dataset_["few_shot_cot_question"]
 answers = dataset_["answer_text"]
 
-model_name =  "gohsyi/gemma-2-9b-it-em" #"Q_models/tt_3/debug2"  # "Qwen/Qwen2.5-Math-1.5B"#"facebook/opt-125m"#"google/gemma-2-2b-it"#"deepseek-ai/deepseek-math-7b-rl"
+model_name =  "YYT-t/gemma-1.1-7b-it_MetaMathQA_ent0.05_beam1_dosampleFalse_temp0.8_estep__epoch1" #"Q_models/tt_3/debug2"  # "Qwen/Qwen2.5-Math-1.5B"#"facebook/opt-125m"#"google/gemma-2-2b-it"#"deepseek-ai/deepseek-math-7b-rl"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 sampling_params = SamplingParams(
     # temperature=0.0,

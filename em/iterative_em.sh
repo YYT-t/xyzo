@@ -7,7 +7,6 @@ conda activate yy
 
 cd em
 
-
 iter_num=3
 path="./gemma-2-9b"
 export HF_TOKEN=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

@@ -86,6 +86,7 @@ class ScriptArguments:
         metadata={"help": "The lr scheduler"},
     )
     max_length: Optional[int] = field(default=256)
+    model_max_length: Optional[int] = field(default=256)
 
     save_every_steps: Optional[int] = field(
         default=999999,
@@ -108,7 +109,7 @@ script_args = parser.parse_args_into_dataclasses()[0]
 tokenizer_name = script_args.model_name
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_name) #AutoTokenizer
 
-tokenizer.model_max_length = script_args.max_length
+tokenizer.model_max_length = script_args.model_max_length
 tokenizer.truncation_side = "left"
 tokenizer.padding_side = "left"
 tokenizer.pad_token = tokenizer.eos_token

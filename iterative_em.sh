@@ -1,4 +1,8 @@
 #!/bin/bash
+# cd em
+# conda env create -f environment.yml
+# conda activate sft
+
 iter_num=3
 path="./gemma-2-9b"
 export HF_TOKEN=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
@@ -16,7 +20,7 @@ for i in $(seq 1 $iter_num); do
     fi
 
     ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent_metamath.py \
-    --model_name google/gemma-1.1-7b-it  \
+    --model_name google/gemma-2-9b-it  \
     --train_set_path meta-math/MetaMathQA \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \

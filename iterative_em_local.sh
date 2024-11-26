@@ -1,11 +1,7 @@
 #!/bin/bash
-git clone https://github.com/YYT-t/xyzo.git
-cd xyzo
-
-conda env create -f environment.yaml
-conda activate yy
-
 cd em
+# conda env create -f environment.yml
+# conda activate sft
 
 iter_num=3
 path="./gemma-2-9b"
@@ -23,8 +19,8 @@ for i in $(seq 1 $iter_num); do
         echo "iteration $i"
     fi
 
-    ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent_metamath.py \
-    --model_name google/gemma-1.1-7b-it  \
+    CUDA_VISIBLE_DEVICES=0,1,2,3  ACCELERATE_LOG_LEVEL=info accelerate launch E_step_ent_metamath.py \
+    --model_name google/gemma-2-9b-it  \
     --train_set_path meta-math/MetaMathQA \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
@@ -32,7 +28,7 @@ for i in $(seq 1 $iter_num); do
     --num_beams 1\
     --do_sample False \
     --temperature 0.8 \
-    --num_train_epochs 3 \
+    --num_train_epochs 1 \
     --max_length 256 \
     --save_every_steps 50 \
     --gradient_accumulation_steps 1 \

@@ -99,7 +99,7 @@ class ScriptArguments:
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
     do_sample: Optional[bool] = field(default=True)
-    model_path: Optional[str]
+    model_path: Optional[str] = field(default="Q_models")
 
 
 
@@ -150,8 +150,8 @@ training_args = TrainingArguments(
     per_device_eval_batch_size=script_args.per_device_eval_batch_size,
     num_train_epochs=script_args.num_train_epochs,
   #  weight_decay=script_args.weight_decay,
-    evaluation_strategy="steps",
-    eval_steps=script_args.eval_every_steps,
+    # evaluation_strategy="steps",
+    # eval_steps=script_args.eval_every_steps,
     save_strategy="epoch",
     save_steps=script_args.save_every_steps,
     gradient_accumulation_steps=script_args.gradient_accumulation_steps,
@@ -203,7 +203,7 @@ class QTrainer(Trainer):
         else:
             self.base_model = self.accelerator.prepare_model(base_model, evaluation_mode=True)
 
-    def compute_loss(self, model, inputs):
+    def compute_loss(self, model, inputs, num_items_in_batch=None):
         with torch.no_grad():
             inputs_ids_q_l = inputs["input_ids_q_l"]
             inputs_ids_a_r = inputs["input_ids_a_r"][:, 1:]
@@ -356,6 +356,7 @@ trainer = QTrainer(
     data_collator=MyDataCollatorWithPadding(tokenizer=tokenizer, padding=True)#, max_length=script_args.max_length)
 )
 
+# print("eval_dataset:", trainer.eval_dataset)
 # print("trained_model_name:", trained_model_name)
 trainer.train()
 ckpt_dir = output_name + "/final_ckpt"

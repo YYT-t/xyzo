@@ -1,8 +1,0 @@
-{"time":"2024-11-26T20:34:38.360945427-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
-{"time":"2024-11-26T20:34:38.360959216-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241126_203438-6b21d7k0/logs/debug-core.log"}
-{"time":"2024-11-26T20:34:38.476216808-06:00","level":"INFO","msg":"created new stream","id":"6b21d7k0"}
-{"time":"2024-11-26T20:34:38.476441902-06:00","level":"INFO","msg":"stream: started","id":"6b21d7k0"}
-{"time":"2024-11-26T20:34:38.476514051-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"6b21d7k0"}}
-{"time":"2024-11-26T20:34:38.476675453-06:00","level":"INFO","msg":"sender: started","stream_id":"6b21d7k0"}
-{"time":"2024-11-26T20:34:38.476611386-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"6b21d7k0"}}
-{"time":"2024-11-26T20:34:38.657888042-06:00","level":"INFO","msg":"Starting system monitor"}

@@ -1,7 +1,0 @@
-  0%|                                                                                                                   | 0/6172 [00:00<?, ?it/s]/home/cyc2202/anaconda3/envs/sft/lib/python3.11/site-packages/transformers/generation/configuration_utils.py:590: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
-  warnings.warn(
-/home/cyc2202/anaconda3/envs/sft/lib/python3.11/site-packages/transformers/generation/configuration_utils.py:595: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.95` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
-  warnings.warn(
-`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
-/home/cyc2202/anaconda3/envs/sft/lib/python3.11/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
-  warnings.warn(

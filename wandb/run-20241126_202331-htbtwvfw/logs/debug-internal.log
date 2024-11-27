@@ -1,0 +1,16 @@
+{"time":"2024-11-26T20:23:31.025455617-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-26T20:23:31.025477403-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241126_202331-htbtwvfw/logs/debug-core.log"}
+{"time":"2024-11-26T20:23:31.139079565-06:00","level":"INFO","msg":"created new stream","id":"htbtwvfw"}
+{"time":"2024-11-26T20:23:31.139133748-06:00","level":"INFO","msg":"stream: started","id":"htbtwvfw"}
+{"time":"2024-11-26T20:23:31.139404064-06:00","level":"INFO","msg":"sender: started","stream_id":"htbtwvfw"}
+{"time":"2024-11-26T20:23:31.139360186-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"htbtwvfw"}}
+{"time":"2024-11-26T20:23:31.139243477-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"htbtwvfw"}}
+{"time":"2024-11-26T20:23:31.334747227-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-26T20:24:07.338671639-06:00","level":"INFO","msg":"stream: closing","id":"htbtwvfw"}
+{"time":"2024-11-26T20:24:07.338720959-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-26T20:24:07.339633445-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-26T20:24:08.356656331-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-26T20:24:08.521750614-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"htbtwvfw"}}
+{"time":"2024-11-26T20:24:08.521835832-06:00","level":"INFO","msg":"sender: closed","stream_id":"htbtwvfw"}
+{"time":"2024-11-26T20:24:08.52181992-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"htbtwvfw"}}
+{"time":"2024-11-26T20:24:08.521982577-06:00","level":"INFO","msg":"stream: closed","id":"htbtwvfw"}

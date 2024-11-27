@@ -1,4 +1,4 @@
-import abc
+from datasets import load_dataset
 
 class Config_Math():
     def __init__(self):
@@ -20,12 +20,25 @@ class Config_Math():
             sample["answer_text"] = f"The answer is {answer_text}."
             return sample
         return tokenize
+    
 class Config_Math_GSM(Config_Math):
     def __init__(self):
         super(Config_Math_GSM, self).__init__()
         with open(self.prompt_path, "r") as file:
             # Read the content of the file
             self.few_shot_cot_prompt = file.read()
+    def tokenize_E(self,tokenizer):
+        def tokenize(sample):
+            tokenized_q = tokenizer(self.few_shot_cot_prompt + sample['question'], truncation=True)
+            answer_text = sample['answer'].split('####')[-1].strip()
+            answer = f"The answer is {answer_text}."
+            tokenized_a = tokenizer(answer, truncation=True)
+            sample["input_ids_q"] = tokenized_q["input_ids"]
+            sample["attention_mask_q"] = tokenized_q["attention_mask"]
+            sample["input_ids_a"] = tokenized_a["input_ids"]
+            sample["attention_mask_a"] = tokenized_a["attention_mask"]
+            return sample
+        return tokenize
 
 
 
@@ -68,5 +81,15 @@ def task_config_check(task_name):
         return Config_Math_MetaMath() 
     elif task_name == "code":
         return Config_Code()
+    else:
+        raise(NotImplementedError)
+    
+def task_data_set(task_name):
+    if task_name == "math_gsm":
+        train_set_path = "openai/gsm8k"
+        return train_set_path, load_dataset(train_set_path, 'main')["train"]
+    elif  task_name == "math_metamath":
+        train_set_path = "meta-math/MetaMathQA"
+        return train_set_path, load_dataset(train_set_path)["train"]
     else:
         raise(NotImplementedError)

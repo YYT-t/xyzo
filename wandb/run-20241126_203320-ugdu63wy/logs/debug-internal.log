@@ -1,0 +1,16 @@
+{"time":"2024-11-26T20:33:20.432966297-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-26T20:33:20.432985756-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241126_203320-ugdu63wy/logs/debug-core.log"}
+{"time":"2024-11-26T20:33:20.551492763-06:00","level":"INFO","msg":"created new stream","id":"ugdu63wy"}
+{"time":"2024-11-26T20:33:20.552129777-06:00","level":"INFO","msg":"stream: started","id":"ugdu63wy"}
+{"time":"2024-11-26T20:33:20.552287372-06:00","level":"INFO","msg":"sender: started","stream_id":"ugdu63wy"}
+{"time":"2024-11-26T20:33:20.552329772-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ugdu63wy"}}
+{"time":"2024-11-26T20:33:20.552242809-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ugdu63wy"}}
+{"time":"2024-11-26T20:33:20.699637568-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-26T20:33:22.522655363-06:00","level":"INFO","msg":"stream: closing","id":"ugdu63wy"}
+{"time":"2024-11-26T20:33:22.522702551-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-26T20:33:22.523613569-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-26T20:33:22.911768449-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-26T20:33:23.005197353-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ugdu63wy"}}
+{"time":"2024-11-26T20:33:23.005285862-06:00","level":"INFO","msg":"sender: closed","stream_id":"ugdu63wy"}
+{"time":"2024-11-26T20:33:23.005278177-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ugdu63wy"}}
+{"time":"2024-11-26T20:33:23.00543743-06:00","level":"INFO","msg":"stream: closed","id":"ugdu63wy"}

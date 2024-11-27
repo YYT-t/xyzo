@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
-
+from task_configs import task_config_check, task_data_set
 # import evaluate
 import numpy as np
 import torch
@@ -8,7 +8,6 @@ import torch.nn as nn
 from datasets import load_dataset
 import deepspeed
 from copy import deepcopy
-from task_configs import task_config_check
 # from peft import LoraConfig, TaskType, get_peft_model
 from transformers import (
     AutoModelForCausalLM,
@@ -66,10 +65,6 @@ class ScriptArguments:
         default=1,
         metadata={"help": "The number of training epochs for the reward model."},
     )
-    train_set_path: Optional[str] = field(
-        default="openai/gsm8k",
-        metadata={"help": "The dir of the subset of the training data to use"},
-    )
     output_suffix: Optional[str] = field(
         default="",
         metadata={"help": "The dir for output model"},
@@ -87,6 +82,7 @@ class ScriptArguments:
         metadata={"help": "The lr scheduler"},
     )
     max_length: Optional[int] = field(default=256)
+    model_max_length: Optional[int] = field(default=256)
 
     save_every_steps: Optional[int] = field(
         default=999999,
@@ -100,8 +96,8 @@ class ScriptArguments:
         default="prompts/math_prompt.txt",
         metadata={"help": "path to get the cot prompt"},
     )
-    Task_Type: Optional[str] = field(
-        default="math",
+    task_type: Optional[str] = field(
+        default="math_metamath",
         metadata={"help": "math or code"},
     )
     ent_coeff: Optional[float] = field(default=0.05)
@@ -114,36 +110,36 @@ class ScriptArguments:
 parser = HfArgumentParser(ScriptArguments)
 script_args = parser.parse_args_into_dataclasses()[0]
 
+task_config = task_config_check(script_args.task_type)
+train_set_path, train_dataset = task_data_set(script_args.task_type)
+
 tokenizer_name = script_args.model_name
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_name) #AutoTokenizer
 
-tokenizer.model_max_length = script_args.max_length
+tokenizer.model_max_length = script_args.model_max_length
 tokenizer.truncation_side = "left"
 tokenizer.padding_side = "left"
 tokenizer.pad_token = tokenizer.eos_token
 
-# Get prompt
 
-with open(script_args.prompt_path, "r") as file:
-    # Read the content of the file
-    few_shot_cot_prompt = file.read()
+# Get prompt
 
 
 # Get the dataset
 
 base_model_name = script_args.model_name.split("/")[1]
-data_name = script_args.train_set_path.split("/")[1]
-train_path = script_args.train_set_path
+
+data_name = train_set_path.split("/")[1]
 
 trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
-estep_{script_args.output_suffix}"
+estep_{script_args.output_suffix}_epoch{script_args.num_train_epochs}"
 
 output_name = f"./Q_models/{trained_model_name}"
-
+"""
 def tokenize(sample):
-    tokenized_q = tokenizer(few_shot_cot_prompt + sample['question'], truncation=True)
-    answer_text = sample['answer'].split('####')[-1].strip()
+    tokenized_q = tokenizer(few_shot_cot_prompt + sample['query'], truncation=True)
+    answer_text = sample['response'].split('The answer is: ')[-1].strip()
     answer = f"The answer is {answer_text}."
     tokenized_a = tokenizer(answer, truncation=True)
     sample["input_ids_q"] = tokenized_q["input_ids"]
@@ -151,12 +147,11 @@ def tokenize(sample):
     sample["input_ids_a"] = tokenized_a["input_ids"]
     sample["attention_mask_a"] = tokenized_a["attention_mask"]
     return sample
-
-train_dataset = load_dataset(train_path)#.shuffle(seed=42)
-print(train_dataset)
-train_dataset = load_dataset(train_path, "main")["train"]#.shuffle(seed=42)
 train_dataset = train_dataset.map(tokenize, num_proc=16)
+"""
 
+train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16)
+# train_dataset = train_dataset.select(range(2))
 
 # Define the trainer
 training_args = TrainingArguments(
@@ -168,7 +163,7 @@ training_args = TrainingArguments(
   #  weight_decay=script_args.weight_decay,
     evaluation_strategy="steps",
     eval_steps=script_args.eval_every_steps,
-    save_strategy="steps",
+    save_strategy="epoch",
     save_steps=script_args.save_every_steps,
     gradient_accumulation_steps=script_args.gradient_accumulation_steps,
     gradient_checkpointing=script_args.gradient_checkpointing,
@@ -183,7 +178,11 @@ training_args = TrainingArguments(
     optim=script_args.optim,
     lr_scheduler_type=script_args.lr_scheduler_type,
     warmup_ratio=0.1,
-    report_to='wandb'
+    report_to='wandb',
+    # push_to_hub=True,
+    # hub_strategy="every_save",
+    # hub_model_id=f"YYT-t/2",
+    # hub_token="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"
 )
 
 model = AutoModelForCausalLM.from_pretrained(
@@ -223,12 +222,16 @@ class QTrainer(Trainer):
             mask_q_l = inputs["attention_mask_q_l"]
             rational = model.generate(input_ids=inputs_ids_q_l, attention_mask=mask_q_l, \
                                       max_new_tokens=script_args.max_length, \
-                                      stop_strings="Question:", tokenizer=tokenizer,
+                                      #stop_strings="Question:", tokenizer=tokenizer,
+                                      stop_strings=task_config.stop_str_gen_z[0], tokenizer=tokenizer,
                                       do_sample=script_args.do_sample, temperature=script_args.temperature, top_k=50, top_p=0.95,
                                       num_beams=script_args.num_beams)
-            
+            query_decode = tokenizer.batch_decode(inputs_ids_q_l, skip_special_tokens=True)
             rational_decode = tokenizer.batch_decode(rational, skip_special_tokens=True)
             answer_decode = tokenizer.batch_decode(inputs_ids_a_r, skip_special_tokens=True)
+            print("query_decode:", query_decode)
+            print("rational_decode:", rational_decode)
+            print("answer_decode:", answer_decode)
             xz = []
             xz_mask = []
             xzy = []
@@ -366,17 +369,27 @@ trainer = QTrainer(
     data_collator=MyDataCollatorWithPadding(tokenizer=tokenizer, padding=True)#, max_length=script_args.max_length)
 )
 
+print("trained_model_name:", trained_model_name)
 trainer.train()
 
 ckpt_dir = output_name + "/final_ckpt"
 print("Saving last checkpoint of the model")
 trainer.save_model(ckpt_dir)
 tokenizer.save_pretrained(ckpt_dir)
-
-# push to hugging face
 subprocess.run([
     "huggingface-cli", "upload", 
     f"YYT-t/{trained_model_name}", 
     ckpt_dir, 
     "--token", "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"
 ])
+# print("save different checkpoints:")
+# for i in range(script_args.num_train_epochs):
+#     ckpt_dir = f"{output_name}/checkpoint-{i+1}"
+#     print("ckpt_dir:", ckpt_dir)
+#     tokenizer.save_pretrained(ckpt_dir)
+#     subprocess.run([
+#     "huggingface-cli", "upload", 
+#     f"YYT-t/{trained_model_name}_epoch_{i+1}", 
+#     ckpt_dir, 
+#     "--token", "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"
+#     ])

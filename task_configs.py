@@ -8,7 +8,7 @@ class Config_Math():
         pass
     def M_sft_cot_prefix(self):
         def cot_prefix(sample):
-            sample["text"] = 'Question: ' + sample["question"] + ' Answer: ' + sample["answer"]
+            sample["text"] = 'Question: ' + sample["question"] + ' Answer: ' + sample["rational_answer"]
         #    sample["prompt"] = few_shot_cot_prompt + sample["question"]
         #    sample["completion"] = sample["rational_answer"]
             return sample

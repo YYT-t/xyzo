@@ -1,6 +1,6 @@
 CUDA_VISIBLE_DEVICES=1,2,3,4 ACCELERATE_LOG_LEVEL=info accelerate launch   E_step_ent.py \
     --model_name google/gemma-1.1-7b-it  \
-    --task_type math_gsm \
+    --task_type math_metamath \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
     --ent_coeff 0.05 \

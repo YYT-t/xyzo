@@ -1,0 +1,16 @@
+{"time":"2024-11-27T01:27:34.75024416-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-27T01:27:34.750271159-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241127_012734-ddrwmmof/logs/debug-core.log"}
+{"time":"2024-11-27T01:27:34.989594972-06:00","level":"INFO","msg":"created new stream","id":"ddrwmmof"}
+{"time":"2024-11-27T01:27:34.989875384-06:00","level":"INFO","msg":"stream: started","id":"ddrwmmof"}
+{"time":"2024-11-27T01:27:34.989957624-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ddrwmmof"}}
+{"time":"2024-11-27T01:27:34.989965054-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ddrwmmof"}}
+{"time":"2024-11-27T01:27:34.990070473-06:00","level":"INFO","msg":"sender: started","stream_id":"ddrwmmof"}
+{"time":"2024-11-27T01:27:35.240133902-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-27T01:29:09.20344883-06:00","level":"INFO","msg":"stream: closing","id":"ddrwmmof"}
+{"time":"2024-11-27T01:29:09.203506129-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-27T01:29:09.204404606-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-27T01:29:10.113168672-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-27T01:29:10.193983272-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ddrwmmof"}}
+{"time":"2024-11-27T01:29:10.194069725-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ddrwmmof"}}
+{"time":"2024-11-27T01:29:10.194085896-06:00","level":"INFO","msg":"sender: closed","stream_id":"ddrwmmof"}
+{"time":"2024-11-27T01:29:10.194151289-06:00","level":"INFO","msg":"stream: closed","id":"ddrwmmof"}

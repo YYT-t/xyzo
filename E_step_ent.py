@@ -104,6 +104,7 @@ class ScriptArguments:
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
     do_sample: Optional[bool] = field(default=True)
+    model_path: Optional[str] = field(default="Q_models")
 
 
 
@@ -135,7 +136,8 @@ trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
 estep_{script_args.output_suffix}_epoch{script_args.num_train_epochs}"
 
-output_name = f"./Q_models/{trained_model_name}"
+# output_name = f"./Q_models/{trained_model_name}"
+output_name = script_args.model_path
 """
 def tokenize(sample):
     tokenized_q = tokenizer(few_shot_cot_prompt + sample['query'], truncation=True)

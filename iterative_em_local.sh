@@ -1,5 +1,5 @@
 #!/bin/bash
-cd em
+# cd em
 # conda env create -f environment.yml
 # conda activate sft
 
@@ -19,9 +19,9 @@ for i in $(seq 1 $iter_num); do
         echo "iteration $i"
     fi
 
-    CUDA_VISIBLE_DEVICES=0,1,2,3  ACCELERATE_LOG_LEVEL=info accelerate launch E_step_ent_metamath.py \
+    CUDA_VISIBLE_DEVICES=0,1,2,3  ACCELERATE_LOG_LEVEL=info accelerate launch E_step_ent.py \
     --model_name google/gemma-2-9b-it  \
-    --train_set_path meta-math/MetaMathQA \
+    --task_type math_metamath \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
     --ent_coeff 0.05 \
@@ -34,7 +34,8 @@ for i in $(seq 1 $iter_num); do
     --gradient_accumulation_steps 1 \
     --per_device_train_batch_size 16 \
     --model_path $e_model_dir \
-   # python E_step_ent_metamath.py --TODO # input model is e_input_model, output is e_model_dir  || exit 1
-    python inference.py --model_path "${e_model_dir}/final_ckpt" --dataset_path $dataset_path --iter i || exit 1
+
+#    python E_step_ent_metamath.py --TODO # input model is e_input_model, output is e_model_dir  || exit 1
+    python inference.py --model_path "${e_model_dir}/final_ckpt" --dataset_path $dataset_path --iter $i || exit 1
     accelerate launch --num_processes 8 m_sft.py --deepspeed deepspeed_configs/deepspeed_2.json --model_name $e_model_dir --attn_implementation eager --per_device_train_batch_size 2 --gradient_accumulation_steps 8 --train_set_path $dataset_path --output_dir $m_model_dir --hub_model_id $m_hub_id || exit 1
 done

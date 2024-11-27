@@ -51,7 +51,6 @@ def parse_args():
 os.environ["HF_TOKEN"] = "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"
 
 
-
 """
 def tokenize(sample):
     answer_text = sample['response'].split(answer_spliter)[-1].strip()
@@ -59,6 +58,7 @@ def tokenize(sample):
     sample["answer_text"] = f"{answer_spliter} {answer_text}."
     return sample
 """
+
 
 NUM_GPUS = 8
 split_list = lambda l, n: [l[i * len(l) // n: (i + 1) * len(l) // n] for i in range(n)]
@@ -82,6 +82,7 @@ def run_inference_multi_gpu(questions, answers):
 if __name__ == "__main__":
     args = parse_args()
     model_name = args.model_path
+    # print("model_name:", model_name)
     task_config = task_config_check(args.Task_Type)
     dataset_iter_map = {1: "[:33%]", 2: "[33%:66%]", 3: "[66%:]"}
     dataset_fraction = dataset_iter_map[args.iter]
@@ -90,7 +91,6 @@ if __name__ == "__main__":
     dataset_ = dataset_.map(task_config.inference_tokenize(), num_proc=16)
     questions = dataset_["few_shot_cot_question"]
     answers = dataset_["answer_text"]
-
     
     answer_spliter = args.answer_spliter
     tokenizer = AutoTokenizer.from_pretrained(model_name)

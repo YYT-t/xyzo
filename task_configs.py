@@ -1,6 +1,6 @@
 import abc
 
-class Config_Math(abc):
+class Config_Math():
     def __init__(self):
         self.stop_str_gen_z = ["Question:"]
         self.prompt_path = "prompts/math_prompt.txt"
@@ -22,6 +22,7 @@ class Config_Math(abc):
         return tokenize
 class Config_Math_GSM(Config_Math):
     def __init__(self):
+        super(Config_Math_GSM, self).__init__()
         with open(self.prompt_path, "r") as file:
             # Read the content of the file
             self.few_shot_cot_prompt = file.read()
@@ -30,13 +31,13 @@ class Config_Math_GSM(Config_Math):
 
 class Config_Math_MetaMath(Config_Math):
     def __init__(self):
+        super(Config_Math_MetaMath, self).__init__()
         with open(self.prompt_path, "r") as file:
             # Read the content of the file
             self.few_shot_cot_prompt = file.read()
 
 
     def tokenize_E(self,tokenizer):
-        
         def tokenize(sample):
             tokenized_q = tokenizer(self.few_shot_cot_prompt + sample['query'], truncation=True)
             answer_text = sample['response'].split('The answer is: ')[-1].strip()

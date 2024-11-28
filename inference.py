@@ -118,7 +118,7 @@ if __name__ == "__main__":
     num_train_data = len(dataset_)
     gathered_data = []
     for i in range(num_train_data):
-        tmp_data = {"question": dataset_[i]["query"], "answer": dataset_[i]["response"],
+        tmp_data = {"question": dataset_[i][task_config.x_colname], "answer": dataset_[i][task_config.y_colname],
                     "rational_answer": rational_answer[i]}
         gathered_data.append(tmp_data)
 

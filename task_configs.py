@@ -4,6 +4,8 @@ class Config_Math():
     def __init__(self):
         self.stop_str_gen_z = ["Question:"]
         self.prompt_path = "prompts/math_prompt.txt"
+        self.x_colname = "query"
+        self.y_colname = "response"
     def tokenize_E(self):
         pass
     def M_sft_cot_prefix(self):
@@ -71,7 +73,8 @@ class Config_Code(Config_Math):
         with open(self.prompt_path, "r") as file:
             # Read the content of the file
             self.few_shot_cot_prompt = file.read()
-    
+        self.x_colname = "instruction"
+        self.y_colname = "output"
 
 class Config_Code_Opencoder_edu(Config_Code):
     def __init__(self):
@@ -95,7 +98,7 @@ class Config_Code_Opencoder_edu(Config_Code):
     def inference_tokenize(self):
         def tokenize(sample):
             answer_text = sample['response'].strip()
-            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['question']
+            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['instruction']
             sample["answer_text"] = f"[Implementation]\n{answer_text}."
             return sample
         return tokenize

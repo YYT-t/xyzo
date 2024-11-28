@@ -1,0 +1,16 @@
+{"time":"2024-11-27T23:06:54.381083318-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-27T23:06:54.381109779-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241127_230654-xjbnetce/logs/debug-core.log"}
+{"time":"2024-11-27T23:06:54.500952456-06:00","level":"INFO","msg":"created new stream","id":"xjbnetce"}
+{"time":"2024-11-27T23:06:54.501003131-06:00","level":"INFO","msg":"stream: started","id":"xjbnetce"}
+{"time":"2024-11-27T23:06:54.501136131-06:00","level":"INFO","msg":"sender: started","stream_id":"xjbnetce"}
+{"time":"2024-11-27T23:06:54.501028832-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"xjbnetce"}}
+{"time":"2024-11-27T23:06:54.501089891-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"xjbnetce"}}
+{"time":"2024-11-27T23:06:54.672742142-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-27T23:17:22.896493437-06:00","level":"INFO","msg":"stream: closing","id":"xjbnetce"}
+{"time":"2024-11-27T23:17:22.896542741-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-27T23:17:22.897451433-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-27T23:17:23.185090451-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-27T23:17:23.472692227-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"xjbnetce"}}
+{"time":"2024-11-27T23:17:23.472768467-06:00","level":"INFO","msg":"sender: closed","stream_id":"xjbnetce"}
+{"time":"2024-11-27T23:17:23.472750558-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"xjbnetce"}}
+{"time":"2024-11-27T23:17:23.472876925-06:00","level":"INFO","msg":"stream: closed","id":"xjbnetce"}

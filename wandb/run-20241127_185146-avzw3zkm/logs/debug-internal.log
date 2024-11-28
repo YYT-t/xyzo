@@ -1,0 +1,16 @@
+{"time":"2024-11-27T18:51:46.72273701-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-27T18:51:46.722762141-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241127_185146-avzw3zkm/logs/debug-core.log"}
+{"time":"2024-11-27T18:51:46.836357955-06:00","level":"INFO","msg":"created new stream","id":"avzw3zkm"}
+{"time":"2024-11-27T18:51:46.836429927-06:00","level":"INFO","msg":"stream: started","id":"avzw3zkm"}
+{"time":"2024-11-27T18:51:46.836591723-06:00","level":"INFO","msg":"sender: started","stream_id":"avzw3zkm"}
+{"time":"2024-11-27T18:51:46.836525064-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"avzw3zkm"}}
+{"time":"2024-11-27T18:51:46.836649458-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"avzw3zkm"}}
+{"time":"2024-11-27T18:51:46.984272379-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-27T18:55:14.840090455-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-27T18:55:14.840104329-06:00","level":"INFO","msg":"stream: closing","id":"avzw3zkm"}
+{"time":"2024-11-27T18:55:14.841049202-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-27T18:55:15.725400417-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-27T18:55:15.817939179-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"avzw3zkm"}}
+{"time":"2024-11-27T18:55:15.818007012-06:00","level":"INFO","msg":"sender: closed","stream_id":"avzw3zkm"}
+{"time":"2024-11-27T18:55:15.81800013-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"avzw3zkm"}}
+{"time":"2024-11-27T18:55:15.81808327-06:00","level":"INFO","msg":"stream: closed","id":"avzw3zkm"}

@@ -1,7 +1,7 @@
 export WANDB_API_KEY=8b2885096bc8e2e0291c1e6aec2de6f864bba024
 
-CUDA_VISIBLE_DEVICES=1,2,3,4 ACCELERATE_LOG_LEVEL=info accelerate launch   E_step_ent.py \
-    --model_name google/gemma-1.1-7b-it  \
+CUDA_VISIBLE_DEVICES=1,2,3,4 ACCELERATE_LOG_LEVEL=info accelerate launch   E_step_ent_test.py \
+    --model_name google/gemma-2-2b-it  \
     --task_type math_gsm \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \

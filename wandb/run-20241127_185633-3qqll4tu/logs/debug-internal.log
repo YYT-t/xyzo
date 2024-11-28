@@ -1,0 +1,16 @@
+{"time":"2024-11-27T18:56:33.311060122-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-27T18:56:33.311074164-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241127_185633-3qqll4tu/logs/debug-core.log"}
+{"time":"2024-11-27T18:56:33.423564312-06:00","level":"INFO","msg":"created new stream","id":"3qqll4tu"}
+{"time":"2024-11-27T18:56:33.423843695-06:00","level":"INFO","msg":"stream: started","id":"3qqll4tu"}
+{"time":"2024-11-27T18:56:33.424069871-06:00","level":"INFO","msg":"sender: started","stream_id":"3qqll4tu"}
+{"time":"2024-11-27T18:56:33.423943419-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"3qqll4tu"}}
+{"time":"2024-11-27T18:56:33.424000816-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"3qqll4tu"}}
+{"time":"2024-11-27T18:56:33.574335634-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-27T19:00:51.067267388-06:00","level":"INFO","msg":"stream: closing","id":"3qqll4tu"}
+{"time":"2024-11-27T19:00:51.06732269-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-27T19:00:51.068119121-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-27T19:00:51.385799309-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-27T19:00:51.437799794-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"3qqll4tu"}}
+{"time":"2024-11-27T19:00:51.437856936-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"3qqll4tu"}}
+{"time":"2024-11-27T19:00:51.437883245-06:00","level":"INFO","msg":"sender: closed","stream_id":"3qqll4tu"}
+{"time":"2024-11-27T19:00:51.437975751-06:00","level":"INFO","msg":"stream: closed","id":"3qqll4tu"}

@@ -20,15 +20,7 @@ from transformers import (
     GPT2Tokenizer, GPT2LMHeadModel
 )
 from transformers.utils import PaddingStrategy
-import pdb
 
-
-#instruct_prompt = r"Answer the question based on the following example:"
-#example1 = r"""Question: Jack is stranded on a desert island. He wants some salt to season his fish. He collects 2 liters of seawater in an old bucket. If the water is 20% salt, how many ml of salt will Jack get when all the water evaporates? Answer: First find how many liters of the seawater are salt: 2 liters * 20% = 0.4 liters Then multiply that amount by 1000 ml/liter to find the number of ml of salt Jack gets: 0.4 liters * 1000 ml/liter = 400 ml."""
-#example2 = r"""Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name."""
-#few_shot_cot_prompt = instruct_prompt + '\n' + example2 + f'\nQuestion: '  #'\n' + example1
-
-# Define and parse arguments.
 @dataclass
 class ScriptArguments:
     """
@@ -105,6 +97,7 @@ class ScriptArguments:
     num_beams: Optional[int] = field(default=5)
     do_sample: Optional[bool] = field(default=True)
     model_path: Optional[str] = field(default="Q_models")
+    save_strategy: Optional[str] = field(default="steps")
 
 
 
@@ -123,38 +116,27 @@ tokenizer.padding_side = "left"
 tokenizer.pad_token = tokenizer.eos_token
 
 
-# Get prompt
-
-
-# Get the dataset
-
 base_model_name = script_args.model_name.split("/")[1]
 
 data_name = train_set_path.split("/")[1]
 
 trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
-estep_{script_args.output_suffix}_epoch{script_args.num_train_epochs}"
+estep_{script_args.output_suffix}_totalepoch{script_args.num_train_epochs}"
 
-# output_name = f"./Q_models/{trained_model_name}"
-output_name = script_args.model_path
-"""
-def tokenize(sample):
-    tokenized_q = tokenizer(few_shot_cot_prompt + sample['query'], truncation=True)
-    answer_text = sample['response'].split('The answer is: ')[-1].strip()
-    answer = f"The answer is {answer_text}."
-    tokenized_a = tokenizer(answer, truncation=True)
-    sample["input_ids_q"] = tokenized_q["input_ids"]
-    sample["attention_mask_q"] = tokenized_q["attention_mask"]
-    sample["input_ids_a"] = tokenized_a["input_ids"]
-    sample["attention_mask_a"] = tokenized_a["attention_mask"]
-    return sample
-train_dataset = train_dataset.map(tokenize, num_proc=16)
-"""
+output_name = f"./Q_models/{trained_model_name}"
+# output_name = script_args.model_path
 
 train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16)
 # train_dataset = train_dataset.select(range(2))
 
+
+
+# training_args.push_to_hub = True
+# training_args.hub_strategy = "every_save"
+
+# training_args.hub_model_id = f"YYT-t/{trained_model_name}"
+# training_args.hub_token = "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"
 # Define the trainer
 training_args = TrainingArguments(
     output_dir=output_name,
@@ -165,7 +147,7 @@ training_args = TrainingArguments(
   #  weight_decay=script_args.weight_decay,
     evaluation_strategy="steps",
     eval_steps=script_args.eval_every_steps,
-    save_strategy="epoch",
+    save_strategy=script_args.save_strategy,
     save_steps=script_args.save_every_steps,
     gradient_accumulation_steps=script_args.gradient_accumulation_steps,
     gradient_checkpointing=script_args.gradient_checkpointing,
@@ -182,8 +164,8 @@ training_args = TrainingArguments(
     warmup_ratio=0.1,
     report_to='wandb',
     # push_to_hub=True,
-    # hub_strategy="every_save",
-    # hub_model_id=f"YYT-t/2",
+    # hub_strategy="checkpoint",
+    # hub_model_id=f"YYT-t/3",
     # hub_token="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"
 )
 
@@ -363,6 +345,7 @@ class MyDataCollatorWithPadding:
 
 from transformers import DataCollatorWithPadding
 import subprocess
+import os
 trainer = QTrainer(
     model=model,
     base_model=our_base_model,
@@ -374,24 +357,19 @@ trainer = QTrainer(
 print("trained_model_name:", trained_model_name)
 trainer.train()
 
-ckpt_dir = output_name + "/final_ckpt"
-print("Saving last checkpoint of the model")
-trainer.save_model(ckpt_dir)
-tokenizer.save_pretrained(ckpt_dir)
-subprocess.run([
-    "huggingface-cli", "upload", 
-    f"YYT-t/{trained_model_name}", 
-    ckpt_dir, 
-    "--token", "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"
-])
-# print("save different checkpoints:")
-# for i in range(script_args.num_train_epochs):
-#     ckpt_dir = f"{output_name}/checkpoint-{i+1}"
-#     print("ckpt_dir:", ckpt_dir)
-#     tokenizer.save_pretrained(ckpt_dir)
-#     subprocess.run([
-#     "huggingface-cli", "upload", 
-#     f"YYT-t/{trained_model_name}_epoch_{i+1}", 
-#     ckpt_dir, 
-#     "--token", "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"
-#     ])
+final_dir = output_name + "/final_checkpoint"
+# print("Saving last checkpoint of the model")
+trainer.save_model(final_dir)
+checkpoint_dirs = [d for d in os.listdir(output_name) if "checkpoint" in d]
+print("Checkpoint directories:", checkpoint_dirs)
+from huggingface_hub import HfApi
+api = HfApi()
+for checkpoint_dir in checkpoint_dirs:
+    tokenizer.save_pretrained(f"{output_name}/{checkpoint_dir}")
+    print("Uploading checkpoint:", checkpoint_dir)
+    subprocess.run([
+        "huggingface-cli", "upload", 
+        f"YYT-t/{trained_model_name}_{checkpoint_dir}", 
+        f"{output_name}/{checkpoint_dir}", 
+        "--token", "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"
+    ])

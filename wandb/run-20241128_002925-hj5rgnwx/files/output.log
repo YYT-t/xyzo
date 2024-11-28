@@ -1,0 +1,315 @@
+trained_model_name: gemma-1.1-7b-it_gsm8k_ent0.05_beam1_dosampleFalse_temp1.0_estep__totalepoch1
+/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/generation/configuration_utils.py:606: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.95` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
+query_decode: ['Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Nina makes one-of-a-kind jewelry and sells it at a local boutique.  She charges $25.00 for her necklaces, $15.00 for bracelets and $10.00 for a pair of earrings.  Over the weekend, she sold 5 necklaces, 10 bracelets, 20 earrings, and received 2 orders for a complete jewelry ensemble that Nina charged $45.00 for.  How much money did she make over the weekend?', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: The Early Bird Dinner offered dinner meals at half off the menu price if you eat between 2-4 pm.  Curtis ordered the Salisbury Steak that costs $16.00 and Rob ordered the Chicken Fried Steak at $18.00.  If they ate at 3 pm, what was the cost of their total bill?', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Boston had .5 feet of snow on the first day of winter.  The next day they got an additional 8 inches.  Over the next 2 days, 2 inches of the snow melted.  On the fifth day, they received another 2 times the amount of snow they received on the first day.  How many feet of snow do they now have?', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: At Hank’s cafe, he sells big stack pancakes which have 5 pancakes and short stack pancakes which have 3 pancakes.  If 9 customers order the short stack and 6 customers order the big stack, how many pancakes does Hank need to make?']
+rational_decode: ['Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Nina makes one-of-a-kind jewelry and sells it at a local boutique.  She charges $25.00 for her necklaces, $15.00 for bracelets and $10.00 for a pair of earrings.  Over the weekend, she sold 5 necklaces, 10 bracelets, 20 earrings, and received 2 orders for a complete jewelry ensemble that Nina charged $45.00 for.  How much money did she make over the weekend?\n\nAnswer: To find the total amount Nina made, we can calculate the cost of each item and multiply by the number of items sold.\nNecklaces: 5 * $25.00 = $125.00\nBracelets: 10 * $15.00 = $150.00\nEarrings: 20 * $10.00 = $200.00\nJewelry Ensemble: 2 * $45.00 = $90.00\nTotal: $125.00 + $150.00 + $200.00 + $90.00 = $565.00\nNina made $565.00 over the weekend.', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: The Early Bird Dinner offered dinner meals at half off the menu price if you eat between 2-4 pm.  Curtis ordered the Salisbury Steak that costs $16.00 and Rob ordered the Chicken Fried Steak at $18.00.  If they ate at 3 pm, what was the cost of their total bill? Answer: The cost of the meal is half of the sum of the cost of the two meals. (1/2 * (16 + 18)) = $17.', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Boston had .5 feet of snow on the first day of winter.  The next day they got an additional 8 inches.  Over the next 2 days, 2 inches of the snow melted.  On the fifth day, they received another 2 times the amount of snow they received on the first day.  How many feet of snow do they now have? Answer: They received .5 + 8/12 = 1.33 feet of snow on the first day.  Over the next two days, they lost 2/12 = .16 feet of snow.  Therefore, they have 1.33 - .16 = 1.17 feet of snow now.', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: At Hank’s cafe, he sells big stack pancakes which have 5 pancakes and short stack pancakes which have 3 pancakes.  If 9 customers order the short stack and 6 customers order the big stack, how many pancakes does Hank need to make? Answer: There are 9 customers ordering short stack pancakes and 6 customers ordering big stack pancakes. Hank needs to make 9*3
+answer_decode: ['The answer is 565.', 'The answer is 17.', 'The answer is 2.', 'The answer is 57.']
+Token indices sequence length is longer than the specified maximum sequence length for this model (422 > 256). Running this sequence through the model will result in indexing errors
+xz: tensor([     2,   1261,    573,   2872,   3482,    611,    573,   2412,   3287,
+        235292,    108,   9413, 235292,  73605, 235349, 235256,   2001,   1503,
+           919,   2149,  23246,  11187,   1178,  11270,   9149, 235349, 235256,
+          2001,   1503, 235265,   1927,  11270,   9149,   3895,   1378,  11187,
+          1401,   1070,   2001,   1503, 235269,   1284,   1134,    791,    476,
+          2001,   1503,  11594,    573,   4191,    576,  40742, 235349, 235256,
+        235265,  40742, 235349, 235256,   2247,   1503,    603,  40742,  25685,
+        235265,   2250,   1767,  11187,    708,    575,  73605, 235349, 235256,
+          2001,   1503, 235336,  10358, 235292,   2456,    708, 235248, 235310,
+         11187,    575,  40742, 235349, 235256,   2001,   1503, 235269,    712,
+         11270,   9149, 235349, 235256,   1503,    603, 235248, 235310, 235287,
+        235284,    963, 235284,    589, 235248, 235274, 235276,  11187,   1497,
+        235265,  73605, 235349, 235256,   2001,   1503,    603, 235248, 235304,
+         11187,  25270,   1178,  11270,   9149, 235349, 235256, 235269,    712,
+          1104,    708, 235248, 235274, 235276,    728, 235248, 235304,    589,
+        235248, 235324,  11187,    575,  73605, 235349, 235256,   2001,   1503,
+        235265,    108,   9413, 235292,  53157,   3833,    974, 235290,    559,
+        235290, 235250, 235290,  11948,  25362,    578,  38219,    665,    696,
+           476,   2813,  36693, 235265,    139,   3899,  12036,    697, 235284,
+        235308, 235265, 235276, 235276,    604,   1070, 115502, 235269,    697,
+        235274, 235308, 235265, 235276, 235276,    604,  79123,    578,    697,
+        235274, 235276, 235265, 235276, 235276,    604,    476,   8537,    576,
+         29074, 235265,    139,   1396,    573,  10762, 235269,   1284,   7596,
+        235248, 235308, 115502, 235269, 235248, 235274, 235276,  79123, 235269,
+        235248, 235284, 235276,  29074, 235269,    578,   4956, 235248, 235284,
+         10840,    604,    476,   3407,  25362,  26889,    674,  53157,  12497,
+           697, 235310, 235308, 235265, 235276, 235276,    604, 235265,    139,
+          2299,   1683,   3370,   1498,   1284,   1501,   1163,    573,  10762,
+        235336,    109,   1261, 235292,   1887,   1717,    573,   3051,   3619,
+         53157,   1644, 235269,    783,    798,  13988,    573,   2458,    576,
+          1853,   2599,    578,  29686,    731,    573,   1758,    576,   5100,
+          7596, 235265,    108,  78920,  17687, 235292, 235248, 235308,    649,
+           697, 235284, 235308, 235265, 235276, 235276,    589,    697, 235274,
+        235284, 235308, 235265, 235276, 235276,    108, 123955,   9919, 235292,
+        235248, 235274, 235276,    649,    697, 235274, 235308, 235265, 235276,
+        235276,    589,    697, 235274, 235308, 235276, 235265, 235276, 235276,
+           108, 235291, 103154, 235292, 235248, 235284, 235276,    649,    697,
+        235274, 235276, 235265, 235276, 235276,    589,    697, 235284, 235276,
+        235276, 235265, 235276, 235276,    108, 168547,  72683, 235292, 235248,
+        235284,    649,    697, 235310, 235308, 235265, 235276, 235276,    589,
+           697, 235315, 235276, 235265, 235276, 235276,    108,   6457, 235292,
+           697, 235274, 235284, 235308, 235265, 235276, 235276,    963,    697,
+        235274, 235308, 235276, 235265, 235276, 235276,    963,    697, 235284,
+        235276, 235276, 235265, 235276, 235276,    963,    697, 235315, 235276,
+        235265, 235276, 235276,    589,    697, 235308, 235318, 235308, 235265,
+        235276, 235276,    108,  76166,   1644,    697, 235308, 235318, 235308,
+        235265, 235276, 235276,   1163,    573,  10762, 235265,    108],
+       device='cuda:3')
+xz_labels: tensor([  -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,    109,   1261, 235292,   1887,   1717,    573,   3051,   3619,
+         53157,   1644, 235269,    783,    798,  13988,    573,   2458,    576,
+          1853,   2599,    578,  29686,    731,    573,   1758,    576,   5100,
+          7596, 235265,    108,  78920,  17687, 235292, 235248, 235308,    649,
+           697, 235284, 235308, 235265, 235276, 235276,    589,    697, 235274,
+        235284, 235308, 235265, 235276, 235276,    108, 123955,   9919, 235292,
+        235248, 235274, 235276,    649,    697, 235274, 235308, 235265, 235276,
+        235276,    589,    697, 235274, 235308, 235276, 235265, 235276, 235276,
+           108, 235291, 103154, 235292, 235248, 235284, 235276,    649,    697,
+        235274, 235276, 235265, 235276, 235276,    589,    697, 235284, 235276,
+        235276, 235265, 235276, 235276,    108, 168547,  72683, 235292, 235248,
+        235284,    649,    697, 235310, 235308, 235265, 235276, 235276,    589,
+           697, 235315, 235276, 235265, 235276, 235276,    108,   6457, 235292,
+           697, 235274, 235284, 235308, 235265, 235276, 235276,    963,    697,
+        235274, 235308, 235276, 235265, 235276, 235276,    963,    697, 235284,
+        235276, 235276, 235265, 235276, 235276,    963,    697, 235315, 235276,
+        235265, 235276, 235276,    589,    697, 235308, 235318, 235308, 235265,
+        235276, 235276,    108,  76166,   1644,    697, 235308, 235318, 235308,
+        235265, 235276, 235276,   1163,    573,  10762, 235265,    108],
+       device='cuda:3')
+decode x:  <bos>Answer the question based on the following example:
+Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.
+Question: Nina makes one-of-a-kind jewelry and sells it at a local boutique.  She charges $25.00 for her necklaces, $15.00 for bracelets and $10.00 for a pair of earrings.  Over the weekend, she sold 5 necklaces, 10 bracelets, 20 earrings, and received 2 orders for a complete jewelry ensemble that Nina charged $45.00 for.  How much money did she make over the weekend?
+decode xz:  <bos>Answer the question based on the following example:
+Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.
+Question: Nina makes one-of-a-kind jewelry and sells it at a local boutique.  She charges $25.00 for her necklaces, $15.00 for bracelets and $10.00 for a pair of earrings.  Over the weekend, she sold 5 necklaces, 10 bracelets, 20 earrings, and received 2 orders for a complete jewelry ensemble that Nina charged $45.00 for.  How much money did she make over the weekend?
+
+Answer: To find the total amount Nina made, we can calculate the cost of each item and multiply by the number of items sold.
+Necklaces: 5 * $25.00 = $125.00
+Bracelets: 10 * $15.00 = $150.00
+Earrings: 20 * $10.00 = $200.00
+Jewelry Ensemble: 2 * $45.00 = $90.00
+Total: $125.00 + $150.00 + $200.00 + $90.00 = $565.00
+Nina made $565.00 over the weekend.
+
+decode xzy:  <bos>Answer the question based on the following example:
+Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.
+Question: Nina makes one-of-a-kind jewelry and sells it at a local boutique.  She charges $25.00 for her necklaces, $15.00 for bracelets and $10.00 for a pair of earrings.  Over the weekend, she sold 5 necklaces, 10 bracelets, 20 earrings, and received 2 orders for a complete jewelry ensemble that Nina charged $45.00 for.  How much money did she make over the weekend?
+
+Answer: To find the total amount Nina made, we can calculate the cost of each item and multiply by the number of items sold.
+Necklaces: 5 * $25.00 = $125.00
+Bracelets: 10 * $15.00 = $150.00
+Earrings: 20 * $10.00 = $200.00
+Jewelry Ensemble: 2 * $45.00 = $90.00
+Total: $125.00 + $150.00 + $200.00 + $90.00 = $565.00
+Nina made $565.00 over the weekend.
+The answer is 565.
+/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/utils/checkpoint.py:295: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with torch.enable_grad(), device_autocast_ctx, torch.cpu.amp.autocast(**ctx.cpu_autocast_kwargs):  # type: ignore[attr-defined]
+Could not estimate the number of tokens of the input, floating-point operations will not be computed
+query_decode: ['Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Jonsey is awake for 2/3 of the day and spends 1/2 her time awake playing outside and the rest inside. Her brother, Riley, is awake for 3/4 of the day and spends 1/3 of his day outside and the rest inside. How much time, on average, do they spend inside?', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: The Lion King cost 10 million to make and earned 200 million at the box office. If it earned a profit that was half of what Star Wars made and Star Wars cost 25 million to make, how many millions did Star Wars earn?', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Issac has to buy pens and pencils for the upcoming school year. Issac buys 108 writing utensils total. He buys 12 more than 5 times the number of pencils than pens. How many pens did Issac buy?', "Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: If Beth is 18 years old and her little sister is 5, in how many years would she be twice her sister's age?"]
+rational_decode: ['Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Jonsey is awake for 2/3 of the day and spends 1/2 her time awake playing outside and the rest inside. Her brother, Riley, is awake for 3/4 of the day and spends 1/3 of his day outside and the rest inside. How much time, on average, do they spend inside? Answer: Jonsey spends 1/2 of her time awake outside, so she spends 2/3 * 1/2 = 1/3 of the day inside. Riley spends 1/3 of his day outside, so he spends 3/4 * 1/3 = 1/4 of the day inside. Together, they spend 1/3 + 1/4 = 7/12 of the day inside.', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: The Lion King cost 10 million to make and earned 200 million at the box office. If it earned a profit that was half of what Star Wars made and Star Wars cost 25 million to make, how many millions did Star Wars earn? Answer: The profit of Star Wars is half of (200-10) = 90 million. So Star Wars earned 200 - 90 = 110 million.', 'Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Issac has to buy pens and pencils for the upcoming school year. Issac buys 108 writing utensils total. He buys 12 more than 5 times the number of pencils than pens. How many pens did Issac buy? Answer: Let x be the number of pens. Then, the number of pencils is x + 12. The number of writing utensils is x + (x + 12) = 108. Solve for x to find the number of pens Issac bought.', "Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: If Beth is 18 years old and her little sister is 5, in how many years would she be twice her sister's age? Answer: The age difference is 18 - 5 = 13 years. The age she would be twice her sister's age is 18 + 13 = 31 years old."]
+answer_decode: ['The answer is 10.', 'The answer is 405.', 'The answer is 16.', 'The answer is 8.']
+xz: tensor([     2,   1261,    573,   2872,   3482,    611,    573,   2412,   3287,
+        235292,    108,   9413, 235292,  73605, 235349, 235256,   2001,   1503,
+           919,   2149,  23246,  11187,   1178,  11270,   9149, 235349, 235256,
+          2001,   1503, 235265,   1927,  11270,   9149,   3895,   1378,  11187,
+          1401,   1070,   2001,   1503, 235269,   1284,   1134,    791,    476,
+          2001,   1503,  11594,    573,   4191,    576,  40742, 235349, 235256,
+        235265,  40742, 235349, 235256,   2247,   1503,    603,  40742,  25685,
+        235265,   2250,   1767,  11187,    708,    575,  73605, 235349, 235256,
+          2001,   1503, 235336,  10358, 235292,   2456,    708, 235248, 235310,
+         11187,    575,  40742, 235349, 235256,   2001,   1503, 235269,    712,
+         11270,   9149, 235349, 235256,   1503,    603, 235248, 235310, 235287,
+        235284,    963, 235284,    589, 235248, 235274, 235276,  11187,   1497,
+        235265,  73605, 235349, 235256,   2001,   1503,    603, 235248, 235304,
+         11187,  25270,   1178,  11270,   9149, 235349, 235256, 235269,    712,
+          1104,    708, 235248, 235274, 235276,    728, 235248, 235304,    589,
+        235248, 235324,  11187,    575,  73605, 235349, 235256,   2001,   1503,
+        235265,    108,   9413, 235292,  11972,   6720,    603,  39276,    604,
+        235248, 235284, 235283, 235304,    576,    573,   1744,    578,  58776,
+        235248, 235274, 235283, 235284,   1070,   1069,  39276,   6155,   5162,
+           578,    573,   2066,   5580, 235265,   3636,   8462, 235269,  49724,
+        235269,    603,  39276,    604, 235248, 235304, 235283, 235310,    576,
+           573,   1744,    578,  58776, 235248, 235274, 235283, 235304,    576,
+           926,   1744,   5162,    578,    573,   2066,   5580, 235265,   2250,
+          1683,   1069, 235269,    611,   5316, 235269,    749,    984,   9999,
+          5580, 235336,  10358, 235292,  11972,   6720,  58776, 235248, 235274,
+        235283, 235284,    576,   1070,   1069,  39276,   5162, 235269,    712,
+          1284,  58776, 235248, 235284, 235283, 235304,    649, 235248, 235274,
+        235283, 235284,    589, 235248, 235274, 235283, 235304,    576,    573,
+          1744,   5580, 235265,  49724,  58776, 235248, 235274, 235283, 235304,
+           576,    926,   1744,   5162, 235269,    712,    693,  58776, 235248,
+        235304, 235283, 235310,    649, 235248, 235274, 235283, 235304,    589,
+        235248, 235274, 235283, 235310,    576,    573,   1744,   5580, 235265,
+         32119, 235269,    984,   9999, 235248, 235274, 235283, 235304,    963,
+        235248, 235274, 235283, 235310,    589, 235248, 235324, 235283, 235274,
+        235284,    576,    573,   1744,   5580, 235265,    108],
+       device='cuda:3')
+xz_labels: tensor([  -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,   -100,
+          -100,   -100,  10358, 235292,  11972,   6720,  58776, 235248, 235274,
+        235283, 235284,    576,   1070,   1069,  39276,   5162, 235269,    712,
+          1284,  58776, 235248, 235284, 235283, 235304,    649, 235248, 235274,
+        235283, 235284,    589, 235248, 235274, 235283, 235304,    576,    573,
+          1744,   5580, 235265,  49724,  58776, 235248, 235274, 235283, 235304,
+           576,    926,   1744,   5162, 235269,    712,    693,  58776, 235248,
+        235304, 235283, 235310,    649, 235248, 235274, 235283, 235304,    589,
+        235248, 235274, 235283, 235310,    576,    573,   1744,   5580, 235265,
+         32119, 235269,    984,   9999, 235248, 235274, 235283, 235304,    963,
+        235248, 235274, 235283, 235310,    589, 235248, 235324, 235283, 235274,
+        235284,    576,    573,   1744,   5580, 235265,    108],
+       device='cuda:3')
+decode x:  <bos>Answer the question based on the following example:
+Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.
+Question: Jonsey is awake for 2/3 of the day and spends 1/2 her time awake playing outside and the rest inside. Her brother, Riley, is awake for 3/4 of the day and spends 1/3 of his day outside and the rest inside. How much time, on average, do they spend inside?
+decode xz:  <bos>Answer the question based on the following example:
+Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.
+Question: Jonsey is awake for 2/3 of the day and spends 1/2 her time awake playing outside and the rest inside. Her brother, Riley, is awake for 3/4 of the day and spends 1/3 of his day outside and the rest inside. How much time, on average, do they spend inside? Answer: Jonsey spends 1/2 of her time awake outside, so she spends 2/3 * 1/2 = 1/3 of the day inside. Riley spends 1/3 of his day outside, so he spends 3/4 * 1/3 = 1/4 of the day inside. Together, they spend 1/3 + 1/4 = 7/12 of the day inside.
+
+decode xzy:  <bos>Answer the question based on the following example:
+Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.
+Question: Jonsey is awake for 2/3 of the day and spends 1/2 her time awake playing outside and the rest inside. Her brother, Riley, is awake for 3/4 of the day and spends 1/3 of his day outside and the rest inside. How much time, on average, do they spend inside? Answer: Jonsey spends 1/2 of her time awake outside, so she spends 2/3 * 1/2 = 1/3 of the day inside. Riley spends 1/3 of his day outside, so he spends 3/4 * 1/3 = 1/4 of the day inside. Together, they spend 1/3 + 1/4 = 7/12 of the day inside.
+The answer is 10.
+Traceback (most recent call last):
+  File "/home/cyc2202/xyzo/proj_file/xyzo/E_step_ent.py", line 363, in <module>
+    trainer.train()
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/trainer.py", line 2052, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/trainer.py", line 2388, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/trainer.py", line 3485, in training_step
+    loss = self.compute_loss(model, inputs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/xyzo/proj_file/xyzo/E_step_ent.py", line 210, in compute_loss
+    rational = model.generate(input_ids=inputs_ids_q_l, attention_mask=mask_q_l, \
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/generation/utils.py", line 2047, in generate
+    result = self._sample(
+             ^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/generation/utils.py", line 3007, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/models/gemma/modeling_gemma.py", line 1069, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/models/gemma/modeling_gemma.py", line 847, in forward
+    causal_mask = self._update_causal_mask(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/models/gemma/modeling_gemma.py", line 948, in _update_causal_mask
+    min_dtype = torch.finfo(dtype).min
+                ^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/cyc2202/xyzo/proj_file/xyzo/E_step_ent.py", line 363, in <module>
+[rank3]:     trainer.train()
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/trainer.py", line 2052, in train
+[rank3]:     return inner_training_loop(
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/trainer.py", line 2388, in _inner_training_loop
+[rank3]:     tr_loss_step = self.training_step(model, inputs)
+[rank3]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/trainer.py", line 3485, in training_step
+[rank3]:     loss = self.compute_loss(model, inputs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/xyzo/proj_file/xyzo/E_step_ent.py", line 210, in compute_loss
+[rank3]:     rational = model.generate(input_ids=inputs_ids_q_l, attention_mask=mask_q_l, \
+[rank3]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank3]:     return func(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/generation/utils.py", line 2047, in generate
+[rank3]:     result = self._sample(
+[rank3]:              ^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/generation/utils.py", line 3007, in _sample
+[rank3]:     outputs = self(**model_inputs, return_dict=True)
+[rank3]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank3]:     return self._call_impl(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
+[rank3]:     result = forward_call(*args, **kwargs)
+[rank3]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/models/gemma/modeling_gemma.py", line 1069, in forward
+[rank3]:     outputs = self.model(
+[rank3]:               ^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank3]:     return self._call_impl(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
+[rank3]:     result = forward_call(*args, **kwargs)
+[rank3]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/models/gemma/modeling_gemma.py", line 847, in forward
+[rank3]:     causal_mask = self._update_causal_mask(
+[rank3]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/home/cyc2202/anaconda3/envs/yuan/lib/python3.11/site-packages/transformers/models/gemma/modeling_gemma.py", line 948, in _update_causal_mask
+[rank3]:     min_dtype = torch.finfo(dtype).min
+[rank3]:                 ^^^^^^^^^^^^^^^^^^
+[rank3]: KeyboardInterrupt

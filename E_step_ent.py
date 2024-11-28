@@ -20,6 +20,7 @@ from transformers import (
     GPT2Tokenizer, GPT2LMHeadModel
 )
 from transformers.utils import PaddingStrategy
+import wandb
 
 @dataclass
 class ScriptArguments:
@@ -191,6 +192,7 @@ def padding_func(ft_ls, padding_side, pad_token_id, return_tensors):
     if return_tensors == "pt":
         return torch.tensor(padded_ft_ls)
 
+
 class QTrainer(Trainer):
     def __init__(self, base_model, **kwargs):
         super().__init__(**kwargs)
@@ -198,7 +200,6 @@ class QTrainer(Trainer):
             self.base_model = self._prepare_deepspeed(base_model)
         else:
             self.base_model = self.accelerator.prepare_model(base_model, evaluation_mode=True)
-
     def compute_loss(self, model, inputs):
         with torch.no_grad():
             inputs_ids_q_l = inputs["input_ids_q_l"]
@@ -213,6 +214,7 @@ class QTrainer(Trainer):
             query_decode = tokenizer.batch_decode(inputs_ids_q_l, skip_special_tokens=True)
             rational_decode = tokenizer.batch_decode(rational, skip_special_tokens=True)
             answer_decode = tokenizer.batch_decode(inputs_ids_a_r, skip_special_tokens=True)
+            
             print("query_decode:", query_decode)
             print("rational_decode:", rational_decode)
             print("answer_decode:", answer_decode)

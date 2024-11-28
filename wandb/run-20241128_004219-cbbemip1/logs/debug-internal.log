@@ -1,0 +1,16 @@
+{"time":"2024-11-28T00:42:19.126202348-06:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-11-28T00:42:19.126215069-06:00","level":"INFO","msg":"created symlink","path":"/home/cyc2202/xyzo/proj_file/xyzo/wandb/run-20241128_004219-cbbemip1/logs/debug-core.log"}
+{"time":"2024-11-28T00:42:19.244832938-06:00","level":"INFO","msg":"created new stream","id":"cbbemip1"}
+{"time":"2024-11-28T00:42:19.244887798-06:00","level":"INFO","msg":"stream: started","id":"cbbemip1"}
+{"time":"2024-11-28T00:42:19.244944891-06:00","level":"INFO","msg":"sender: started","stream_id":"cbbemip1"}
+{"time":"2024-11-28T00:42:19.244903271-06:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"cbbemip1"}}
+{"time":"2024-11-28T00:42:19.244906143-06:00","level":"INFO","msg":"handler: started","stream_id":{"value":"cbbemip1"}}
+{"time":"2024-11-28T00:42:19.426841266-06:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-28T00:43:31.910529316-06:00","level":"INFO","msg":"stream: closing","id":"cbbemip1"}
+{"time":"2024-11-28T00:43:31.910566408-06:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-28T00:43:31.911302028-06:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-28T00:43:32.918812624-06:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-28T00:43:33.007548145-06:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"cbbemip1"}}
+{"time":"2024-11-28T00:43:33.007645265-06:00","level":"INFO","msg":"sender: closed","stream_id":"cbbemip1"}
+{"time":"2024-11-28T00:43:33.007627214-06:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"cbbemip1"}}
+{"time":"2024-11-28T00:43:33.007768106-06:00","level":"INFO","msg":"stream: closed","id":"cbbemip1"}

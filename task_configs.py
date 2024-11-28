@@ -84,8 +84,8 @@ class Config_Code_Opencoder_edu(Config_Code):
             self.few_shot_cot_prompt = file.read()
     def tokenize_E(self,tokenizer):
         def tokenize(sample):
-            tokenized_q = tokenizer(self.few_shot_cot_prompt + sample['instruction'], truncation=True)
-            answer_text = sample['output'].strip()
+            tokenized_q = tokenizer(self.few_shot_cot_prompt + sample[self.x_colname], truncation=True)
+            answer_text = sample[self.y_colname].strip()
             answer = f"[Implementation]\n{answer_text}."
             tokenized_a = tokenizer(answer, truncation=True)
             sample["input_ids_q"] = tokenized_q["input_ids"]
@@ -97,12 +97,17 @@ class Config_Code_Opencoder_edu(Config_Code):
 
     def inference_tokenize(self):
         def tokenize(sample):
-            answer_text = sample['response'].strip()
-            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['instruction']
+            answer_text = sample[self.y_colname].strip()
+            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample[self.x_colname]
             sample["answer_text"] = f"[Implementation]\n{answer_text}."
             return sample
         return tokenize
     def M_sft_cot_prefix(self):
+        """
+        recall that we save the inference dataset as follows:
+        tmp_data = {"question": dataset_[i][task_config.x_colname], "answer": dataset_[i][task_config.y_colname],
+            "rational_answer": rational_answer[i]}
+        """
         def cot_prefix(sample):
             sample["text"] = '### Instruction\n' + sample["question"] + '### Response\n[Reasoning]\n' + sample["rational_answer"] + '[Implementation]\n' + sample["answer"]
             return sample

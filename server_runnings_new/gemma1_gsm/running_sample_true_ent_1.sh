@@ -23,3 +23,4 @@ ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_en
     --save_every_steps 50 \
     --gradient_accumulation_steps 1 \
     --per_device_train_batch_size 16 \
+    --wandb_project E_step_ent \

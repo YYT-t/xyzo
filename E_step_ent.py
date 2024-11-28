@@ -102,6 +102,7 @@ class ScriptArguments:
     do_sample: Optional[bool] = field(default=True)
     model_path: Optional[str] = field(default="Q_models")
     save_strategy: Optional[str] = field(default="steps")
+    wandb_project: Optional[str] = field(default="E_step_ent")
 
 
 
@@ -144,6 +145,7 @@ train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16
 # training_args.hub_model_id = f"YYT-t/{trained_model_name}"
 # training_args.hub_token = "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"
 # Define the trainer
+os.environ["WANDB_PROJECT"]=script_args.wandb_project
 training_args = TrainingArguments(
     output_dir=output_name,
     learning_rate=script_args.learning_rate,
@@ -169,6 +171,7 @@ training_args = TrainingArguments(
     lr_scheduler_type=script_args.lr_scheduler_type,
     warmup_ratio=0.1,
     report_to='wandb',
+    # run_name="E_step_ent"
     # push_to_hub=True,
     # hub_strategy="checkpoint",
     # hub_model_id=f"YYT-t/3",
@@ -406,14 +409,16 @@ checkpoint_dirs = [d for d in os.listdir(output_name) if "checkpoint" in d]
 print("Checkpoint directories:", checkpoint_dirs)
 for checkpoint_dir in checkpoint_dirs:
     tokenizer.save_pretrained(f"{output_name}/{checkpoint_dir}")
-    log_file_path = os.path.join(output_name, checkpoint_dir, 'loggings.log')
-    os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
-    with open(Log_path, 'r') as src, open(log_file_path, 'w') as dst:
-        dst.write(src.read())
-    print("Uploading checkpoint:", checkpoint_dir)
     subprocess.run([
         "huggingface-cli", "upload", 
         f"YYT-t/{trained_model_name}_{checkpoint_dir}", 
         f"{output_name}/{checkpoint_dir}", 
+        "--token", "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"
+    ])
+for checkpoint_dir in checkpoint_dirs:
+    subprocess.run([
+        "huggingface-cli", "upload", 
+        f"YYT-t/{trained_model_name}_{checkpoint_dir}", 
+        Log_path, 
         "--token", "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"
     ])

@@ -13,4 +13,5 @@ CUDA_VISIBLE_DEVICES=1,2,3,4 ACCELERATE_LOG_LEVEL=info accelerate launch   E_ste
     --max_length 256 \
     --save_strategy steps \
     --save_every_steps 50 \
-    --per_device_train_batch_size 4
+    --per_device_train_batch_size 4 \
+    --wandb_project E_step_ent \

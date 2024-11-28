@@ -8,7 +8,7 @@ huggingface-cli login --token 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
 
 
 lm_eval --model hf \
-    --model_args pretrained=YYT-t/gemma-1.1-7b-it_MetaMathQA_ent0.05_beam1_dosampleTrue_temp0.8_estep__epoch1\
+    --model_args pretrained=google/gemma-1.1-7b-it\
     --tasks gsm8k \
     --device cuda:2 \
     --batch_size 8 \

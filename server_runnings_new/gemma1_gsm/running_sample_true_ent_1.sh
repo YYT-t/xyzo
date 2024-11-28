@@ -8,17 +8,18 @@ cd xyzo
 conda env create -f environment.yaml
 conda activate yy
 
-ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent_metamath.py \
+ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
     --model_name google/gemma-1.1-7b-it  \
-    --train_set_path meta-math/MetaMathQA \
+    --task_type math_gsm \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
     --ent_coeff 1.0 \
-    --num_beams 1\
     --do_sample True \
+    --num_beams 1\
     --temperature 0.8 \
-    --num_train_epochs 3 \
+    --num_train_epochs 1 \
     --max_length 256 \
+    --save_strategy steps \
     --save_every_steps 50 \
     --gradient_accumulation_steps 1 \
     --per_device_train_batch_size 16 \

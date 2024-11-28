@@ -21,7 +21,10 @@ from transformers import (
 )
 from transformers.utils import PaddingStrategy
 import wandb
+import sys
+import os
 
+import logging
 @dataclass
 class ScriptArguments:
     """
@@ -126,6 +129,8 @@ beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.tem
 estep_{script_args.output_suffix}_totalepoch{script_args.num_train_epochs}"
 
 output_name = f"./Q_models/{trained_model_name}"
+if not os.path.exists(output_name):
+    os.makedirs(output_name)
 # output_name = script_args.model_path
 
 train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16)
@@ -192,14 +197,48 @@ def padding_func(ft_ls, padding_side, pad_token_id, return_tensors):
     if return_tensors == "pt":
         return torch.tensor(padded_ft_ls)
 
+# # Create a logger
+# logger = logging.getLogger(__name__)
+# logger.setLevel(logging.DEBUG)
+
+# # Create a file handler
+# log_file = os.path.join(output_name, 'training.log')
+# file_handler = logging.FileHandler(log_file)
+# file_handler.setLevel(logging.DEBUG)
+
+# # Create a console handler
+# console_handler = logging.StreamHandler()
+# console_handler.setLevel(logging.INFO)
+
+# # Create a formatter and set it for the handlers
+# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# file_handler.setFormatter(formatter)
+# console_handler.setFormatter(formatter)
+
+# # Add the handlers to the logger
+# logger.addHandler(file_handler)
+# logger.addHandler(console_handler)
+
+# # Example usage
+# logger.info("Logger is set up.")
+# XZYs = []
+
+
+Log_path = f"{output_name}/loggings.log"
 
 class QTrainer(Trainer):
-    def __init__(self, base_model, **kwargs):
+    def __init__(self, base_model, log_path, **kwargs):
         super().__init__(**kwargs)
         if self.is_deepspeed_enabled:
             self.base_model = self._prepare_deepspeed(base_model)
         else:
             self.base_model = self.accelerator.prepare_model(base_model, evaluation_mode=True)
+        handler = logging.FileHandler(log_path, mode='w')
+        handler.setFormatter(logging.Formatter('%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s'))
+        self.logger = logging.getLogger('testing')
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.addHandler(handler)
+        self.logger.addHandler(logging.StreamHandler(sys.stdout))
     def compute_loss(self, model, inputs):
         with torch.no_grad():
             inputs_ids_q_l = inputs["input_ids_q_l"]
@@ -215,9 +254,9 @@ class QTrainer(Trainer):
             rational_decode = tokenizer.batch_decode(rational, skip_special_tokens=True)
             answer_decode = tokenizer.batch_decode(inputs_ids_a_r, skip_special_tokens=True)
             
-            print("query_decode:", query_decode)
-            print("rational_decode:", rational_decode)
-            print("answer_decode:", answer_decode)
+            self.logger.info(f"query_decode:{query_decode}")
+            self.logger.info(f"rational_decode:{rational_decode}")
+            self.logger.info(f"answer_decode:{answer_decode}")
             xz = []
             xz_mask = []
             xzy = []
@@ -253,8 +292,8 @@ class QTrainer(Trainer):
             xz_labels = -100 * x_mask_z + xz_labels * (1 - x_mask_z)
             xzy_labels = -100 * x_mask_zy + xzy_labels * (1 - x_mask_zy)
 
-            print("xz:", xz[0])
-            print("xz_labels:", xz_labels[0])
+            self.logger.info(f"xz:{xz[0]}")
+            self.logger.info(f"xz_labels:{xz_labels[0]}")
             # print("x: ", x[0])
             # print("x_mask: ", x_mask[0])
             # print("x_labels: ", x_labels[0])
@@ -268,9 +307,9 @@ class QTrainer(Trainer):
             # print("decode 109:", tokenizer.decode(109))
             # print("xz: ", xz[0])
             # print("xzy: ", xzy[0])
-            print("decode x: ", tokenizer.decode(x[0]))
-            print("decode xz: ", tokenizer.decode(xz[0]))
-            print("decode xzy: ", tokenizer.decode(xzy[0]))
+            self.logger.info(f"decode x: {tokenizer.decode(x[0])}")
+            self.logger.info(f"decode xz: {tokenizer.decode(xz[0])}")
+            self.logger.info(f"decode xzy: {tokenizer.decode(xzy[0])}")
             self.base_model.eval()
             outputs = self.base_model(xzy, labels=xzy_labels, attention_mask=xzy_mask)
             ce_loss, logits = outputs[:2]
@@ -350,6 +389,7 @@ import subprocess
 import os
 trainer = QTrainer(
     model=model,
+    log_path=Log_path,
     base_model=our_base_model,
     args=training_args,
     train_dataset=train_dataset,
@@ -364,10 +404,12 @@ final_dir = output_name + "/final_checkpoint"
 trainer.save_model(final_dir)
 checkpoint_dirs = [d for d in os.listdir(output_name) if "checkpoint" in d]
 print("Checkpoint directories:", checkpoint_dirs)
-from huggingface_hub import HfApi
-api = HfApi()
 for checkpoint_dir in checkpoint_dirs:
     tokenizer.save_pretrained(f"{output_name}/{checkpoint_dir}")
+    log_file_path = os.path.join(output_name, checkpoint_dir, 'loggings.log')
+    os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+    with open(Log_path, 'r') as src, open(log_file_path, 'w') as dst:
+        dst.write(src.read())
     print("Uploading checkpoint:", checkpoint_dir)
     subprocess.run([
         "huggingface-cli", "upload", 

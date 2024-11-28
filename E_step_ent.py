@@ -321,6 +321,7 @@ class QTrainer(Trainer):
             reward = - ce_loss.item() #- ce_loss_x.item()
         log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
         loss = -(reward - script_args.ent_coeff * log_Q.item()) * log_Q
+        self.logger.info(f"loss:{loss}")
         return loss
 
     def _prepare_deepspeed(self, model):

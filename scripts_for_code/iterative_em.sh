@@ -4,28 +4,31 @@
 # conda activate sft
 
 iter_num=3
-path="./gemma-2-9b"
+TASK_ID=code_opencoder_edu
+MODEL_FULL_NAME=deepseek-ai/deepseek-coder-6.7b-instruct
+MODEL_NICKNAME=deepseek-coder-6.7b-instruct
+path="./${MODEL_NICKNAME}"
 export HF_TOKEN=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
 for i in $(seq 1 $iter_num); do
     mkdir $path
     e_input_model="${path}/m-model-iter-$((i-1))"
     e_model_dir="${path}/e-model-iter-$i"
     m_model_dir="${path}/m-model-iter-$i"
-    m_hub_id="gemma2-9b-it-m-model-iter-$i"
-    dataset_path="ZhangShenao/iterative-metamath-iter$i"
+    m_hub_id="${MODEL_NICKNAME}-m-model-iter-$i"
+    dataset_path="ZhangShenao/iterative-${TASK_ID}-iter$i"
     if [ "$i" -eq 1 ]; then
-        e_input_model="google/gemma-2-9b-it"
+        e_input_model=${MODEL_FULL_NAME}
     else
         echo "iteration $i"
     fi
 
-    ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent_metamath.py \
-    --model_name google/gemma-2-9b-it  \
-    --train_set_path meta-math/MetaMathQA \
+    ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
+    --model_name ${MODEL_FULL_NAME}  \
+    --train_set_path OpenCoder-LLM/opc-sft-stage2 \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
     --ent_coeff 0.05 \
-    --num_beams 1\
+    --num_beams 1 \
     --do_sample False \
     --temperature 0.8 \
     --num_train_epochs 3 \
@@ -34,7 +37,11 @@ for i in $(seq 1 $iter_num); do
     --gradient_accumulation_steps 1 \
     --per_device_train_batch_size 16 \
     --model_path $e_model_dir \
-   # python E_step_ent_metamath.py --TODO # input model is e_input_model, output is e_model_dir  || exit 1
+
+    ## The full batch size is 512
     python inference.py --model_path "${e_model_dir}/final_ckpt" --dataset_path $dataset_path --iter i || exit 1
-    accelerate launch --num_processes 8 m_sft.py --deepspeed deepspeed_configs/deepspeed_2.json --model_name $e_model_dir --attn_implementation eager --per_device_train_batch_size 2 --gradient_accumulation_steps 8 --train_set_path $dataset_path --output_dir $m_model_dir --hub_model_id $m_hub_id || exit 1
+    accelerate launch --num_processes 8 m_sft.py --deepspeed deepspeed_configs/deepspeed_2.json --model_name $e_model_dir \
+    --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --train_set_path $dataset_path --output_dir $m_model_dir \
+    --num_train_epochs 1 --Task_Type ${TASK_ID} --learning_rate 5e-5 \
+    --hub_model_id $m_hub_id || exit 1
 done

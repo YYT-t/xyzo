@@ -1,6 +1,6 @@
 export WANDB_API_KEY=8b2885096bc8e2e0291c1e6aec2de6f864bba024
 
-CUDA_VISIBLE_DEVICES=1,2,3,4 ACCELERATE_LOG_LEVEL=info accelerate launch   E_step_ent.py \
+CUDA_VISIBLE_DEVICES=1,2,3,4 ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port 29501  E_step_ent.py \
     --model_name google/gemma-2-2b-it  \
     --task_type math_gsm \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
@@ -10,6 +10,7 @@ CUDA_VISIBLE_DEVICES=1,2,3,4 ACCELERATE_LOG_LEVEL=info accelerate launch   E_ste
     --do_sample False \
     --temperature 1.0 \
     --label_smoothing 0.001 \
+    --use_template True \
     --num_train_epochs 1 \
     --max_length 256 \
     --save_strategy steps \

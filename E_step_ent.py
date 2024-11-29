@@ -102,6 +102,7 @@ class ScriptArguments:
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
     do_sample: Optional[bool] = field(default=True)
+    use_template: Optional[bool] = field(default=False)
     label_smoothing: Optional[float] = field(default=0.0)
     model_path: Optional[str] = field(default="None")
     save_strategy: Optional[str] = field(default="steps")

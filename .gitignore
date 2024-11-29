@@ -3,3 +3,4 @@ Q_models/
 wandb/
 __pycache__/
 *.pyc
+local_scripts_for_run/

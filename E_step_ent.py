@@ -25,6 +25,7 @@ import wandb
 import sys
 import os
 from utils import regularized_logp
+import lm_eval
 
 import logging
 @dataclass

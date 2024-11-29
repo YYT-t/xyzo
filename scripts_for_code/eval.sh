@@ -1,17 +1,13 @@
-# lm_eval --model hf \
-#     --model_args pretrained=Q_models/tt_3/debug2\
-#     --tasks gsm8k \
-#     --device cuda:0\
-#     --batch_size 8
-
+conda activate eval_code || conda create --name eval_code python=3.11 && conda activate eval_code
+pip install huggingface
 huggingface-cli login --token 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
 
 pip install --upgrade "evalplus[vllm] @ git+https://github.com/evalplus/evalplus"
 # Or `pip install "evalplus[vllm]" --upgrade` for the latest stable release
 
 
-MODEL=xxx
-CUDA_VISIBLE_DEVICES=0 evalplus.evaluate --model YYT-t/${MODEL} \
+MODEL=$1
+CUDA_VISIBLE_DEVICES=0 evalplus.evaluate --model ${MODEL} \
                   --dataset [humaneval|mbpp]             \
                   --backend vllm                         \
                   --greedy

@@ -294,7 +294,6 @@ class QTrainer(Trainer):
             # x_mask_zy = 1 - x_mask_zy
             # x_mask_z = 1 - x_mask_z
 
-
             xz_labels = -100 * x_mask_z + xz_labels * (1 - x_mask_z)
             xzy_labels = -100 * x_mask_zy + xzy_labels * (1 - x_mask_zy)
 
@@ -322,7 +321,9 @@ class QTrainer(Trainer):
             # outputs = self.base_model(x, labels=x_labels, attention_mask=x_mask)
             # ce_loss_x, logits_x = outputs[:2]
             reward = - ce_loss.item() #- ce_loss_x.item()
+            self.logger.info(f"reward:{reward}")
         log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
+        self.logger.info(f"log_Q:{log_Q}")
         loss = -(reward - script_args.ent_coeff * log_Q.item()) * log_Q
         self.logger.info(f"loss:{loss}")
         return loss

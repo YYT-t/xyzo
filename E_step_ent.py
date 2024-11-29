@@ -322,16 +322,19 @@ class QTrainer(Trainer):
             self.logger.info(f"decode xzy: {tokenizer.decode(xzy[0])}")
             self.base_model.eval()
             outputs = self.base_model(xzy, labels=xzy_labels, attention_mask=xzy_mask)
-            ce_loss, logits = outputs[:2]
-            my_loss = regularized_logp(logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
-            print("ce_loss:", ce_loss, "my_loss:", my_loss)
+            # ce_loss, logits = outputs[:2]
+            my_loss = regularized_logp(outputs.logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
+            # print("ce_loss:", ce_loss, "my_loss:", my_loss)
             # outputs = self.base_model(x, labels=x_labels, attention_mask=x_mask)
             # ce_loss_x, logits_x = outputs[:2]
-            reward = - ce_loss.item() #- ce_loss_x.item()
+            reward = - my_loss.item() #- ce_loss_x.item()
             self.logger.info(f"reward:{reward}")
-        log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
-        self.logger.info(f"log_Q:{log_Q}")
-        loss = -(reward - script_args.ent_coeff * log_Q.item()) * log_Q
+        outputs_Q = model(xz, labels=xz_labels, attention_mask=xz_mask)
+        my_log_Q = - regularized_logp(outputs_Q.logits, xz_labels, VOCAB_SIZE, script_args.label_smoothing)
+        # log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
+        # print("log_Q:", log_Q, "my_log_Q:", my_log_Q)
+        self.logger.info(f"log_Q:{my_log_Q}")
+        loss = -(reward - script_args.ent_coeff * my_log_Q.item()) * my_log_Q
         self.logger.info(f"loss:{loss}")
         return loss
 

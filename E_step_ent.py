@@ -100,7 +100,7 @@ class ScriptArguments:
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
     do_sample: Optional[bool] = field(default=True)
-    model_path: Optional[str] = field(default="Q_models")
+    model_path: Optional[str] = field(default="None")
     save_strategy: Optional[str] = field(default="steps")
     wandb_project: Optional[str] = field(default="E_step_ent")
 
@@ -129,14 +129,17 @@ trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
 estep_{script_args.output_suffix}_totalepoch{script_args.num_train_epochs}"
 
-output_name = f"./Q_models/{trained_model_name}"
+if script_args.model_path == "None":
+    output_name = f"./Q_models/{trained_model_name}"
+else:
+    output_name = script_args.model_path
+    
 if not os.path.exists(output_name):
     os.makedirs(output_name)
 # output_name = script_args.model_path
 
 train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16)
 # train_dataset = train_dataset.select(range(2))
-
 
 
 # training_args.push_to_hub = True

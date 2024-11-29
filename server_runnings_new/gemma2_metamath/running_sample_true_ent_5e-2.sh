@@ -9,7 +9,7 @@ conda env create -f environment.yaml
 conda activate yy
 
 ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
-    --model_name google/gemma-2-2b-it   \
+    --model_name google/gemma-2-9b-it   \
     --task_type math_metamath \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \

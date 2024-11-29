@@ -17,12 +17,14 @@ from transformers import (
     Trainer,
     TrainerCallback,
     TrainingArguments,
-    GPT2Tokenizer, GPT2LMHeadModel
+    GPT2Tokenizer, GPT2LMHeadModel,
+    Gemma2ForCausalLM
 )
 from transformers.utils import PaddingStrategy
 import wandb
 import sys
 import os
+from utils import regularized_logp
 
 import logging
 @dataclass
@@ -100,6 +102,7 @@ class ScriptArguments:
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
     do_sample: Optional[bool] = field(default=True)
+    label_smoothing: Optional[float] = field(default=0.0)
     model_path: Optional[str] = field(default="None")
     save_strategy: Optional[str] = field(default="steps")
     wandb_project: Optional[str] = field(default="E_step_ent")
@@ -126,7 +129,7 @@ base_model_name = script_args.model_name.split("/")[1]
 data_name = train_set_path.split("/")[1]
 
 trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
-beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
+beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_labelsm{script_args.label_smoothing}_\
 estep_{script_args.output_suffix}_totalepoch{script_args.num_train_epochs}"
 
 if script_args.model_path == "None":
@@ -190,6 +193,8 @@ our_base_model = AutoModelForCausalLM.from_pretrained(
 
 model.config.use_cache = not script_args.gradient_checkpointing
 original_columns = train_dataset.column_names
+print("model.config:", model.config)
+VOCAB_SIZE = model.config.vocab_size
 
 
 def padding_func(ft_ls, padding_side, pad_token_id, return_tensors):
@@ -318,6 +323,8 @@ class QTrainer(Trainer):
             self.base_model.eval()
             outputs = self.base_model(xzy, labels=xzy_labels, attention_mask=xzy_mask)
             ce_loss, logits = outputs[:2]
+            my_loss = regularized_logp(logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
+            print("ce_loss:", ce_loss, "my_loss:", my_loss)
             # outputs = self.base_model(x, labels=x_labels, attention_mask=x_mask)
             # ce_loss_x, logits_x = outputs[:2]
             reward = - ce_loss.item() #- ce_loss_x.item()

@@ -1,43 +1,195 @@
-from vllm import LLM, SamplingParams
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Union
+from task_configs import task_config_check, task_data_set
+# import evaluate
+import numpy as np
+import torch
+import torch.nn as nn
 from datasets import load_dataset
-
-from transformers import AutoTokenizer
-instruct_prompt = r"Answer the question based on the following example:"
-example1 = r"""Question: Jack is stranded on a desert island. He wants some salt to season his fish. He collects 2 liters of seawater in an old bucket. If the water is 20% salt, how many ml of salt will Jack get when all the water evaporates? Answer: First find how many liters of the seawater are salt: 2 liters * 20% = 0.4 liters Then multiply that amount by 1000 ml/liter to find the number of ml of salt Jack gets: 0.4 liters * 1000 ml/liter = 400 ml."""
-example2 = r"""Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name."""
-few_shot_cot_prompt = instruct_prompt + '\n' + example2 + f'\nQuestion: '  #'\n' + example1
-
-def tokenize(sample):
-    answer_text = sample['answer'].split('####')[-1].strip()
-    sample["few_shot_cot_question"] = few_shot_cot_prompt + sample['question']
-    sample["answer_text"] = f"The answer is {answer_text}."
-    return sample
-
-train_path = "openai/gsm8k"
-dataset_ = load_dataset(train_path, "main")["train"]
-dataset_ = dataset_.map(tokenize, num_proc=16)
-questions = dataset_["few_shot_cot_question"]
-answers = dataset_["answer_text"]
-
-model_name =  "YYT-t/gemma-1.1-7b-it_MetaMathQA_ent0.05_beam1_dosampleFalse_temp0.8_estep__epoch1" #"Q_models/tt_3/debug2"  # "Qwen/Qwen2.5-Math-1.5B"#"facebook/opt-125m"#"google/gemma-2-2b-it"#"deepseek-ai/deepseek-math-7b-rl"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-sampling_params = SamplingParams(
-    # temperature=0.0,
-    # top_p=1.0,
-    # top_k=-1,
-    # seed=42,
-    max_tokens=512,
-    min_tokens=100,
-    # n=1,
-    # frequency_penalty=1.0,
-   # stop_token_ids=[tokenizer.eos_token_id],
-   stop=['Question:'],
+import deepspeed
+from copy import deepcopy
+# from peft import LoraConfig, TaskType, get_peft_model
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    HfArgumentParser,
+    PreTrainedTokenizerBase,
+    Trainer,
+    TrainerCallback,
+    TrainingArguments,
+    GPT2Tokenizer, GPT2LMHeadModel,
+    Gemma2ForCausalLM
 )
-# print("questions:", questions)
-llm = LLM(model=model_name, tokenizer=model_name, dtype="bfloat16", seed=42, gpu_memory_utilization=0.9)
-few_shot_questions = questions[9]
-print("few_shot_questions:", few_shot_questions)
-print("decode:", [tokenizer.decode(108)])
-rational = llm.generate(few_shot_questions, sampling_params, use_tqdm=True)
-print("rational:", rational)
-print(rational[0].outputs[0].text)
+from transformers.utils import PaddingStrategy
+import wandb
+import sys
+import os
+from utils import regularized_logp
+
+import logging
+@dataclass
+class ScriptArguments:
+    """
+    These arguments vary depending on how many GPUs you have, what their capacity and features are, and what size model you want to train.
+    """
+    local_rank: Optional[int] = field(
+        default=-1, metadata={"help": "Used for multi-gpu"})
+
+    deepspeed: Optional[str] = field(
+        # default="dp3.json",
+        default=None,
+        metadata={
+            "help": "Path to deepspeed config if using deepspeed. You may need this if the model that you want to train doesn't fit on a single GPU."
+        },
+    )
+    per_device_train_batch_size: Optional[int] = field(default=4)
+    per_device_eval_batch_size: Optional[int] = field(default=1)
+    gradient_accumulation_steps: Optional[int] = field(default=4)
+    learning_rate: Optional[float] = field(default=5e-7)
+    weight_decay: Optional[float] = field(default=0.001)
+    model_name: Optional[str] = field(
+        default="google/gemma-2b-it",  # "mistralai/Mistral-7B-Instruct-v0.2",
+        metadata={
+            "help": "The model that you want to train from the Hugging Face hub. E.g. gpt2, gpt2-xl, bert, etc."
+        },
+    )
+    bf16: Optional[bool] = field(
+        default=True,
+        metadata={
+            "help": "This essentially cuts the training time in half if you want to sacrifice a little precision and have a supported GPU."
+        },
+    )
+    num_train_epochs: Optional[int] = field(
+        default=1,
+        metadata={"help": "The number of training epochs for the reward model."},
+    )
+    output_suffix: Optional[str] = field(
+        default="",
+        metadata={"help": "The dir for output model"},
+    )
+    gradient_checkpointing: Optional[bool] = field(
+        default=True,
+        metadata={"help": "Enables gradient checkpointing."},
+    )
+    optim: Optional[str] = field(
+        default="adamw_torch",
+        metadata={"help": "The optimizer to use."},
+    )
+    lr_scheduler_type: Optional[str] = field(
+        default="cosine",
+        metadata={"help": "The lr scheduler"},
+    )
+    max_length: Optional[int] = field(default=256)
+    model_max_length: Optional[int] = field(default=256)
+
+    save_every_steps: Optional[int] = field(
+        default=999999,
+        metadata={"help": "Save the model every x steps"},
+    )
+    eval_every_steps: Optional[int] = field(
+        default=999999,
+        metadata={"help": "Eval the model every x steps"},
+    )
+    prompt_path: Optional[str] = field(
+        default="prompts/math_prompt.txt",
+        metadata={"help": "path to get the cot prompt"},
+    )
+    task_type: Optional[str] = field(
+        default="math_metamath",
+        metadata={"help": "math or code"},
+    )
+    ent_coeff: Optional[float] = field(default=0.05)
+    temperature: Optional[float] = field(default=0.8)
+    num_beams: Optional[int] = field(default=5)
+    do_sample: Optional[bool] = field(default=True)
+    log_regulaizer: Optional[bool] = field(default=False)
+    regu_eps: Optional[float] = field(default=1e-6)
+    model_path: Optional[str] = field(default="None")
+    save_strategy: Optional[str] = field(default="steps")
+    wandb_project: Optional[str] = field(default="E_step_ent")
+
+
+
+parser = HfArgumentParser(ScriptArguments)
+script_args = parser.parse_args_into_dataclasses()[0]
+
+task_config = task_config_check(script_args.task_type)
+train_set_path, train_dataset = task_data_set(script_args.task_type)
+
+tokenizer_name = script_args.model_name
+tokenizer = AutoTokenizer.from_pretrained(tokenizer_name) #AutoTokenizer
+
+tokenizer.model_max_length = script_args.model_max_length
+tokenizer.truncation_side = "left"
+tokenizer.padding_side = "left"
+tokenizer.pad_token = tokenizer.eos_token
+
+
+base_model_name = script_args.model_name.split("/")[1]
+
+data_name = train_set_path.split("/")[1]
+
+trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
+beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
+estep_{script_args.output_suffix}_totalepoch{script_args.num_train_epochs}"
+
+if script_args.model_path == "None":
+    output_name = f"./Q_models/{trained_model_name}"
+else:
+    output_name = script_args.model_path
+    
+if not os.path.exists(output_name):
+    os.makedirs(output_name)
+# output_name = script_args.model_path
+
+train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16)
+# train_dataset = train_dataset.select(range(2))
+
+
+# training_args.push_to_hub = True
+# training_args.hub_strategy = "every_save"
+
+# training_args.hub_model_id = f"YYT-t/{trained_model_name}"
+# training_args.hub_token = "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"
+# Define the trainer
+os.environ["WANDB_PROJECT"]=script_args.wandb_project
+training_args = TrainingArguments(
+    output_dir=output_name,
+    learning_rate=script_args.learning_rate,
+    per_device_train_batch_size=script_args.per_device_train_batch_size,
+    per_device_eval_batch_size=script_args.per_device_eval_batch_size,
+    num_train_epochs=script_args.num_train_epochs,
+  #  weight_decay=script_args.weight_decay,
+    evaluation_strategy="steps",
+    eval_steps=script_args.eval_every_steps,
+    save_strategy=script_args.save_strategy,
+    save_steps=script_args.save_every_steps,
+    gradient_accumulation_steps=script_args.gradient_accumulation_steps,
+    gradient_checkpointing=script_args.gradient_checkpointing,
+    deepspeed=script_args.deepspeed,
+    local_rank=script_args.local_rank,
+    #remove_unused_columns=True,
+    remove_unused_columns=False,
+    label_names=[],
+    bf16=script_args.bf16,
+    logging_strategy="steps",
+    logging_steps=10,
+    optim=script_args.optim,
+    lr_scheduler_type=script_args.lr_scheduler_type,
+    warmup_ratio=0.1,
+    report_to='wandb',
+    # run_name="E_step_ent"
+    # push_to_hub=True,
+    # hub_strategy="checkpoint",
+    # hub_model_id=f"YYT-t/3",
+    # hub_token="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"
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    script_args.model_name, torch_dtype=torch.bfloat16, use_flash_attention_2=False
+)
+
+model.config.use_cache = not script_args.gradient_checkpointing
+original_columns = train_dataset.column_names
+
+print(train_dataset[0])

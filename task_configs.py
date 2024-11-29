@@ -15,6 +15,11 @@ class Config_Math():
         #    sample["completion"] = sample["rational_answer"]
             return sample
         return cot_prefix
+    def baseline_sft_cot_prefix(self):
+        def cot_prefix(sample):
+            sample["text"] = 'Question: ' + sample["query"] + ' Answer: ' + sample["response"]
+            return sample
+        return cot_prefix
     def inference_tokenize(self):
         def tokenize(sample):
             answer_text = sample['response'].split("The answer is")[-1].strip()
@@ -107,9 +112,15 @@ class Config_Code_Opencoder_edu(Config_Code):
         recall that we save the inference dataset as follows:
         tmp_data = {"question": dataset_[i][task_config.x_colname], "answer": dataset_[i][task_config.y_colname],
             "rational_answer": rational_answer[i]}
+        Here:  rational_answer == cat(z,y)
         """
         def cot_prefix(sample):
-            sample["text"] = '### Instruction\n' + sample["question"] + '### Response\n[Reasoning]\n' + sample["rational_answer"] + '[Implementation]\n' + sample["answer"]
+            sample["text"] = '### Instruction\n' + sample["question"] + '### Response\n[Reasoning]\n' + sample["rational_answer"] ##+ '[Implementation]\n' + sample["answer"]
+            return sample
+        return cot_prefix
+    def baseline_sft_cot_prefix(self):
+        def cot_prefix(sample):
+            sample["text"] = '### Instruction\n' + sample["question"] + '### Response\n[Implementation]\n' + sample["answer"]
             return sample
         return cot_prefix
 def task_config_check(task_name):

@@ -92,7 +92,6 @@ if __name__ == "__main__":
     questions = dataset_["few_shot_cot_question"]
     answers = dataset_["answer_text"]
     
-    answer_spliter = args.answer_spliter
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     sampling_params = SamplingParams(
         temperature=0.0,

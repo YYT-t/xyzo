@@ -22,7 +22,7 @@ for i in $(seq 1 $iter_num); do
     else
         echo "iteration $i"
     fi
-
+    
     ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
     --model_name ${MODEL_FULL_NAME}  \
     --train_set_path ${DATASET_NAME} \
@@ -38,7 +38,7 @@ for i in $(seq 1 $iter_num); do
     --gradient_accumulation_steps 1 \
     --per_device_train_batch_size 16 \
     --model_path $e_model_dir \
-
+    
     ## The full batch size is 512
     python inference.py --model_path "${e_model_dir}/final_ckpt" --dataset_path $dataset_path --iter i || exit 1
     accelerate launch --num_processes 8 m_sft.py --deepspeed deepspeed_configs/deepspeed_2.json --model_name $e_model_dir \

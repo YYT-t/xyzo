@@ -7,6 +7,7 @@ iter_num=3
 TASK_ID=code_opencoder_edu
 MODEL_FULL_NAME=deepseek-ai/deepseek-coder-6.7b-instruct
 MODEL_NICKNAME=deepseek-coder-6.7b-instruct
+DATASET_NAME=OpenCoder-LLM/opc-sft-stage2
 path="./${MODEL_NICKNAME}"
 export HF_TOKEN=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
 for i in $(seq 1 $iter_num); do
@@ -24,7 +25,7 @@ for i in $(seq 1 $iter_num); do
 
     CUDA_VISIBLE_DEVICES=0,1,2,3 ACCELERATE_LOG_LEVEL=info accelerate launch --main_process_port $PORT1 E_step_ent.py \
     --model_name ${MODEL_FULL_NAME}  \
-    --train_set_path OpenCoder-LLM/opc-sft-stage2 \
+    --train_set_path ${DATASET_NAME} \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
     --ent_coeff 0.05 \

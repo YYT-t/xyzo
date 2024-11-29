@@ -1,3 +1,5 @@
+conda activate eval_code || conda create --name eval_code python=3.11 && conda activate eval_code
+pip install huggingface
 huggingface-cli login --token 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
 
 pip install --upgrade "evalplus[vllm] @ git+https://github.com/evalplus/evalplus"

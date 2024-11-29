@@ -5,7 +5,7 @@ from datasets import load_dataset
 from transformers import HfArgumentParser, TrainingArguments
 from trl import SFTTrainer
 import os
-from ..task_configs import task_config_check
+from task_configs import task_config_check, task_data_set
 os.environ["HF_TOKEN"] = "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"
 
 # Define and parse arguments.
@@ -125,7 +125,8 @@ def cot_prefix(sample):
 #    sample["completion"] = sample["rational_answer"]
     return sample
 """
-train_dataset = load_dataset(script_args.train_set_path, split="train").shuffle(seed=42)
+#train_dataset = load_dataset(script_args.train_set_path, split="train").shuffle(seed=42)
+_,train_dataset = task_data_set(script_args.Task_Type)
 column_names = list(train_dataset.features)
 train_dataset = train_dataset.map(task_config.baseline_sft_cot_prefix(), remove_columns=column_names, num_proc=16)
 

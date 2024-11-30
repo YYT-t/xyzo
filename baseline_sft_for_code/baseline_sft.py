@@ -23,6 +23,7 @@ class ScriptArguments:
     learning_rate: Optional[float] = field(default=2e-5)
     weight_decay: Optional[float] = field(default=0.0)
     warmup_ratio: Optional[float] = field(default=0.1)
+    wandb_project: Optional[str] = field(default="EM")
     model_name: Optional[str] = field(
         default="google/gemma-2-9b-it",
         metadata={
@@ -80,10 +81,12 @@ class ScriptArguments:
         default="math_metamath",
         metadata={"help": "math or code"},
     )
+    
 parser = HfArgumentParser(ScriptArguments)
 script_args = parser.parse_args_into_dataclasses()[0]
 task_config = task_config_check(script_args.Task_Type)
 # Define the trainer
+os.environ["WANDB_PROJECT"]=script_args.wandb_project
 training_args = TrainingArguments(
     output_dir=script_args.output_dir,
     learning_rate=script_args.learning_rate,

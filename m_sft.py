@@ -80,11 +80,13 @@ class ScriptArguments:
         default="math_metamath",
         metadata={"help": "math or code"},
     )
+    wandb_project: Optional[str] = field(default="EM")
 
 parser = HfArgumentParser(ScriptArguments)
 script_args = parser.parse_args_into_dataclasses()[0]
 task_config = task_config_check(script_args.Task_Type)
 # Define the trainer
+os.environ["WANDB_PROJECT"]=script_args.wandb_project
 training_args = TrainingArguments(
     output_dir=script_args.output_dir,
     learning_rate=script_args.learning_rate,

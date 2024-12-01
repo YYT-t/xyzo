@@ -1,4 +1,5 @@
 conda activate sft || conda env create -f environment.yml && conda activate sft
+wandb login --relogin ${WANDB_API_KEY}
 export HF_TOKEN=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
 TASK_ID=code_opencoder_edu
 MODEL_NAME=deepseek-ai/deepseek-coder-6.7b-instruct

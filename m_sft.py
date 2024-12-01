@@ -156,4 +156,3 @@ if trainer.accelerator.is_main_process:
     # Restore k,v cache for fast inference
     trainer.model.config.use_cache = True
     trainer.model.config.save_pretrained(training_args.output_dir)
-trainer.push_to_hub()

@@ -1,4 +1,5 @@
 conda activate sft || conda env create -f environment.yml && conda activate sft
+export WANDB_API_KEY=84f03efa3815c8727157b1951519ce4b0f2a190a
 wandb login --relogin ${WANDB_API_KEY}
 export HF_TOKEN=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
 TASK_ID=code_opencoder_edu

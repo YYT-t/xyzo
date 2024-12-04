@@ -132,7 +132,7 @@ data_name = train_set_path.split("/")[1]
 
 trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_labelsm{script_args.label_smoothing}_\
-estep_{script_args.output_suffix}_totalepoch{script_args.num_train_epochs}"
+totalepoch{script_args.num_train_epochs}"
 
 if script_args.model_path == "None":
     output_name = f"./Q_models/{trained_model_name}"

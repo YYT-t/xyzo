@@ -17,12 +17,15 @@ from transformers import (
     Trainer,
     TrainerCallback,
     TrainingArguments,
-    GPT2Tokenizer, GPT2LMHeadModel
+    GPT2Tokenizer, GPT2LMHeadModel,
+    Gemma2ForCausalLM
 )
 from transformers.utils import PaddingStrategy
 import wandb
 import sys
 import os
+from utils import regularized_logp
+import lm_eval
 
 import logging
 @dataclass
@@ -100,7 +103,9 @@ class ScriptArguments:
     temperature: Optional[float] = field(default=0.8)
     num_beams: Optional[int] = field(default=5)
     do_sample: Optional[bool] = field(default=True)
-    model_path: Optional[str] = field(default="Q_models")
+    use_template: Optional[bool] = field(default=False)
+    label_smoothing: Optional[float] = field(default=0.0)
+    model_path: Optional[str] = field(default="None")
     save_strategy: Optional[str] = field(default="steps")
     wandb_project: Optional[str] = field(default="E_step_ent")
 
@@ -126,17 +131,20 @@ base_model_name = script_args.model_name.split("/")[1]
 data_name = train_set_path.split("/")[1]
 
 trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
-beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_\
-estep_{script_args.output_suffix}_totalepoch{script_args.num_train_epochs}"
+beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_labelsm{script_args.label_smoothing}_\
+totalepoch{script_args.num_train_epochs}"
 
-output_name = f"./Q_models/{trained_model_name}"
+if script_args.model_path == "None":
+    output_name = f"./Q_models/{trained_model_name}"
+else:
+    output_name = script_args.model_path
+    
 if not os.path.exists(output_name):
     os.makedirs(output_name)
 # output_name = script_args.model_path
 
 train_dataset = train_dataset.map(task_config.tokenize_E(tokenizer), num_proc=16)
 train_dataset = train_dataset.select(range(2))
-
 
 
 # training_args.push_to_hub = True
@@ -187,6 +195,8 @@ our_base_model = AutoModelForCausalLM.from_pretrained(
 
 model.config.use_cache = not script_args.gradient_checkpointing
 original_columns = train_dataset.column_names
+print("model.config:", model.config)
+VOCAB_SIZE = model.config.vocab_size
 
 
 def padding_func(ft_ls, padding_side, pad_token_id, return_tensors):
@@ -291,7 +301,6 @@ class QTrainer(Trainer):
             # x_mask_zy = 1 - x_mask_zy
             # x_mask_z = 1 - x_mask_z
 
-
             xz_labels = -100 * x_mask_z + xz_labels * (1 - x_mask_z)
             xzy_labels = -100 * x_mask_zy + xzy_labels * (1 - x_mask_zy)
 
@@ -315,12 +324,19 @@ class QTrainer(Trainer):
             self.logger.info(f"decode xzy: {tokenizer.decode(xzy[0])}")
             self.base_model.eval()
             outputs = self.base_model(xzy, labels=xzy_labels, attention_mask=xzy_mask)
-            ce_loss, logits = outputs[:2]
+            # ce_loss, logits = outputs[:2]
+            my_loss = regularized_logp(outputs.logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
+            # print("ce_loss:", ce_loss, "my_loss:", my_loss)
             # outputs = self.base_model(x, labels=x_labels, attention_mask=x_mask)
             # ce_loss_x, logits_x = outputs[:2]
-            reward = - ce_loss.item() #- ce_loss_x.item()
-        log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
-        loss = -(reward - script_args.ent_coeff * log_Q.item()) * log_Q
+            reward = - my_loss.item() #- ce_loss_x.item()
+            self.logger.info(f"reward:{reward}")
+        outputs_Q = model(xz, labels=xz_labels, attention_mask=xz_mask)
+        my_log_Q = - regularized_logp(outputs_Q.logits, xz_labels, VOCAB_SIZE, script_args.label_smoothing)
+        # log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
+        # print("log_Q:", log_Q, "my_log_Q:", my_log_Q)
+        self.logger.info(f"log_Q:{my_log_Q}")
+        loss = -(reward - script_args.ent_coeff * my_log_Q.item()) * my_log_Q
         self.logger.info(f"loss:{loss}")
         return loss
 

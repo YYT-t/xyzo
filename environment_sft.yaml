@@ -1,4 +1,4 @@
-name: sft
+name: sft_debug
 channels:
   - defaults
 dependencies:

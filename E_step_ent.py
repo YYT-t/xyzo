@@ -108,6 +108,7 @@ class ScriptArguments:
     model_path: Optional[str] = field(default="None")
     save_strategy: Optional[str] = field(default="steps")
     wandb_project: Optional[str] = field(default="E_step_ent")
+    upload_to_hub: Optional[bool] = field(default=True)
 
 
 
@@ -130,13 +131,13 @@ base_model_name = script_args.model_name.split("/")[1]
 
 data_name = train_set_path.split("/")[1]
 
-trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
+if script_args.model_path == "None":
+    trained_model_name = f"{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_labelsm{script_args.label_smoothing}_\
 totalepoch{script_args.num_train_epochs}"
-
-if script_args.model_path == "None":
     output_name = f"./Q_models/{trained_model_name}"
 else:
+    trained_model_name = script_args.model_path.split("/")[-1]
     output_name = script_args.model_path
     
 if not os.path.exists(output_name):
@@ -426,12 +427,13 @@ checkpoint_dirs = [d for d in os.listdir(output_name) if "checkpoint" in d]
 print("Checkpoint directories:", checkpoint_dirs)
 for checkpoint_dir in checkpoint_dirs:
     tokenizer.save_pretrained(f"{output_name}/{checkpoint_dir}")
-    subprocess.run([
-        "huggingface-cli", "upload", 
-        f"YYT-t/{trained_model_name}_{checkpoint_dir}", 
-        f"{output_name}/{checkpoint_dir}", 
-        "--token", "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"
-    ])
+    if script_args.upload_to_hub:
+        subprocess.run([
+            "huggingface-cli", "upload", 
+            f"YYT-t/{trained_model_name}_{checkpoint_dir}", 
+            f"{output_name}/{checkpoint_dir}", 
+            "--token", "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"
+        ])
 for checkpoint_dir in checkpoint_dirs:
     subprocess.run([
         "huggingface-cli", "upload", 

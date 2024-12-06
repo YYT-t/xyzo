@@ -90,7 +90,7 @@ if __name__ == "__main__":
     train_path = args.train_path
     dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
     dataset_ = dataset_.map(task_config.inference_tokenize(), num_proc=16)
-    # dataset_ = dataset_.select(range(10))
+    dataset_ = dataset_.select(range(10))
     questions = dataset_["few_shot_cot_question"]
     answers = dataset_["answer_text"]
     

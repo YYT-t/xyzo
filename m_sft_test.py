@@ -130,7 +130,7 @@ def cot_prefix(sample):
 train_dataset = load_dataset(script_args.train_set_path, split="train").shuffle(seed=42)
 column_names = list(train_dataset.features)
 train_dataset = train_dataset.map(task_config.M_sft_cot_prefix(), remove_columns=column_names, num_proc=16)
-# train_dataset = train_dataset.select(range(10))
+train_dataset = train_dataset.select(range(10))
 
 trainer = SFTTrainer(
     model=script_args.model_name,

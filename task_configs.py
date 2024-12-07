@@ -27,6 +27,8 @@ class Config_Math_GSM(Config_Math):
         with open(self.prompt_path, "r") as file:
             # Read the content of the file
             self.few_shot_cot_prompt = file.read()
+        self.x_colname = "question"
+        self.y_colname = "answer"
     def tokenize_E(self,tokenizer):
         def tokenize(sample):
             tokenized_q = tokenizer(self.few_shot_cot_prompt + sample['question'], truncation=True)
@@ -55,6 +57,8 @@ class Config_Math_MetaMath(Config_Math):
         with open(self.prompt_path, "r") as file:
             # Read the content of the file
             self.few_shot_cot_prompt = file.read()
+        self.x_colname = "query"
+        self.y_colname = "response"
 
 
     def tokenize_E(self,tokenizer):
@@ -135,7 +139,7 @@ def task_config_check(task_name):
     if task_name == "math_gsm":
         return Config_Math_GSM()
     elif  task_name == "math_metamath":
-        return Config_Math_MetaMath() 
+        return Config_Math_MetaMath()
     elif task_name == "code_opencoder_edu":
         return Config_Code_Opencoder_edu()
     else:

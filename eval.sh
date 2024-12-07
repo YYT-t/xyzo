@@ -8,9 +8,9 @@ huggingface-cli login --token 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
 
 
 lm_eval --model hf \
-    --model_args pretrained=google/gemma-2-9b-it\
+    --model_args pretrained=YYT-t/gemma-2-9b-it_gsm8k_ent0.05_beam5_dosampleFalse_temp0.8_estep__final\
     --tasks gsm8k \
-    --device cuda:3 \
+    --device cuda:4 \
     --batch_size 8 \
     --output_path ./Logs \
     --log_samples \

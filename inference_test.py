@@ -73,11 +73,11 @@ if __name__ == "__main__":
     dataset_iter_map = {1: "[:33%]", 2: "[33%:66%]", 3: "[66%:]"}
     dataset_fraction = dataset_iter_map[args.iter]
     task_config = task_config_check(args.task_type)
-    train_path, _ = task_data_set(args.task_type)
+    train_path, dataset_ = task_data_set(args.task_type)
 
-    dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
+    # dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
     dataset_ = dataset_.map(task_config.inference_tokenize(), num_proc=16)
-    dataset_ = dataset_.select(range(10))
+    dataset_ = dataset_.select(range(100))
     questions = dataset_["few_shot_cot_question"]
     answers = dataset_["answer_text"]
     

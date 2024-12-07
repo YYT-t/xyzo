@@ -20,13 +20,6 @@ class Config_Math():
             sample["text"] = 'Question: ' + sample["query"] + ' Answer: ' + sample["response"]
             return sample
         return cot_prefix
-    def inference_tokenize(self):
-        def tokenize(sample):
-            answer_text = sample['response'].split("The answer is")[-1].strip()
-            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['query']
-            sample["answer_text"] = f"The answer is {answer_text}."
-            return sample
-        return tokenize
     
 class Config_Math_GSM(Config_Math):
     def __init__(self):
@@ -44,6 +37,13 @@ class Config_Math_GSM(Config_Math):
             sample["attention_mask_q"] = tokenized_q["attention_mask"]
             sample["input_ids_a"] = tokenized_a["input_ids"]
             sample["attention_mask_a"] = tokenized_a["attention_mask"]
+            return sample
+        return tokenize
+    def inference_tokenize(self):
+        def tokenize(sample):
+            answer_text = sample['answer'].split('####')[-1].strip()
+            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['question']
+            sample["answer_text"] = f"The answer is {answer_text}."
             return sample
         return tokenize
 
@@ -70,6 +70,14 @@ class Config_Math_MetaMath(Config_Math):
             return sample
         return tokenize
 
+    def inference_tokenize(self):
+        def tokenize(sample):
+            answer_text = sample['response'].split("The answer is")[-1].strip()
+            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['query']
+            sample["answer_text"] = f"The answer is {answer_text}."
+            return sample
+        return tokenize
+    
 class Config_Code(Config_Math):
     def __init__(self):
         super(Config_Code, self).__init__()

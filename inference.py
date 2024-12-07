@@ -4,7 +4,7 @@ from transformers import AutoTokenizer
 import multiprocessing
 import json, os, re
 from datasets import Dataset
-from task_configs import task_config_check
+from task_configs import task_config_check, task_data_set
 import argparse
 import torch
 
@@ -36,28 +36,13 @@ def parse_args():
         help= "path to get the cot prompt",
     )
     parser.add_argument(
-        "--Task_Type",
+        "--task_type",
         type=str,
         default="math_metamath",
         help= "math or code",
     )
-    parser.add_argument(
-        "--train_path",
-        type = str,
-        default = "meta-math/MetaMathQA",
-        help = 'path to the training dataset'
-    )
     return parser.parse_args()
 
-
-
-"""
-def tokenize(sample):
-    answer_text = sample['response'].split(answer_spliter)[-1].strip()
-    sample["few_shot_cot_question"] = few_shot_cot_prompt + sample['query']
-    sample["answer_text"] = f"{answer_spliter} {answer_text}."
-    return sample
-"""
 
 
 NUM_GPUS = torch.cuda.device_count()
@@ -84,11 +69,13 @@ if __name__ == "__main__":
     args = parse_args()
     model_name = args.model_path
     # print("model_name:", model_name)
-    task_config = task_config_check(args.Task_Type)
+    task_config = task_config_check(args.task_type)
     dataset_iter_map = {1: "[:33%]", 2: "[33%:66%]", 3: "[66%:]"}
     dataset_fraction = dataset_iter_map[args.iter]
-    train_path = args.train_path
-    dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
+    task_config = task_config_check(args.task_type)
+    train_path, dataset_ = task_data_set(args.task_type)
+
+    # dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
     dataset_ = dataset_.map(task_config.inference_tokenize(), num_proc=16)
     # dataset_ = dataset_.select(range(10))
     questions = dataset_["few_shot_cot_question"]

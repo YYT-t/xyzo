@@ -52,7 +52,7 @@ for i in $(seq 1 $iter_num); do
     --model_path $e_model_dir \
     # --upload_to_hub False \
 
-    python inference_test.py --model_path "${e_model_dir}/final_checkpoint" --dataset_path $dataset_path --iter $i
+    python inference_test.py --model_path "${e_model_dir}/final_checkpoint"  --task_type "${task_pre}_${task_suf}" --dataset_path $dataset_path --iter $i
     conda deactivate
 
     conda activate sft_debug

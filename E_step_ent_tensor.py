@@ -20,7 +20,7 @@ from transformers.utils import PaddingStrategy
 import wandb
 import sys
 import os
-from utils import regularized_logp
+from utils import regularized_logp_tensor
 import lm_eval
 import subprocess
 
@@ -336,20 +336,20 @@ class QTrainer(Trainer):
             self.base_model.eval()
             outputs = self.base_model(xzy, labels=xzy_labels, attention_mask=xzy_mask)
             # ce_loss, logits = outputs[:2]
-            my_loss = regularized_logp(outputs.logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
+            my_loss = regularized_logp_tensor(outputs.logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
+            reward = - my_loss.detach()
             # print("ce_loss:", ce_loss, "my_loss:", my_loss)
             # outputs = self.base_model(x, labels=x_labels, attention_mask=x_mask)
             # ce_loss_x, logits_x = outputs[:2]
-            reward = - my_loss.item() #- ce_loss_x.item()
             self.logger.info(f"reward:{reward}")
         model.train()
         outputs_Q = model(xz, labels=xz_labels, attention_mask=xz_mask)
-        my_log_Q = - regularized_logp(outputs_Q.logits, xz_labels, VOCAB_SIZE, script_args.label_smoothing)
-        # log_Q = - model(xz, labels=xz_labels, attention_mask=xz_mask)[0]
-        # print("log_Q:", log_Q, "my_log_Q:", my_log_Q)
+        my_log_Q = - regularized_logp_tensor(outputs_Q.logits, xz_labels, VOCAB_SIZE, script_args.label_smoothing)
         self.logger.info(f"log_Q:{my_log_Q}")
-        loss = -(reward - script_args.ent_coeff * my_log_Q.item()) * my_log_Q
+        my_log_Q_detach = my_log_Q.detach()
+        loss = -(reward - script_args.ent_coeff * my_log_Q_detach) * my_log_Q
         self.logger.info(f"loss:{loss}")
+        loss = loss.mean()
         return loss
 
     def _prepare_deepspeed(self, model):

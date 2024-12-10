@@ -244,13 +244,8 @@ class QTrainer(Trainer):
             xzy = []
             xzy_mask = []
             
-            # query_decode = tokenizer.batch_decode(inputs_ids_q_l, skip_special_tokens=True)
             rational_decode = tokenizer.batch_decode(rational, skip_special_tokens=True)
             answer_decode = tokenizer.batch_decode(inputs_ids_a_r, skip_special_tokens=True)
-
-            # self.logger.info(f"query_decode:{query_decode}")
-            # self.logger.info(f"rational_decode:{rational_decode}")
-            # self.logger.info(f"answer_decode:{answer_decode}")
 
             for i in range(len(rational)):
                 first_rat_ids = rational[i][len(inputs_ids_q_l[i])]

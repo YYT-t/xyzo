@@ -6,15 +6,15 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 ACCELERATE_LOG_LEVEL=info accelerate launch --main_
     --task_type math_gsm \
     --deepspeed ./deepspeed_configs/deepspeed_3.json \
     --output_suffix "" \
-    --ent_coeff 0.05 \
+    --ent_coeff 0.00 \
     --num_beams 1\
     --do_sample False \
     --temperature 1.0 \
     --label_smoothing 0.001 \
     --use_template True \
     --num_train_epochs 1 \
-    --max_length 256 \
+    --max_length 512 \
     --save_strategy steps \
-    --save_every_steps 50 \
+    --save_every_steps 30 \
     --gradient_accumulation_steps 4 \
     --per_device_train_batch_size 4 \

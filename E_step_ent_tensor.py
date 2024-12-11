@@ -131,7 +131,7 @@ data_name = train_set_path.split("/")[1]
 
 
 if script_args.model_path == "None":
-    trained_model_name = f"new_{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
+    trained_model_name = f"new_worep_{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_labelsm{script_args.label_smoothing}_\
 totalepoch{script_args.num_train_epochs}"
     output_name = f"/projects/p32658/Q_models/{trained_model_name}"
@@ -238,7 +238,7 @@ class QTrainer(Trainer):
                                     #   stop_strings=task_config.stop_str_gen_z[0], 
                                       tokenizer=tokenizer,
                                       do_sample=script_args.do_sample, temperature=script_args.temperature, top_k=50, top_p=0.95,
-                                      num_beams=script_args.num_beams)
+                                      num_beams=script_args.num_beams, repetition_penalty=1.2)
             xz = []
             xz_mask = []
             xzy = []

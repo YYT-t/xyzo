@@ -131,7 +131,7 @@ data_name = train_set_path.split("/")[1]
 
 
 if script_args.model_path == "None":
-    trained_model_name = f"new_worep_short_{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
+    trained_model_name = f"new_worep_rewnorm_{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_labelsm{script_args.label_smoothing}_\
 totalepoch{script_args.num_train_epochs}"
     output_name = f"/projects/p32658/Q_models/{trained_model_name}"
@@ -291,6 +291,8 @@ class QTrainer(Trainer):
             my_loss = regularized_logp_tensor(outputs.logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
             reward = - my_loss.detach()
             self.logger.info(f"reward:{reward}")
+            reward -= reward.mean()
+            self.logger.info(f"reward_norm:{reward}")
         model.train()
         outputs_Q = model(xz, labels=xz_labels, attention_mask=xz_mask)
         my_log_Q = - regularized_logp_tensor(outputs_Q.logits, xz_labels, VOCAB_SIZE, script_args.label_smoothing)

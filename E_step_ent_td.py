@@ -25,6 +25,7 @@ import lm_eval
 import subprocess
 
 import logging
+import copy
 @dataclass
 class ScriptArguments:
     """
@@ -131,7 +132,7 @@ data_name = train_set_path.split("/")[1]
 
 
 if script_args.model_path == "None":
-    trained_model_name = f"new_{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
+    trained_model_name = f"new_worep_rewnorm_{base_model_name}_{data_name}_ent{script_args.ent_coeff}_\
 beam{script_args.num_beams}_dosample{script_args.do_sample}_temp{script_args.temperature}_labelsm{script_args.label_smoothing}_\
 totalepoch{script_args.num_train_epochs}"
     output_name = f"/projects/p32658/Q_models/{trained_model_name}"
@@ -210,42 +211,18 @@ def padding_func(ft_ls, padding_side, pad_token_id, return_tensors):
     if return_tensors == "pt":
         return torch.tensor(padded_ft_ls)
 
-# # Create a logger
-# logger = logging.getLogger(__name__)
-# logger.setLevel(logging.DEBUG)
-
-# # Create a file handler
-# log_file = os.path.join(output_name, 'training.log')
-# file_handler = logging.FileHandler(log_file)
-# file_handler.setLevel(logging.DEBUG)
-
-# # Create a console handler
-# console_handler = logging.StreamHandler()
-# console_handler.setLevel(logging.INFO)
-
-# # Create a formatter and set it for the handlers
-# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# file_handler.setFormatter(formatter)
-# console_handler.setFormatter(formatter)
-
-# # Add the handlers to the logger
-# logger.addHandler(file_handler)
-# logger.addHandler(console_handler)
-
-# # Example usage
-# logger.info("Logger is set up.")
-# XZYs = []
-
-
 Log_path = f"{output_name}/loggings.log"
 
 class QTrainer(Trainer):
     def __init__(self, base_model, log_path, **kwargs):
         super().__init__(**kwargs)
+        self.q_model = copy.deepcopy(self.model)
         if self.is_deepspeed_enabled:
             self.base_model = self._prepare_deepspeed(base_model)
+            self.q_model = self._prepare_deepspeed(self.q_model)
         else:
             self.base_model = self.accelerator.prepare_model(base_model, evaluation_mode=True)
+            self.q_model = self.accelerator.prepare_model(self.q_model, evaluation_mode=True)
         handler = logging.FileHandler(log_path, mode='w')
         handler.setFormatter(logging.Formatter('%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s'))
         self.logger = logging.getLogger('testing')
@@ -258,22 +235,6 @@ class QTrainer(Trainer):
             inputs_ids_q_l = inputs["input_ids_q_l"]
             inputs_ids_a_r = inputs["input_ids_a_r"][:, 1:]
             mask_q_l = inputs["attention_mask_q_l"]
-            # print("inputs_ids_q_l.shape:", inputs_ids_q_l.shape)
-            # test_str = "Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Corey downloaded two movie series from his Netflix account with 12 and 14 seasons per series, respectively. However, in the week, his computer got a mechanical failure, and he lost two episodes from each season for both series. If each season in the movie series that Corey downloaded had 16 episodes, how many episodes remained after the computer's mechanical failure?"
-            # input_ids = tokenizer(test_str, return_tensors="pt")["input_ids"].to(inputs_ids_q_l.device)
-            # test_rational = model.generate(input_ids=input_ids, max_new_tokens=512,\
-            #                            tokenizer=tokenizer,
-            #                           do_sample=False, top_k=-1, top_p=1.0,
-            #                           num_beams=1)
-            # test_rational_decode = tokenizer.decode(test_rational[0])
-            # print("test_rational_decode:", test_rational_decode)
-
-            xz = []
-            xz_mask = []
-            xzy = []
-            xzy_mask = []
-
-
 
             rational = model.generate(input_ids=inputs_ids_q_l, attention_mask=mask_q_l, \
                                       max_new_tokens=script_args.max_length, \
@@ -281,27 +242,30 @@ class QTrainer(Trainer):
                                     #   stop_strings=task_config.stop_str_gen_z[0], 
                                       tokenizer=tokenizer,
                                       do_sample=script_args.do_sample, temperature=script_args.temperature, top_k=50, top_p=0.95,
-                                      num_beams=script_args.num_beams)
-            # print("rational:", rational)
-            # print("rational_decode:", tokenizer.batch_decode(rational, skip_special_tokens=False))
-            # rational_logits = model(input_ids=inputs_ids_q_l, attention_mask=mask_q_l, return_dict=True).logits
-            # print("rational_logits:", rational_logits)
-            query_decode = tokenizer.batch_decode(inputs_ids_q_l, skip_special_tokens=True)
+                                      num_beams=script_args.num_beams, repetition_penalty=1.2)
+            xz = []
+            xz_mask = []
+            xzy = []
+            xzy_mask = []
+            
             rational_decode = tokenizer.batch_decode(rational, skip_special_tokens=True)
             answer_decode = tokenizer.batch_decode(inputs_ids_a_r, skip_special_tokens=True)
-            print("special_tokens:", tokenizer.special_tokens_map)
-            
-            self.logger.info(f"query_decode:{query_decode}")
-            self.logger.info(f"rational_decode:{rational_decode}")
-            self.logger.info(f"answer_decode:{answer_decode}")
-            for i in range(len(rational_decode)):
-                xz_tok = tokenizer(rational_decode[i] + "\n")
+
+            for i in range(len(rational)):
+                first_rat_ids = rational[i][len(inputs_ids_q_l[i])]
+                first_rat_tok = tokenizer.decode(first_rat_ids)
+                print("rational_decode[i]:", rational_decode[i])
+                print("first_rat_tok:", first_rat_tok)
+                if first_rat_ids in tokenizer.all_special_ids:
+                    xz_tok = tokenizer(rational_decode[i]+ first_rat_tok)
+                else:
+                    xz_tok = tokenizer(rational_decode[i])
                 xz.append(xz_tok["input_ids"])
                 xz_mask.append(xz_tok["attention_mask"])
-                
                 xzy_tok = tokenizer(rational_decode[i] + "\n" + answer_decode[i])
                 xzy.append(xzy_tok["input_ids"])
                 xzy_mask.append(xzy_tok["attention_mask"])
+            
             xz = padding_func(xz, "right", tokenizer.pad_token_id, "pt").to(inputs_ids_q_l.device)
             xz_mask = padding_func(xz_mask, "right", 0, "pt").to(inputs_ids_q_l.device)
             xz_labels = deepcopy(xz)
@@ -319,39 +283,20 @@ class QTrainer(Trainer):
 
             x_mask_zy = torch.cat([x_mask, torch.zeros((x_mask.shape[0], xzy.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
             x_mask_z = torch.cat([x_mask, torch.zeros((x_mask.shape[0], xz.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
-            # x_mask_zy = 1 - x_mask_zy
-            # x_mask_z = 1 - x_mask_z
 
             xz_labels = -100 * x_mask_z + xz_labels * (1 - x_mask_z)
             xzy_labels = -100 * x_mask_zy + xzy_labels * (1 - x_mask_zy)
 
-            # self.logger.info(f"xz:{xz[0]}")
-            # self.logger.info(f"xz_labels:{xz_labels[0]}")
-            # print("x: ", x[0])
-            # print("x_mask: ", x_mask[0])
-            # print("x_labels: ", x_labels[0])
-            # print("xz: ", xz[0])
-            # print("xz_mask: ", xz_mask[0])
-            # print("xz_labels: ", xz_labels[0])
-            # print("xzy: ", xzy[0])
-            # print("xzy_mask: ", xzy_mask[0])
-            # print("xzy_labels: ", xzy_labels[0])
-            # print("decode 111:", tokenizer.decode(111))
-            # print("decode 109:", tokenizer.decode(109))
-            # print("xz: ", xz[0])
-            # print("xzy: ", xzy[0])
             self.logger.info(f"decode x: {tokenizer.decode(x[0], skip_special_tokens=False)}")
             self.logger.info(f"decode xz: {tokenizer.decode(xz[0], skip_special_tokens=False)}")
             self.logger.info(f"decode xzy: {tokenizer.decode(xzy[0], skip_special_tokens=False)}")
             self.base_model.eval()
             outputs = self.base_model(xzy, labels=xzy_labels, attention_mask=xzy_mask)
-            # ce_loss, logits = outputs[:2]
             my_loss = regularized_logp_tensor(outputs.logits, xzy_labels, VOCAB_SIZE, script_args.label_smoothing)
             reward = - my_loss.detach()
-            # print("ce_loss:", ce_loss, "my_loss:", my_loss)
-            # outputs = self.base_model(x, labels=x_labels, attention_mask=x_mask)
-            # ce_loss_x, logits_x = outputs[:2]
             self.logger.info(f"reward:{reward}")
+            reward -= reward.mean()
+            self.logger.info(f"reward_norm:{reward}")
         model.train()
         outputs_Q = model(xz, labels=xz_labels, attention_mask=xz_mask)
         my_log_Q = - regularized_logp_tensor(outputs_Q.logits, xz_labels, VOCAB_SIZE, script_args.label_smoothing)

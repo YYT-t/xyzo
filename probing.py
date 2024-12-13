@@ -25,6 +25,7 @@ import lm_eval
 import subprocess
 
 import logging
+import re
 @dataclass
 class ScriptArguments:
     """
@@ -131,9 +132,9 @@ model = AutoModelForCausalLM.from_pretrained(
 model.config.use_cache = not script_args.gradient_checkpointing
 VOCAB_SIZE = model.config.vocab_size
 
-x_str = "Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Matthias has 40 soccer balls and 15 basketballs. 30 soccer balls and 7 basketballs have a hole in them. How many balls in total does Matthias have without holes in them?"
-xz_str = "Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Matthias has 40 soccer balls and 15 basketballs. 30 soccer balls and 7 basketballs have a hole in them. How many balls in total does Matthias have without holes in them? That’s a lot of work, but I’m going to do it step by step. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to"
-xzy_str = "Answer the question based on the following example:\nQuestion: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name? Answer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nQuestion: Matthias has 40 soccer balls and 15 basketballs. 30 soccer balls and 7 basketballs have a hole in them. How many balls in total does Matthias have without holes in them? That’s a lot of work, but I’m going to do it step by step. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to do it. That’s the way to\nThe answer is 18."
+x_str = "Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name?\nAnswer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nThe answer is 7.\nQuestion: Matthias has 40 soccer balls and 15 basketballs. 30 soccer balls and 7 basketballs have a hole in them. How many balls in total does Matthias have without holes in them?\nAnswer:"
+xz_str = "Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name?\nAnswer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nThe answer is 7.\nQuestion: Matthias has 40 soccer balls and 15 basketballs. 30 soccer balls and 7 basketballs have a hole in them. How many balls in total does Matthias have without holes in them?\nAnswer: Matthias has 40 - 30 = 10 soccer balls without holes. He has 15 - 7 = 8 basketballs without holes. In total, Matthias has 10 + 8 = 18 balls without holes."
+xzy_str = "Question: Samantha’s last name has three fewer letters than Bobbie’s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie’s. Jamie’s full name is Jamie Grey. How many letters are in Samantha’s last name?\nAnswer: There are 4 letters in Jamie’s last name, so Bobbie’s name is 4*2 +2 = 10 letters long. Samantha’s last name is 3 letters shorter than Bobbie’s, so there are 10 - 3 = 7 letters in Samantha’s last name.\nThe answer is 7.\nQuestion: Matthias has 40 soccer balls and 15 basketballs. 30 soccer balls and 7 basketballs have a hole in them. How many balls in total does Matthias have without holes in them?\nAnswer: Matthias has 40 - 30 = 10 soccer balls without holes. He has 15 - 7 = 8 basketballs without holes. In total, Matthias has 10 + 8 = 18 balls without holes.\nThe answer is 18."
 y_str = xzy_str[len(xz_str):]
 
 inputs = tokenizer(x_str, return_tensors="pt")
@@ -162,43 +163,55 @@ my_loss = regularized_logp(outputs.logits, xzy_labels, VOCAB_SIZE, script_args.l
 reward = - my_loss.detach()
 print("reward=", reward)
 
-pure_rational = model.generate(input_ids=x, max_new_tokens=512, tokenizer=tokenizer, do_sample=False)
-pure_rational_str = tokenizer.decode(pure_rational[0], skip_special_tokens=True)
-print("pure_rational=", tokenizer.decode(pure_rational[0], skip_special_tokens=True))
+# pure_rational = model.generate(input_ids=x, max_new_tokens=512, tokenizer=tokenizer, do_sample=False)
+# pure_rational_str = tokenizer.decode(pure_rational[0], skip_special_tokens=True)
+# print("pure_rational=", tokenizer.decode(pure_rational[0], skip_special_tokens=True))
 
-pure_rational_tok = tokenizer(pure_rational_str, return_tensors="pt")
-pure_rational = pure_rational_tok["input_ids"].to(model.device)
-pure_rational_mask = pure_rational_tok["attention_mask"].to(model.device)
-pure_rational_labels = deepcopy(pure_rational)
+# # Extract the generated answer part
+# generated_answer_part = pure_rational_str[len(x_str):]
 
-pure_rational_y_str = pure_rational_str + y_str
-pure_rational_y_tok = tokenizer(pure_rational_y_str, return_tensors="pt")
-pure_rational_y = pure_rational_y_tok["input_ids"].to(model.device)
-pure_rational_y_mask = pure_rational_y_tok["attention_mask"].to(model.device)
-pure_rational_y_labels = deepcopy(pure_rational_y)
+# # Use regex to find "The answer is d." where d is an integer
+# # match = re.search(r"The answer is (\d+)\.", generated_answer_part)
 
-x_mask_py = torch.cat([x_mask, torch.zeros((x_mask.shape[0], pure_rational_y.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
-x_mask_p = torch.cat([x_mask, torch.zeros((x_mask.shape[0], pure_rational.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
+# # if match:
+# #     answer = int(match.group(1))
+# #     print(f"The answer is {answer}.")
+# # else:
+# #     print("No answer found.")
 
-p_labels = -100 * x_mask_p + pure_rational_labels * (1 - x_mask_p)
-py_labels = -100 * x_mask_py + pure_rational_y_labels * (1 - x_mask_py)
+# pure_rational_tok = tokenizer(pure_rational_str, return_tensors="pt")
+# pure_rational = pure_rational_tok["input_ids"].to(model.device)
+# pure_rational_mask = pure_rational_tok["attention_mask"].to(model.device)
+# pure_rational_labels = deepcopy(pure_rational)
 
-p_outputs = model(pure_rational, labels=p_labels, attention_mask=pure_rational_mask)
-p_loss = regularized_logp(p_outputs.logits, p_labels, VOCAB_SIZE, script_args.label_smoothing, "none")
-p_reward = - p_loss.detach()
-print("p_reward=", p_reward)
+# pure_rational_y_str = pure_rational_str + y_str
+# pure_rational_y_tok = tokenizer(pure_rational_y_str, return_tensors="pt")
+# pure_rational_y = pure_rational_y_tok["input_ids"].to(model.device)
+# pure_rational_y_mask = pure_rational_y_tok["attention_mask"].to(model.device)
+# pure_rational_y_labels = deepcopy(pure_rational_y)
+
+# x_mask_py = torch.cat([x_mask, torch.zeros((x_mask.shape[0], pure_rational_y.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
+# x_mask_p = torch.cat([x_mask, torch.zeros((x_mask.shape[0], pure_rational.shape[1] - x.shape[1]), dtype=x_mask.dtype).to(x_mask.device)], dim=1)
+
+# p_labels = -100 * x_mask_p + pure_rational_labels * (1 - x_mask_p)
+# py_labels = -100 * x_mask_py + pure_rational_y_labels * (1 - x_mask_py)
+
+# p_outputs = model(pure_rational, labels=p_labels, attention_mask=pure_rational_mask)
+# p_loss = regularized_logp(p_outputs.logits, p_labels, VOCAB_SIZE, script_args.label_smoothing, "none")
+# p_reward = - p_loss.detach()
+# print("p_reward=", p_reward)
 
 
 import matplotlib.pyplot as plt
 
 # Assuming reward and p_reward are tensors, convert them to numpy arrays for plotting
 reward_np = reward.cpu().numpy()
-p_reward_np = p_reward.cpu().numpy()
+# p_reward_np = p_reward.cpu().numpy()
 
 # Plotting the rewards
 plt.figure(figsize=(10, 5))
 plt.plot(reward_np, label='Reward')
-plt.plot(p_reward_np, label='P Reward')
+# plt.plot(p_reward_np, label='P Reward')
 plt.xlabel('tokens')
 plt.ylabel('log p')
 plt.title('Reward vs P Reward')

@@ -70,6 +70,7 @@ class ScriptArguments:
             "help": "The model that you want to train from the Hugging Face hub. E.g. gpt2, gpt2-xl, bert, etc."
         },
     )
+    critic_model_name: Optional[str] = field(default="google/gemma-2-2b-it")
     bf16: Optional[bool] = field(
         default=True,
         metadata={
@@ -207,6 +208,9 @@ class CriticModel(torch.nn.Module):
         outputs = self.rwtransformer(input_ids, attention_mask, use_cache=False)
         values = self.v_head(outputs[0]).squeeze(-1)
         return values
+    @property
+    def device(self):
+        return self.rwtransformer.device
 
 def actor_loss_fn(logprobs, old_logprobs, advantages, mask, cliprange=0.2):
     ## policy gradient loss
@@ -239,7 +243,7 @@ def calc_PPO_loss(model, critic_model, seq, attention_mask, prompts, reward_scor
     with torch.no_grad():
         # Calculate advantage
         critic_model.eval()
-        old_values = critic_model.forward(seq, attention_mask).detach()[:,:-1]
+        old_values = critic_model.forward(seq.to(critic_model.device), attention_mask.to(critic_model.device)).to(model.device).detach()[:,:-1]
         start = prompts.size()[-1] - 1
         action_mask = attention_mask[:,1:]
         ends = start + action_mask[:,start:].sum(1)+1
@@ -267,13 +271,17 @@ def calc_PPO_loss(model, critic_model, seq, attention_mask, prompts, reward_scor
     actor_log_prob = gather_log_probs(actor_prob[:,:-1,:], seq[:,1:])
     actor_loss = actor_loss_fn(actor_log_prob[:,start:], logprobs[:,start:], advantages, action_mask[:,start:])
     critic_model.train()
-    value = critic_model.forward(input_ids=seq, attention_mask=attention_mask)[:, :-1]
-    critic_loss = critic_loss_fn(value[:,start:], old_values[:,start:], returns, action_mask[:,start:])
+    value = critic_model.forward(input_ids=seq.to(critic_model.device), attention_mask=attention_mask.to(critic_model.device))[:, :-1]
+    critic_loss = critic_loss_fn(value[:,start:], old_values[:,start:].to(critic_model.device), returns.to(critic_model.device), action_mask[:,start:].to(critic_model.device))
     return actor_loss, critic_loss
 
 
 def main(script_args):
-    DEVICE = "cuda:0"
+    if torch.cuda.device_count() == 1:
+        DEVICE0 = DEVICE1 = "cuda:0"
+    else:
+        DEVICE0 = "cuda:0"
+        DEVICE1 = "cuda:1"
 
     task_config = task_config_check(script_args.task_type)
     train_set_path, train_dataset = task_data_set(script_args.task_type)
@@ -310,7 +318,7 @@ def main(script_args):
     for key in ('dropout', 'attention_dropout', 'hidden_dropout', 'activation_dropout'):
         if hasattr(model_config, key):
             setattr(model_config, key, 0.0)
-    model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE).train()
+    model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE0).train()
     if script_args.use_lora:
         lora_config = LoraConfig(
             r=32,
@@ -327,11 +335,11 @@ def main(script_args):
     optimizer = torch.optim.AdamW(model.parameters(), lr=script_args.learning_rate, weight_decay=0, betas=(0.9, 0.95))
     scheduler = get_scheduler(name='cosine', optimizer=optimizer, num_warmup_steps=min(100,0.1*train_steps), num_training_steps=train_steps)
 
-    ref_model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE).eval()
+    ref_model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE1).eval()
     ref_model.requires_grad = False
 
-    critic_base_model = AutoModel.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE)
-    critic_model = CriticModel(critic_base_model).to(DEVICE).eval()
+    critic_base_model = AutoModel.from_pretrained(script_args.critic_model_name, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE1)
+    critic_model = CriticModel(critic_base_model).to(DEVICE1).eval()
     optimizer_critic = torch.optim.AdamW(critic_model.parameters(), lr=script_args.critic_lr, weight_decay=0, betas=(0.9, 0.95))
     scheduler_critic = get_scheduler(name='cosine', optimizer=optimizer_critic, num_warmup_steps=min(100,0.1*train_steps), num_training_steps=train_steps)
 
@@ -339,10 +347,10 @@ def main(script_args):
     prompt_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=script_args.per_device_train_batch_size, collate_fn=MyDataCollatorWithPadding(tokenizer=tokenizer, padding=True))
     tb_writer = SummaryWriter(log_dir='%s/tb_log/'%script_args.model_path)
     for step, batch in tqdm(enumerate(prompt_dataloader), total=len(prompt_dataloader)):
-        prompt_input_ids = batch["input_ids_q_l"].to(DEVICE)
-        prompt_attention_mask = batch["attention_mask_q_l"].to(DEVICE)
+        prompt_input_ids = batch["input_ids_q_l"].to(DEVICE0)
+        prompt_attention_mask = batch["attention_mask_q_l"].to(DEVICE0)
         prompt_length = prompt_input_ids.shape[1]
-        answer_input_ids = batch["input_ids_a_r"].to(DEVICE)
+        answer_input_ids = batch["input_ids_a_r"].to(DEVICE0)
 
         model.eval()
         max_min_length = prompt_length + script_args.max_length
@@ -353,7 +361,7 @@ def main(script_args):
             seq_attention_mask[:,:prompt_length] = prompt_attention_mask
 
             # Evaluate reward and other info
-            reward_score = calc_reward_with_nll(ref_model, tokenizer, seq, answer_input_ids)
+            reward_score = calc_reward_with_nll(ref_model, tokenizer, seq.to(DEVICE1), answer_input_ids.to(DEVICE1)).to(DEVICE0)
             print (reward_score)
             # TODO: hard-coded reward normalization here. May try other methods.
             #reward_score = (reward_score+4.5)*2
@@ -368,9 +376,9 @@ def main(script_args):
 
             print ("Using a hard-coded simple normalization")
             output = model(seq, attention_mask=seq_attention_mask)
-            output_ref = ref_model(seq, attention_mask=seq_attention_mask)
+            output_ref = ref_model(seq.to(DEVICE1), attention_mask=seq_attention_mask.to(DEVICE1))
             logprobs = gather_log_probs(output.logits[:,:-1,:],seq[:,1:])
-            ref_logprobs = gather_log_probs(output_ref.logits[:,:-1,:],seq[:,1:])
+            ref_logprobs = gather_log_probs(output_ref.logits[:,:-1,:].to(DEVICE0),seq[:,1:])
 
         # Calculate actor loss and critic loss with standard PPO
         model.train()
@@ -383,7 +391,7 @@ def main(script_args):
         # add KL div to track the current model
         with torch.no_grad():
             prob_p = torch.nn.functional.softmax(output.logits, -1)
-            prob_q = torch.nn.functional.softmax(output_ref.logits, -1)
+            prob_q = torch.nn.functional.softmax(output_ref.logits, -1).to(DEVICE0)
             kl_position_loss = -prob_p * torch.log(prob_q+1e-6)
             position_weight = torch.zeros_like(kl_position_loss)
             position_weight[:,prompt_length:] = 1
@@ -420,7 +428,8 @@ def main(script_args):
     print("Saving last checkpoint of the model")
     if script_args.use_lora:
         model = model.merge_and_unload()
-        model.save_pretrained(final_dir, from_pt=True)
+    model.save_pretrained(final_dir, from_pt=True)
+    tokenizer.save_pretrained(final_dir)
     #trainer.save_model(final_dir)
     subprocess.run([
         "huggingface-cli", "upload", 

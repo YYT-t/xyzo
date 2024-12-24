@@ -3,15 +3,15 @@ source ~/.bashrc
 export WANDB_API_KEY=ee43df2d6680a9ce636f698eba4b5534c4336452
 export HF_TOKEN=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
 #huggingface-cli login  --token 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
-#git clone https://github.com/YYT-t/xyzo.git
-#cd xyzo
-#conda env create -f environment.yaml
+git clone https://github.com/YYT-t/xyzo.git
+cd xyzo
+conda env create -f environment.yaml
 #conda env create -f environment_sft.yaml
 
 iter_num=3
 
 company="google"
-model_name="gemma-2-2b-it"
+model_name="gemma-2-9b-it"
 
 task_pre="math"
 task_suf="metamath"
@@ -39,10 +39,10 @@ for i in $(seq 1 $iter_num); do
     else
         split="[66%:71%]"
     fi
-    accelerate launch --num_processes 4 xiaojun_E_step_ent_PPO_dp.py --model_name google/gemma-2-2b-it --deepspeed deepspeed_configs/deepspeed_2.json --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
+    accelerate launch --num_processes 4 xiaojun_E_step_ent_PPO_dp.py --model_name $e_input_model --deepspeed deepspeed_configs/deepspeed_2.json --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
     python inference.py --model_path "${e_model_dir}/final_checkpoint" --task_type "${task_pre}_${task_suf}" --dataset_path $dataset_path --iter $i || exit 1
 #    conda deactivate
 #    conda activate sft_debug
-    accelerate launch m_sft.py --deepspeed deepspeed_configs/deepspeed_2.json --model_name $e_input_model --attn_implementation eager --per_device_train_batch_size 4 --gradient_accumulation_steps 2 --train_set_path $dataset_path --output_dir $m_model_dir --hub_model_id $m_hub_id || exit 1
+    accelerate launch m_sft.py --deepspeed deepspeed_configs/deepspeed_3.json --model_name $e_input_model --attn_implementation eager --per_device_train_batch_size 4 --gradient_accumulation_steps 4 --train_set_path $dataset_path --output_dir $m_model_dir --hub_model_id $m_hub_id || exit 1
 #    conda deactivate
 done

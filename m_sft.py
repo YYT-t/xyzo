@@ -16,9 +16,9 @@ class ScriptArguments:
             "help": "Path to deepspeed config if using deepspeed. You may need this if the model that you want to train doesn't fit on a single GPU."
         },
     )
-    per_device_train_batch_size: Optional[int] = field(default=4)
-    per_device_eval_batch_size: Optional[int] = field(default=4)
-    gradient_accumulation_steps: Optional[int] = field(default=8)  # set to 4 for 8-GPU!!!!!!!
+    per_device_train_batch_size: Optional[int] = field(default=1)
+    per_device_eval_batch_size: Optional[int] = field(default=2)
+    gradient_accumulation_steps: Optional[int] = field(default=16)  # ensure batch_size=128!!!
     learning_rate: Optional[float] = field(default=2e-5)
     weight_decay: Optional[float] = field(default=0.0)
     warmup_ratio: Optional[float] = field(default=0.1)

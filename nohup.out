@@ -1,581 +1,0 @@
-no change     /software/miniconda3/4.12.0/condabin/conda
-no change     /software/miniconda3/4.12.0/bin/conda
-no change     /software/miniconda3/4.12.0/bin/conda-env
-no change     /software/miniconda3/4.12.0/bin/activate
-no change     /software/miniconda3/4.12.0/bin/deactivate
-no change     /software/miniconda3/4.12.0/etc/profile.d/conda.sh
-no change     /software/miniconda3/4.12.0/etc/fish/conf.d/conda.fish
-no change     /software/miniconda3/4.12.0/shell/condabin/Conda.psm1
-no change     /software/miniconda3/4.12.0/shell/condabin/conda-hook.ps1
-no change     /software/miniconda3/4.12.0/lib/python3.9/site-packages/xontrib/conda.xsh
-no change     /software/miniconda3/4.12.0/etc/profile.d/conda.csh
-no change     /home/fkq3712/.bashrc
-No action taken.
-The following values were not passed to `accelerate launch` and had defaults used instead:
-		More than one GPU was found, enabling multi-GPU training.
-		If this was unintended please pass in `--num_processes=1`.
-	`--num_machines` was set to a value of `1`
-	`--mixed_precision` was set to a value of `'no'`
-	`--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.85it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 13.68it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 18.00it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 17.97it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 18.00it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 17.97it/s]
-[2024-12-24 13:27:08,621] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[2024-12-24 13:27:09,202] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:27:09,202] [INFO] [comm.py:637:init_distributed] cdb=None
-{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  8.31it/s]{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 10.07it/s]
-{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  8.56it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.57it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.55it/s]
-Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.05it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 10.72it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.28it/s]
-Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 14.74it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 14.72it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 14.11it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 14.09it/s]
-Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.98it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.79it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s][2024-12-24 13:27:13,217] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.91it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.89it/s]
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.11it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.10it/s]
-[2024-12-24 13:27:13,558] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-[2024-12-24 13:27:13,651] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-[2024-12-24 13:27:13,734] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:27:13,734] [INFO] [comm.py:637:init_distributed] cdb=None
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-[2024-12-24 13:27:14,091] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:27:14,091] [INFO] [comm.py:637:init_distributed] cdb=None
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[2024-12-24 13:27:14,186] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:27:14,186] [INFO] [comm.py:637:init_distributed] cdb=None
-[2024-12-24 13:27:31,436] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
-[2024-12-24 13:27:31,439] [INFO] [logging.py:96:log_dist] [Rank 0] Using client Optimizer as basic optimizer
-[2024-12-24 13:27:31,439] [INFO] [logging.py:96:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
-[2024-12-24 13:27:31,450] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Basic Optimizer = AdamW
-[2024-12-24 13:27:31,451] [INFO] [utils.py:56:is_zero_supported_optimizer] Checking ZeRO support for optimizer=AdamW type=<class 'torch.optim.adamw.AdamW'>
-[2024-12-24 13:27:31,451] [INFO] [logging.py:96:log_dist] [Rank 0] Creating torch.bfloat16 ZeRO stage 2 optimizer
-[2024-12-24 13:27:31,451] [INFO] [stage_1_and_2.py:148:__init__] Reduce bucket size 500,000,000
-[2024-12-24 13:27:31,451] [INFO] [stage_1_and_2.py:149:__init__] Allgather bucket size 500,000,000
-[2024-12-24 13:27:31,451] [INFO] [stage_1_and_2.py:150:__init__] CPU Offload: False
-[2024-12-24 13:27:31,451] [INFO] [stage_1_and_2.py:151:__init__] Round robin gradient partitioning: False
-[2024-12-24 13:27:34,156] [INFO] [utils.py:781:see_memory_usage] Before initializing optimizer states
-[2024-12-24 13:27:34,156] [INFO] [utils.py:782:see_memory_usage] MA 17.06 GB         Max_MA 18.28 GB         CA 18.66 GB         Max_CA 19 GB 
-[2024-12-24 13:27:34,157] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 21.64 GB, percent = 2.1%
-[2024-12-24 13:27:34,243] [INFO] [utils.py:781:see_memory_usage] After initializing optimizer states
-[2024-12-24 13:27:34,243] [INFO] [utils.py:782:see_memory_usage] MA 17.06 GB         Max_MA 19.49 GB         CA 21.1 GB         Max_CA 21 GB 
-[2024-12-24 13:27:34,243] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 21.64 GB, percent = 2.1%
-[2024-12-24 13:27:34,243] [INFO] [stage_1_and_2.py:543:__init__] optimizer state initialized
-[2024-12-24 13:27:34,314] [INFO] [utils.py:781:see_memory_usage] After initializing ZeRO optimizer
-[2024-12-24 13:27:34,314] [INFO] [utils.py:782:see_memory_usage] MA 17.06 GB         Max_MA 17.06 GB         CA 21.1 GB         Max_CA 21 GB 
-[2024-12-24 13:27:34,314] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 21.64 GB, percent = 2.1%
-[2024-12-24 13:27:34,315] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer
-[2024-12-24 13:27:34,315] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed using client LR scheduler
-[2024-12-24 13:27:34,315] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed LR Scheduler = None
-[2024-12-24 13:27:34,315] [INFO] [logging.py:96:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0], mom=[(0.9, 0.95)]
-[2024-12-24 13:27:34,317] [INFO] [config.py:997:print] DeepSpeedEngine configuration:
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   activation_checkpointing_config  {
-    "partition_activations": false, 
-    "contiguous_memory_optimization": false, 
-    "cpu_checkpointing": false, 
-    "number_checkpoints": null, 
-    "synchronize_checkpoint_boundary": false, 
-    "profile": false
-}
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   amp_enabled .................. False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   amp_params ................... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   autotuning_config ............ {
-    "enabled": false, 
-    "start_step": null, 
-    "end_step": null, 
-    "metric_path": null, 
-    "arg_mappings": null, 
-    "metric": "throughput", 
-    "model_info": null, 
-    "results_dir": "autotuning_results", 
-    "exps_dir": "autotuning_exps", 
-    "overwrite": true, 
-    "fast": true, 
-    "start_profile_step": 3, 
-    "end_profile_step": 5, 
-    "tuner_type": "gridsearch", 
-    "tuner_early_stopping": 5, 
-    "tuner_num_trials": 50, 
-    "model_info_path": null, 
-    "mp_size": 1, 
-    "max_train_batch_size": null, 
-    "min_train_batch_size": 1, 
-    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
-    "min_train_micro_batch_size_per_gpu": 1, 
-    "num_tuning_micro_batch_sizes": 3
-}
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   bfloat16_enabled ............. True
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   bfloat16_immediate_grad_update  False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   checkpoint_parallel_write_pipeline  False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   checkpoint_tag_validation_enabled  True
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   checkpoint_tag_validation_fail  False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7f541ef9e950>
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   communication_data_type ...... None
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   curriculum_enabled_legacy .... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   curriculum_params_legacy ..... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   data_efficiency_enabled ...... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   dataloader_drop_last ......... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   disable_allgather ............ False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   dump_state ................... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   dynamic_loss_scale_args ...... None
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_enabled ........... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_gas_boundary_resolution  1
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_layer_name ........ bert.encoder.layer
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_layer_num ......... 0
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_max_iter .......... 100
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_stability ......... 1e-06
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_tol ............... 0.01
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   eigenvalue_verbose ........... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   elasticity_enabled ........... False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   flops_profiler_config ........ {
-    "enabled": false, 
-    "recompute_fwd_factor": 0.0, 
-    "profile_step": 1, 
-    "module_depth": -1, 
-    "top_modules": 1, 
-    "detailed": true, 
-    "output_file": null
-}
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   fp16_auto_cast ............... None
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   fp16_enabled ................. False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   fp16_master_weights_and_gradients  False
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   global_rank .................. 0
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   grad_accum_dtype ............. None
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   gradient_accumulation_steps .. 4
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   gradient_clipping ............ 1.0
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   gradient_predivide_factor .... 1.0
-[2024-12-24 13:27:34,317] [INFO] [config.py:1001:print]   graph_harvesting ............. False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   initial_dynamic_scale ........ 1
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   load_universal_checkpoint .... False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   loss_scale ................... 1.0
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   memory_breakdown ............. False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   mics_hierarchial_params_gather  False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   mics_shard_size .............. -1
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') enabled=False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   nebula_config ................ {
-    "enabled": false, 
-    "persistent_storage_path": null, 
-    "persistent_time_interval": 100, 
-    "num_of_version_in_retention": 2, 
-    "enable_nebula_load": true, 
-    "load_path": null
-}
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   optimizer_legacy_fusion ...... False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   optimizer_name ............... None
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   optimizer_params ............. None
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   pld_enabled .................. False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   pld_params ................... False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   prescale_gradients ........... False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   scheduler_name ............... None
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   scheduler_params ............. None
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   seq_parallel_communication_data_type  torch.float32
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   sparse_attention ............. None
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   sparse_gradients_enabled ..... False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   steps_per_print .............. inf
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   timers_config ................ enabled=True synchronized=True
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   train_batch_size ............. 64
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   train_micro_batch_size_per_gpu  4
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   use_data_before_expert_parallel_  False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   use_node_local_storage ....... False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   wall_clock_breakdown ......... False
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   weight_quantization_config ... None
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   world_size ................... 4
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   zero_allow_untested_optimizer  True
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   zero_config .................. stage=2 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500,000,000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   zero_enabled ................. True
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   zero_force_ds_cpu_optimizer .. True
-[2024-12-24 13:27:34,318] [INFO] [config.py:1001:print]   zero_optimization_stage ...... 2
-[2024-12-24 13:27:34,318] [INFO] [config.py:987:print_user_config]   json = {
-    "zero_optimization": {
-        "stage": 2, 
-        "contiguous_gradients": true, 
-        "overlap_comm": true
-    }, 
-    "bf16": {
-        "enabled": true
-    }, 
-    "fp16": {
-        "enabled": false, 
-        "auto_cast": false, 
-        "loss_scale": 0, 
-        "initial_scale_power": 32, 
-        "loss_scale_window": 1000, 
-        "hysteresis": 2, 
-        "min_loss_scale": 1
-    }, 
-    "gradient_accumulation_steps": 4, 
-    "gradient_clipping": 1.0, 
-    "train_batch_size": 64, 
-    "train_micro_batch_size_per_gpu": 4, 
-    "wall_clock_breakdown": false, 
-    "steps_per_print": inf, 
-    "zero_allow_untested_optimizer": true
-}
-The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Token indices sequence length is longer than the specified maximum sequence length for this model (357 > 256). Running this sequence through the model will result in indexing errors
-Token indices sequence length is longer than the specified maximum sequence length for this model (468 > 256). Running this sequence through the model will result in indexing errors
-Token indices sequence length is longer than the specified maximum sequence length for this model (469 > 256). Running this sequence through the model will result in indexing errors
-Token indices sequence length is longer than the specified maximum sequence length for this model (500 > 256). Running this sequence through the model will result in indexing errors
-W1224 13:36:36.275000 140031080121344 torch/distributed/elastic/agent/server/api.py:688] Received 15 death signal, shutting down workers
-W1224 13:36:36.275000 140031080121344 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2399629 closing signal SIGTERM
-W1224 13:36:36.275000 140031080121344 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2399630 closing signal SIGTERM
-W1224 13:36:36.275000 140031080121344 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2399631 closing signal SIGTERM
-W1224 13:36:36.275000 140031080121344 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2399632 closing signal SIGTERM
-Traceback (most recent call last):
-  File "/home/fkq3712/.conda/envs/yy/bin/accelerate", line 8, in <module>
-    sys.exit(main())
-             ^^^^^^
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/accelerate/commands/accelerate_cli.py", line 48, in main
-    args.func(args)
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/accelerate/commands/launch.py", line 1159, in launch_command
-    multi_gpu_launcher(args)
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/accelerate/commands/launch.py", line 793, in multi_gpu_launcher
-    distrib_run.run(args)
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in run
-    elastic_launch(
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
-    return launch_agent(self._config, self._entrypoint, list(args))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
-    result = agent.run()
-             ^^^^^^^^^^^
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
-    result = f(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
-    result = self._invoke_run(role)
-             ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 835, in _invoke_run
-    time.sleep(monitor_interval)
-  File "/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 79, in _terminate_process_handler
-    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
-torch.distributed.elastic.multiprocessing.api.SignalException: Process 2399613 got signal: 15
-no change     /software/miniconda3/4.12.0/condabin/conda
-no change     /software/miniconda3/4.12.0/bin/conda
-no change     /software/miniconda3/4.12.0/bin/conda-env
-no change     /software/miniconda3/4.12.0/bin/activate
-no change     /software/miniconda3/4.12.0/bin/deactivate
-no change     /software/miniconda3/4.12.0/etc/profile.d/conda.sh
-no change     /software/miniconda3/4.12.0/etc/fish/conf.d/conda.fish
-no change     /software/miniconda3/4.12.0/shell/condabin/Conda.psm1
-no change     /software/miniconda3/4.12.0/shell/condabin/conda-hook.ps1
-no change     /software/miniconda3/4.12.0/lib/python3.9/site-packages/xontrib/conda.xsh
-no change     /software/miniconda3/4.12.0/etc/profile.d/conda.csh
-no change     /home/fkq3712/.bashrc
-No action taken.
-The following values were not passed to `accelerate launch` and had defaults used instead:
-		More than one GPU was found, enabling multi-GPU training.
-		If this was unintended please pass in `--num_processes=1`.
-	`--num_machines` was set to a value of `1`
-	`--mixed_precision` was set to a value of `'no'`
-	`--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.32it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.86it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.56it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 13.29it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 18.11it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 18.08it/s]
-[2024-12-24 13:37:58,322] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[2024-12-24 13:37:58,780] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:37:58,780] [INFO] [comm.py:637:init_distributed] cdb=None
-{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-{'type': 'MATH_AnsAug', 'query': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'original_question': "Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?", 'response': "The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.\nIn this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.\nSo the distance between their points is $\\sqrt{((-1)-(1))^2+((1)-(2))^2}=\\sqrt{(-2)^2+(-1)^2}=\\sqrt{4+1}=\\sqrt{5}$.\nTherefore, Gracie and Joe's points are $\\boxed{\\sqrt{5}}$ units apart.\nThe answer is: \\sqrt{5}", 'input_ids_q': [2, 1261, 573, 2872, 3482, 611, 573, 2412, 3287, 235292, 108, 9413, 235292, 73605, 235349, 235256, 2001, 1503, 919, 2149, 23246, 11187, 1178, 11270, 9149, 235349, 235256, 2001, 1503, 235265, 1927, 11270, 9149, 3895, 1378, 11187, 1401, 1070, 2001, 1503, 235269, 1284, 1134, 791, 476, 2001, 1503, 11594, 573, 4191, 576, 40742, 235349, 235256, 235265, 40742, 235349, 235256, 2247, 1503, 603, 40742, 25685, 235265, 2250, 1767, 11187, 708, 575, 73605, 235349, 235256, 2001, 1503, 235336, 10358, 235292, 2456, 708, 235248, 235310, 11187, 575, 40742, 235349, 235256, 2001, 1503, 235269, 712, 11270, 9149, 235349, 235256, 1503, 603, 235248, 235310, 235287, 235284, 963, 235284, 589, 235248, 235274, 235276, 11187, 1497, 235265, 73605, 235349, 235256, 2001, 1503, 603, 235248, 235304, 11187, 25270, 1178, 11270, 9149, 235349, 235256, 235269, 712, 1104, 708, 235248, 235274, 235276, 728, 235248, 235304, 589, 235248, 235324, 11187, 575, 73605, 235349, 235256, 2001, 1503, 235265, 108, 9413, 235292, 165522, 578, 12685, 708, 22623, 5968, 611, 573, 5766, 10599, 235265, 12685, 56360, 573, 2377, 697, 235274, 235340, 235284, 235252, 3306, 165522, 56360, 6058, 235274, 235340, 235252, 3306, 2250, 2166, 10392, 708, 165522, 578, 12685, 235303, 235256, 3782, 235336], 'attention_mask_q': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'input_ids_a': [2, 651, 3448, 603, 730, 8402, 235282, 235308, 8331], 'attention_mask_a': [1, 1, 1, 1, 1, 1, 1, 1, 1]}
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.05it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  7.67it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.51it/s]
-Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  9.95it/s]
-Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  8.48it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.54it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 14.20it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 14.18it/s]
-Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.89it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.23it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.68it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.67it/s]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.51it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 11.50it/s]
-Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 13.11it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 13.10it/s]
-Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.95it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.20it/s]
-[2024-12-24 13:38:03,913] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-[2024-12-24 13:38:04,000] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[2024-12-24 13:38:04,075] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
-[93m [WARNING] [0m async_io: please install the libaio-devel package with yum
-[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
-[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-[2024-12-24 13:38:04,432] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:38:04,432] [INFO] [comm.py:637:init_distributed] cdb=None
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
-[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
-[2024-12-24 13:38:04,517] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:38:04,517] [INFO] [comm.py:637:init_distributed] cdb=None
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:47: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  @autocast_custom_fwd
-/home/fkq3712/.conda/envs/yy/lib/python3.11/site-packages/deepspeed/runtime/zero/linear.py:66: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  @autocast_custom_bwd
-[2024-12-24 13:38:04,606] [INFO] [logging.py:96:log_dist] [Rank -1] DeepSpeed info: version=0.14.4, git-hash=unknown, git-branch=unknown
-[2024-12-24 13:38:04,606] [INFO] [comm.py:637:init_distributed] cdb=None
-[2024-12-24 13:38:21,596] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
-[2024-12-24 13:38:21,598] [INFO] [logging.py:96:log_dist] [Rank 0] Using client Optimizer as basic optimizer
-[2024-12-24 13:38:21,598] [INFO] [logging.py:96:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
-[2024-12-24 13:38:21,610] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Basic Optimizer = AdamW
-[2024-12-24 13:38:21,610] [INFO] [utils.py:56:is_zero_supported_optimizer] Checking ZeRO support for optimizer=AdamW type=<class 'torch.optim.adamw.AdamW'>
-[2024-12-24 13:38:21,610] [INFO] [logging.py:96:log_dist] [Rank 0] Creating torch.bfloat16 ZeRO stage 2 optimizer
-[2024-12-24 13:38:21,610] [INFO] [stage_1_and_2.py:148:__init__] Reduce bucket size 500,000,000
-[2024-12-24 13:38:21,610] [INFO] [stage_1_and_2.py:149:__init__] Allgather bucket size 500,000,000
-[2024-12-24 13:38:21,610] [INFO] [stage_1_and_2.py:150:__init__] CPU Offload: False
-[2024-12-24 13:38:21,610] [INFO] [stage_1_and_2.py:151:__init__] Round robin gradient partitioning: False
-  0%|          | 0/1235 [00:00<?, ?it/s]  0%|          | 0/1235 [00:00<?, ?it/s]  0%|          | 0/1235 [00:00<?, ?it/s][2024-12-24 13:38:24,222] [INFO] [utils.py:781:see_memory_usage] Before initializing optimizer states
-[2024-12-24 13:38:24,222] [INFO] [utils.py:782:see_memory_usage] MA 17.06 GB         Max_MA 18.28 GB         CA 18.66 GB         Max_CA 19 GB 
-[2024-12-24 13:38:24,222] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 22.1 GB, percent = 2.2%
-[2024-12-24 13:38:24,299] [INFO] [utils.py:781:see_memory_usage] After initializing optimizer states
-[2024-12-24 13:38:24,300] [INFO] [utils.py:782:see_memory_usage] MA 17.06 GB         Max_MA 19.49 GB         CA 21.1 GB         Max_CA 21 GB 
-[2024-12-24 13:38:24,300] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 22.1 GB, percent = 2.2%
-[2024-12-24 13:38:24,300] [INFO] [stage_1_and_2.py:543:__init__] optimizer state initialized
-[2024-12-24 13:38:24,370] [INFO] [utils.py:781:see_memory_usage] After initializing ZeRO optimizer
-[2024-12-24 13:38:24,370] [INFO] [utils.py:782:see_memory_usage] MA 17.06 GB         Max_MA 17.06 GB         CA 21.1 GB         Max_CA 21 GB 
-[2024-12-24 13:38:24,370] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 22.1 GB, percent = 2.2%
-[2024-12-24 13:38:24,371] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer
-[2024-12-24 13:38:24,371] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed using client LR scheduler
-[2024-12-24 13:38:24,371] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed LR Scheduler = None
-[2024-12-24 13:38:24,371] [INFO] [logging.py:96:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0], mom=[(0.9, 0.95)]
-[2024-12-24 13:38:24,372] [INFO] [config.py:997:print] DeepSpeedEngine configuration:
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   activation_checkpointing_config  {
-    "partition_activations": false, 
-    "contiguous_memory_optimization": false, 
-    "cpu_checkpointing": false, 
-    "number_checkpoints": null, 
-    "synchronize_checkpoint_boundary": false, 
-    "profile": false
-}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   amp_enabled .................. False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   amp_params ................... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   autotuning_config ............ {
-    "enabled": false, 
-    "start_step": null, 
-    "end_step": null, 
-    "metric_path": null, 
-    "arg_mappings": null, 
-    "metric": "throughput", 
-    "model_info": null, 
-    "results_dir": "autotuning_results", 
-    "exps_dir": "autotuning_exps", 
-    "overwrite": true, 
-    "fast": true, 
-    "start_profile_step": 3, 
-    "end_profile_step": 5, 
-    "tuner_type": "gridsearch", 
-    "tuner_early_stopping": 5, 
-    "tuner_num_trials": 50, 
-    "model_info_path": null, 
-    "mp_size": 1, 
-    "max_train_batch_size": null, 
-    "min_train_batch_size": 1, 
-    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
-    "min_train_micro_batch_size_per_gpu": 1, 
-    "num_tuning_micro_batch_sizes": 3
-}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   bfloat16_enabled ............. True
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   bfloat16_immediate_grad_update  False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   checkpoint_parallel_write_pipeline  False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   checkpoint_tag_validation_enabled  True
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   checkpoint_tag_validation_fail  False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7fcbee359a10>
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   communication_data_type ...... None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   curriculum_enabled_legacy .... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   curriculum_params_legacy ..... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   data_efficiency_enabled ...... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   dataloader_drop_last ......... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   disable_allgather ............ False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   dump_state ................... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   dynamic_loss_scale_args ...... None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_enabled ........... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_gas_boundary_resolution  1
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_layer_name ........ bert.encoder.layer
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_layer_num ......... 0
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_max_iter .......... 100
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_stability ......... 1e-06
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_tol ............... 0.01
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   eigenvalue_verbose ........... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   elasticity_enabled ........... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   flops_profiler_config ........ {
-    "enabled": false, 
-    "recompute_fwd_factor": 0.0, 
-    "profile_step": 1, 
-    "module_depth": -1, 
-    "top_modules": 1, 
-    "detailed": true, 
-    "output_file": null
-}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   fp16_auto_cast ............... None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   fp16_enabled ................. False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   fp16_master_weights_and_gradients  False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   global_rank .................. 0
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   grad_accum_dtype ............. None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   gradient_accumulation_steps .. 4
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   gradient_clipping ............ 1.0
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   gradient_predivide_factor .... 1.0
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   graph_harvesting ............. False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   initial_dynamic_scale ........ 1
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   load_universal_checkpoint .... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   loss_scale ................... 1.0
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   memory_breakdown ............. False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   mics_hierarchial_params_gather  False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   mics_shard_size .............. -1
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') enabled=False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   nebula_config ................ {
-    "enabled": false, 
-    "persistent_storage_path": null, 
-    "persistent_time_interval": 100, 
-    "num_of_version_in_retention": 2, 
-    "enable_nebula_load": true, 
-    "load_path": null
-}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   optimizer_legacy_fusion ...... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   optimizer_name ............... None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   optimizer_params ............. None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   pld_enabled .................. False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   pld_params ................... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   prescale_gradients ........... False
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   scheduler_name ............... None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   scheduler_params ............. None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   seq_parallel_communication_data_type  torch.float32
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   sparse_attention ............. None
-[2024-12-24 13:38:24,373] [INFO] [config.py:1001:print]   sparse_gradients_enabled ..... False
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   steps_per_print .............. inf
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   timers_config ................ enabled=True synchronized=True
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   train_batch_size ............. 64
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   train_micro_batch_size_per_gpu  4
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   use_data_before_expert_parallel_  False
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   use_node_local_storage ....... False
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   wall_clock_breakdown ......... False
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   weight_quantization_config ... None
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   world_size ................... 4
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   zero_allow_untested_optimizer  True
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   zero_config .................. stage=2 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500,000,000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   zero_enabled ................. True
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   zero_force_ds_cpu_optimizer .. True
-[2024-12-24 13:38:24,374] [INFO] [config.py:1001:print]   zero_optimization_stage ...... 2
-[2024-12-24 13:38:24,374] [INFO] [config.py:987:print_user_config]   json = {
-    "zero_optimization": {
-        "stage": 2, 
-        "contiguous_gradients": true, 
-        "overlap_comm": true
-    }, 
-    "bf16": {
-        "enabled": true
-    }, 
-    "fp16": {
-        "enabled": false, 
-        "auto_cast": false, 
-        "loss_scale": 0, 
-        "initial_scale_power": 32, 
-        "loss_scale_window": 1000, 
-        "hysteresis": 2, 
-        "min_loss_scale": 1
-    }, 
-    "gradient_accumulation_steps": 4, 
-    "gradient_clipping": 1.0, 
-    "train_batch_size": 64, 
-    "train_micro_batch_size_per_gpu": 4, 
-    "wall_clock_breakdown": false, 
-    "steps_per_print": inf, 
-    "zero_allow_untested_optimizer": true
-}
-  0%|          | 0/1235 [00:00<?, ?it/s]The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-The 'max_batch_size' argument of HybridCache is deprecated and will be removed in v4.46. Use the more precisely named 'batch_size' argument instead.
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-Token indices sequence length is longer than the specified maximum sequence length for this model (338 > 256). Running this sequence through the model will result in indexing errors
-Token indices sequence length is longer than the specified maximum sequence length for this model (449 > 256). Running this sequence through the model will result in indexing errors
-Token indices sequence length is longer than the specified maximum sequence length for this model (468 > 256). Running this sequence through the model will result in indexing errors
-Token indices sequence length is longer than the specified maximum sequence length for this model (258 > 256). Running this sequence through the model will result in indexing errors
-  0%|          | 1/1235 [00:16<5:39:36, 16.51s/it]  0%|          | 1/1235 [00:16<5:39:31, 16.51s/it]  0%|          | 1/1235 [00:16<5:38:07, 16.44s/it]  0%|          | 1/1235 [00:16<5:34:22, 16.26s/it]  0%|          | 2/1235 [00:23<3:43:32, 10.88s/it]  0%|          | 2/1235 [00:23<3:43:30, 10.88s/it]  0%|          | 2/1235 [00:23<3:42:55, 10.85s/it]  0%|          | 2/1235 [00:23<3:41:23, 10.77s/it]  0%|          | 3/1235 [00:30<3:06:12,  9.07s/it]  0%|          | 3/1235 [00:30<3:06:32,  9.09s/it]  0%|          | 3/1235 [00:30<3:06:31,  9.08s/it]  0%|          | 3/1235 [00:30<3:05:22,  9.03s/it]  0%|          | 4/1235 [00:37<2:49:07,  8.24s/it]  0%|          | 4/1235 [00:37<2:49:19,  8.25s/it]  0%|          | 4/1235 [00:37<2:49:39,  8.27s/it]  0%|          | 4/1235 [00:37<2:49:09,  8.24s/it]  0%|          | 5/1235 [00:44<2:40:14,  7.82s/it]  0%|          | 5/1235 [00:44<2:40:13,  7.82s/it]  0%|          | 5/1235 [00:44<2:40:20,  7.82s/it]  0%|          | 5/1235 [00:44<2:39:44,  7.79s/it]  0%|          | 6/1235 [00:51<2:34:15,  7.53s/it]  0%|          | 6/1235 [00:51<2:34:11,  7.53s/it]  0%|          | 6/1235 [00:51<2:34:10,  7.53s/it]  0%|          | 6/1235 [00:51<2:33:52,  7.51s/it]  1%|          | 7/1235 [00:58<2:30:27,  7.35s/it]  1%|          | 7/1235 [00:58<2:30:25,  7.35s/it]  1%|          | 7/1235 [00:58<2:30:24,  7.35s/it]  1%|          | 7/1235 [00:58<2:30:11,  7.34s/it]  1%|          | 8/1235 [01:05<2:27:59,  7.24s/it]  1%|          | 8/1235 [01:05<2:27:57,  7.24s/it]  1%|          | 8/1235 [01:05<2:27:59,  7.24s/it]  1%|          | 8/1235 [01:05<2:28:02,  7.24s/it]  1%|          | 9/1235 [01:12<2:26:33,  7.17s/it]  1%|          | 9/1235 [01:12<2:26:31,  7.17s/it]  1%|          | 9/1235 [01:12<2:26:31,  7.17s/it]  1%|          | 9/1235 [01:12<2:26:21,  7.16s/it]  1%|          | 10/1235 [01:19<2:25:23,  7.12s/it]  1%|          | 10/1235 [01:19<2:25:22,  7.12s/it]  1%|          | 10/1235 [01:19<2:25:22,  7.12s/it]  1%|          | 10/1235 [01:19<2:25:15,  7.11s/it]  1%|          | 11/1235 [01:26<2:24:06,  7.06s/it]  1%|          | 11/1235 [01:26<2:24:07,  7.06s/it]  1%|          | 11/1235 [01:26<2:24:06,  7.06s/it]  1%|          | 11/1235 [01:26<2:24:02,  7.06s/it]  1%|          | 12/1235 [01:33<2:23:26,  7.04s/it]  1%|          | 12/1235 [01:33<2:23:26,  7.04s/it]  1%|          | 12/1235 [01:33<2:23:26,  7.04s/it]  1%|          | 12/1235 [01:33<2:23:35,  7.04s/it]  1%|          | 13/1235 [01:40<2:23:10,  7.03s/it]  1%|          | 13/1235 [01:40<2:23:10,  7.03s/it]  1%|          | 13/1235 [01:40<2:23:10,  7.03s/it]  1%|          | 13/1235 [01:40<2:23:03,  7.02s/it]  1%|          | 14/1235 [01:47<2:22:46,  7.02s/it]  1%|          | 14/1235 [01:47<2:22:46,  7.02s/it]  1%|          | 14/1235 [01:47<2:22:46,  7.02s/it]  1%|          | 14/1235 [01:47<2:22:42,  7.01s/it]  1%|          | 15/1235 [01:54<2:22:28,  7.01s/it]  1%|          | 15/1235 [01:54<2:22:29,  7.01s/it]  1%|          | 15/1235 [01:54<2:22:28,  7.01s/it]  1%|          | 15/1235 [01:54<2:22:26,  7.00s/it]  1%|▏         | 16/1235 [02:01<2:22:07,  7.00s/it]  1%|▏         | 16/1235 [02:01<2:22:07,  7.00s/it]  1%|▏         | 16/1235 [02:01<2:22:07,  7.00s/it]  1%|▏         | 16/1235 [02:01<2:22:18,  7.00s/it]  1%|▏         | 17/1235 [02:08<2:22:06,  7.00s/it]  1%|▏         | 17/1235 [02:08<2:22:06,  7.00s/it]  1%|▏         | 17/1235 [02:08<2:22:06,  7.00s/it]  1%|▏         | 17/1235 [02:08<2:22:01,  7.00s/it]  1%|▏         | 18/1235 [02:14<2:19:10,  6.86s/it]  1%|▏         | 18/1235 [02:14<2:19:10,  6.86s/it]  1%|▏         | 18/1235 [02:14<2:19:10,  6.86s/it]  1%|▏         | 18/1235 [02:14<2:19:06,  6.86s/it]

@@ -219,7 +219,7 @@ class ScriptArguments:
         default="deepspeed_configs/deepspeed_3.json",
         metadata={"help": "Path to your DeepSpeed JSON config."},
     )
-    per_device_train_batch_size: Optional[int] = field(default=4)
+    per_device_train_batch_size: Optional[int] = field(default=2)
     per_device_eval_batch_size: Optional[int] = field(default=1)
     gradient_accumulation_steps: Optional[int] = field(default=4)
     learning_rate: Optional[float] = field(default=5e-7)
@@ -433,7 +433,7 @@ def main(script_args):
     )
     # (Optional) TensorBoard on main process
     if accelerator.is_main_process:
-        output_name = "./Q_models/deepspeed_test"  # Example
+        output_name = script_args.model_path # "./Q_models/deepspeed_test"  # Example
         os.makedirs(output_name, exist_ok=True)
         tb_writer = SummaryWriter(log_dir=os.path.join(output_name, "tb_logs"))
     else:
@@ -514,7 +514,7 @@ def main(script_args):
             final_model = final_model.merge_and_unload()
         final_model.save_pretrained(final_dir)
         tokenizer.save_pretrained(final_dir)
-
+        print("saved to", final_dir)
     if tb_writer is not None:
         tb_writer.close()
 

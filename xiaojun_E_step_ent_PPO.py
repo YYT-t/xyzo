@@ -190,6 +190,7 @@ def calc_reward_with_nll(ref_model, tokenizer, xz_leftpad, y_rightpad):
         #assert tokenizer.decode(concat_toks['input_ids'][0][xz_length:prompt_length]) == 'The answer is ', [tokenizer.decode(concat_toks['input_ids'][0][xz_length:prompt_length])]
 
         output = ref_model.forward(concat_toks['input_ids'].to(ref_model.device), attention_mask=concat_toks['attention_mask'].to(ref_model.device))
+        print(concat_toks['input_ids'].size(), y_txt)
         shift_logits = output.logits[:,prompt_length-1:-1].view(concat_toks['input_ids'].shape[1]-prompt_length,-1)
         shift_labels = concat_toks['input_ids'][:,prompt_length:].view(concat_toks['input_ids'].shape[1]-prompt_length).to(ref_model.device)
         loss = loss_fn(shift_logits, shift_labels)

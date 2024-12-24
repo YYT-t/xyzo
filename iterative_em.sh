@@ -39,7 +39,7 @@ for i in $(seq 1 $iter_num); do
     else
         split="[66%:71%]"
     fi
-    python xiaojun_E_step_ent_PPO.py --model_name google/gemma-2-2b-it --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
+    accelerate launch --num_processes 4 xiaojun_E_step_ent_PPO_dp.py --model_name google/gemma-2-2b-it --deepspeed deepspeed_configs/deepspeed_2.json --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
     python inference.py --model_path "${e_model_dir}/final_checkpoint" --task_type "${task_pre}_${task_suf}" --dataset_path $dataset_path --iter $i || exit 1
 #    conda deactivate
 #    conda activate sft_debug

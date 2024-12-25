@@ -105,10 +105,18 @@ def calc_reward_with_nll(ref_model, tokenizer, xz_leftpad, y_rightpad):
 #        print("output.logits.shape= ", y_txt)
 #        print("prompt_length= ", prompt_length)
 #        print("output.logits[:,prompt_length-1:-1]= ", output.logits[:,prompt_length-1:-1])
-        shift_logits = output.logits[:,prompt_length-1:-1].view(concat_toks['input_ids'].shape[1]-prompt_length,-1)
-        shift_labels = concat_toks['input_ids'][:,prompt_length:].view(concat_toks['input_ids'].shape[1]-prompt_length).to(ref_model.device)
-        loss = loss_fn(shift_logits, shift_labels)
-        reward.append(-loss)
+        try:
+            shift_logits = output.logits[:,prompt_length-1:-1].view(concat_toks['input_ids'].shape[1]-prompt_length,-1)
+            #print(output.logits.size(), concat_toks['input_ids'].size(), prompt_length)
+            shift_labels = concat_toks['input_ids'][:,prompt_length:].view(concat_toks['input_ids'].shape[1]-prompt_length).to(ref_model.device)
+            loss = loss_fn(shift_logits, shift_labels)
+            reward.append(-loss)
+        except Exception as e:
+            print("error: ", e)
+            print(output.logits.size(), concat_toks['input_ids'].size(), prompt_length, xz_txt, "y_txt:", y_txt)
+       # shift_labels = concat_toks['input_ids'][:,prompt_length:].view(concat_toks['input_ids'].shape[1]-prompt_length).to(ref_model.device)
+       # loss = loss_fn(shift_logits, shift_labels)
+       # reward.append(-loss)
     return torch.stack(reward)
 
 class CriticModel(torch.nn.Module):
@@ -219,7 +227,7 @@ class ScriptArguments:
         default="deepspeed_configs/deepspeed_3.json",
         metadata={"help": "Path to your DeepSpeed JSON config."},
     )
-    per_device_train_batch_size: Optional[int] = field(default=2)
+    per_device_train_batch_size: Optional[int] = field(default=4)
     per_device_eval_batch_size: Optional[int] = field(default=1)
     gradient_accumulation_steps: Optional[int] = field(default=4)
     learning_rate: Optional[float] = field(default=5e-7)

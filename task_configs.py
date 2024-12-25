@@ -176,12 +176,12 @@ def task_data_set(task_name):
         train_set_path = "openai/gsm8k"
         return train_set_path, load_dataset(train_set_path, 'main')["train"]
     elif task_name == "math_metamath":
-        train_set_path = "meta-math/MetaMathQA"
+        train_set_path = "ZhangShenao/metamath_filtered" #"meta-math/MetaMathQA"
         return train_set_path, load_dataset(train_set_path, split="train")
     elif task_name == "code_opencoder_edu":
         train_set_path = "OpenCoder-LLM/opc-sft-stage2"
         return train_set_path, load_dataset(train_set_path, "educational_instruct")["train"]
     else:
-        train_set_path = "meta-math/MetaMathQA"
+        train_set_path = "ZhangShenao/metamath_filtered" #"meta-math/MetaMathQA"
         split = task_name.split("math_metamath")[-1]
         return train_set_path, load_dataset(train_set_path, split=f"train{split}")

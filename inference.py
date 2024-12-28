@@ -70,7 +70,7 @@ if __name__ == "__main__":
     model_name = args.model_path
     # print("model_name:", model_name)
     task_config = task_config_check(args.task_type)
-    dataset_iter_map = {1: "[5%:33%]", 2: "[38%:66%]", 3: "[71%:]"}
+    dataset_iter_map = {1: "[:4000]", 2: "[4000:8000]", 3: "[8000:12000]"}
     dataset_fraction = dataset_iter_map[args.iter]
     task_config = task_config_check(args.task_type)
     train_path, dataset_ = task_data_set(args.task_type)
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         top_p=1.0,
         top_k=-1,
         seed=42,
-        max_tokens=512,
+        max_tokens=1024,
         min_tokens=50,
         n=1,
         # frequency_penalty=1.0,

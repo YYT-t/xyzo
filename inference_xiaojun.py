@@ -38,7 +38,7 @@ def parse_args():
         default="math_gsm",
         help= "math or code",
     )
-    parser.add_argument("--batch_size", type=int, default=4)
+    parser.add_argument("--batch_size", type=int, default=2)
     parser.add_argument("--train_step", type=int, default=999999)
     parser.add_argument("--learning_rate", type=float, default=5e-5)
     parser.add_argument("--save_prefix", type=str, required=True)

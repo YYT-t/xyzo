@@ -70,7 +70,7 @@ if __name__ == "__main__":
     model_name = args.model_path
     # print("model_name:", model_name)
     task_config = task_config_check(args.task_type)
-    dataset_iter_map = {1: "[:4000]", 2: "[4000:8000]", 3: "[8000:12000]"}
+    dataset_iter_map = {1: "[:1000]", 2: "[4000:8000]", 3: "[8000:12000]"}
     dataset_fraction = dataset_iter_map[args.iter]
     task_config = task_config_check(args.task_type)
     train_path, dataset_ = task_data_set(args.task_type)

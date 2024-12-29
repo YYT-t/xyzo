@@ -369,8 +369,8 @@ def main(script_args):
     )
     for param in ref_model.parameters():
         param.requires_grad = False
-    ac = AC_Model(model.config, model, critic_model, ref_model)
-
+   # ac = AC_Model(model.config, model, critic_model, ref_model)
+    ac = AC_Model(AutoConfig.from_pretrained(script_args.model_name), model, critic_model, ref_model)
     ac.actor.train()
     if script_args.use_lora:
         lora_config = LoraConfig(

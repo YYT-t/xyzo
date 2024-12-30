@@ -11,11 +11,11 @@ source ~/.bashrc
 
 iter_num=3
 
-model_name="Mistral-7B-Instruct-v0.2"
-company="mistralai"
+#model_name="Mistral-7B-Instruct-v0.2"
+#company="mistralai"
 
-#company="google"
-#model_name="gemma-2-2b-it"
+company="google"
+model_name="gemma-2-9b-it"
 task_pre="math"
 task_suf="metamath"
 conda init bash
@@ -42,7 +42,7 @@ for i in $(seq 1 $iter_num); do
     else
         split="[8000:12000]"
     fi
-    accelerate launch xiaojun_E_step_ent_PPO_dp.py --model_name $e_input_model --critic_model_name $e_input_model --deepspeed deepspeed_configs/deepspeed_2.json --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
+    python xiaojun_E_step_ent_PPO.py --model_name $e_input_model --critic_model_name "google/gemma-2-2b-it" --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
     python inference.py --model_path "${e_model_dir}/final_checkpoint" --task_type "${task_pre}_${task_suf}" --dataset_path $dataset_path --iter $i || exit 1
 #    conda deactivate
 #    conda activate sft_debug

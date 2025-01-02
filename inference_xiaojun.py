@@ -57,15 +57,17 @@ def main(args):
 
     column_names = list(train_dataset.features)
     task_config = task_config_check(args.task_type)
+    train_dataset = train_dataset.map(task_config.sft_tokenize(tokenizer), num_proc=16)
+    print("train_dataset[0]:", train_dataset[0])
 
-    if args.with_template:
-        assert 'Gemma' in str(tokenizer), str(tokenizer)
-        def add_template(sample):
-            message = [{"role":"user", "content":sample['question']}]
-            new_question = tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True)
-            sample['question'] = new_question
-            return sample
-        train_dataset = train_dataset.map(add_template, num_proc=16)
+    # if args.with_template:
+    #     print("Using template")
+    #     def add_template(sample):
+    #         message = [{"role":"user", "content":sample['question']}]
+    #         new_question = tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True)
+    #         sample['question'] = new_question
+    #         return sample
+    #     train_dataset = train_dataset.map(add_template, num_proc=16)
 
 
 

@@ -77,14 +77,19 @@ if __name__ == "__main__":
     dataset_fraction = args.dataset_fraction
     task_config = task_config_check(args.task_type)
     train_path, dataset_ = task_data_set(args.task_type)
-
-    dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
-    dataset_ = dataset_.map(task_config.inference_tokenize(), num_proc=16)
-    # dataset_ = dataset_.select(range(10))
-    questions = dataset_["few_shot_cot_question"]
-    answers = dataset_["answer_text"]
     
     tokenizer = AutoTokenizer.from_pretrained(model_name)
+    if "Llama" in model_name:
+        stop_strings = ["<|eot_id|>"]
+        stop_tokens = []
+        for stop_string in stop_strings:
+            stop_tokens += tokenizer(stop_string)["input_ids"]
+        print(stop_tokens)
+    dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
+    dataset_ = dataset_.map(task_config.inference_tokenize(tokenizer), num_proc=16)
+    # dataset_ = dataset_.select(range(10))
+    questions = dataset_["template_question"]
+    answers = dataset_["answer_text"]
     sampling_params = SamplingParams(
         temperature=0.0,
         top_p=1.0,
@@ -95,13 +100,13 @@ if __name__ == "__main__":
         n=1,
         # frequency_penalty=1.0,
         stop_token_ids=[tokenizer.eos_token_id],
-        stop=task_config.stop_str_gen_z,
+        stop=task_config.stop_str_gen_z + stop_strings,
     )
 
     def generate_rational(few_shot_questions, answers):
         llm = LLM(model=model_name, tokenizer=model_name, dtype="bfloat16", seed=42, gpu_memory_utilization=0.9)
         rational = llm.generate(few_shot_questions, sampling_params, use_tqdm=True)
-        # print("rational:", rational)
+        print("rational:", rational)
         rational_answer = [rational[i].outputs[0].text + answer_text for i, answer_text in enumerate(answers)]
         return rational_answer
 

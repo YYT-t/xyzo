@@ -1,0 +1,5 @@
+wandb/
+__pycache__/
+*.pyc
+local_scripts_for_run/
+Meta-Llama-3-8B-Instruct-metamath_sample_1000_tp

@@ -300,10 +300,12 @@ def main(script_args):
     tokenizer.truncation_side = "left"
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
-    if "llama" in script_args.model_name:
+    if "llama" in script_args.model_name.lower():
         stop_strings = ["<|eot_id|>"]
-        # stop_tokens = [tokenizer(stop_string) for stop_string in stop_strings]
-        # print(stop_tokens)
+        stop_tokens = []
+        for stop_string in stop_strings:
+            stop_tokens += tokenizer(stop_string)["input_ids"]
+        print(stop_tokens)
 
 
     base_model_name = script_args.model_name.split("/")[1]
@@ -376,10 +378,12 @@ def main(script_args):
                                  stop_strings=stop_strings,
                                  tokenizer=tokenizer,
                                  )
-            # if seq[0][-1] in stop_tokens:
-                # seq = seq[:,:-1]
-            print("seq=", seq)
-            print(tokenizer.decode(seq[0]))
+            for idx in range(len(seq[0])-1, -1, -1):
+                if not seq[0][idx] in stop_tokens:
+                    seq = seq[:,:idx+1]
+                    break
+            # print("seq=", seq)
+            # print(tokenizer.decode(seq[0]))
             seq_attention_mask = seq.not_equal(tokenizer.pad_token_id).long()
             seq_attention_mask[:,:prompt_length] = prompt_attention_mask
 

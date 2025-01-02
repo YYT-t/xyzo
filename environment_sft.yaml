@@ -1,4 +1,4 @@
-name: sft_debug
+name: sft
 channels:
   - defaults
 dependencies:
@@ -57,7 +57,7 @@ dependencies:
       - evaluate==0.4.3
       - fastapi==0.115.2
       - filelock==3.16.1
-      - flash-attn==2.6.3
+      # - flash-attn==2.6.3
       - frozenlist==1.4.1
       - fsspec==2024.6.1
       - gguf==0.10.0
@@ -192,7 +192,7 @@ dependencies:
       - uvicorn==0.32.0
       - uvloop==0.21.0
       - vllm==0.5.4
-      - vllm-flash-attn==2.6.1
+      # - vllm-flash-attn==2.6.1
       - wandb==0.18.5
       - watchfiles==0.24.0
       - websockets==13.1

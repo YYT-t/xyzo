@@ -122,6 +122,26 @@ class Config_Math_MetaMath(Config_Math):
             return sample
         return tokenize
 
+    def inference_tokenize(self, tokenizer):
+        def tokenize(sample):
+            input = [{"role": "user", "content": sample['query']}]
+            q = tokenizer.apply_chat_template(input, tokenize=False, add_generation_prompt=True)
+            answer_text = sample['response'].split("The answer is ")[-1].strip()
+            answer = f"The answer is {answer_text}."
+            input_answer = [{"role": "user", "content": sample['query']}, {"role": "assistant", "content": answer}]
+            answer = tokenizer.apply_chat_template(input_answer, tokenize=False).replace(q, '')
+            sample["template_question"] = q
+            sample["answer_text"] = answer
+            return sample
+        return tokenize
+    
+    def sft_tokenize(self, tokenizer):
+        def tokenize(sample):
+            input = [{"role": "user", "content": sample['question']}]
+            q = tokenizer.apply_chat_template(input, tokenize=False, add_generation_prompt=True)
+            sample["question"] = q
+            return sample
+        return tokenize
 
 class Config_Code(Config_Math):
     def __init__(self):

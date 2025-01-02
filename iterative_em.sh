@@ -1,4 +1,4 @@
-source ~/.bashrc
+# source ~/.bashrc
 export CUDA_VISIBLE_DEVICES="0,1,2,3"
 #export WANDB_API_KEY=ee43df2d6680a9ce636f698eba4b5534c4336452
 #export HF_TOKEN=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
@@ -19,9 +19,9 @@ model_name="Meta-Llama-3-8B-Instruct"
 critic_model_name="${company}/${model_name}"
 task_pre="math"
 task_suf="metamath"
-conda init bash
+# conda init bash
 num_samples=1000
-path="./${model_name}-${task_suf}_sample_${num_samples}"
+path="./${model_name}-${task_suf}_sample_${num_samples}_tp"
 export HF_TOKEN=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
 
 for i in $(seq 1 $iter_num); do
@@ -30,8 +30,8 @@ for i in $(seq 1 $iter_num); do
     e_input_model="${path}/m-iter-$((i-1))_zq_raw"
     e_model_dir="${path}/e-iter-$i"
     m_model_dir="${path}/m-iter-$i"
-    e_hub_id="${model_name}-e-iter-${i}_sample_${num_samples}"
-    m_hub_id="${model_name}-m-iter-${i}_sample_${num_samples}"
+    e_hub_id="${model_name}-e-iter-${i}_sample_${num_samples}_tp"
+    m_hub_id="${model_name}-m-iter-${i}_sample_${num_samples}_tp"
     dataset_path="ZhangShenao/new-${model_name}-iter${i}_sample_${num_samples}"
     if [ "$i" -eq 1 ]; then
         e_input_model="${company}/${model_name}"
@@ -55,4 +55,4 @@ for i in $(seq 1 $iter_num); do
     
     python inference_xiaojun.py --model_path $e_input_model --dataset_path $dataset_path --save_prefix $m_model_dir --sft_data_type zq_raw --train_step $num_samples || exit 1
     huggingface-cli upload "ZhangShenao/$m_hub_id" "${m_model_dir}_zq_raw" --token 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
-done
+done    

@@ -28,6 +28,7 @@ class Config_Math():
         return cot_prefix
 
 
+
 class Config_Math_GSM(Config_Math):
     def __init__(self):
         super(Config_Math_GSM, self).__init__()
@@ -61,6 +62,38 @@ class Config_Math_GSM(Config_Math):
         return tokenize
 
 
+# class Config_Math_MetaMath(Config_Math):
+#     def __init__(self):
+#         super(Config_Math_MetaMath, self).__init__()
+#         with open(self.prompt_path, "r") as file:
+#             # Read the content of the file
+#             self.few_shot_cot_prompt = file.read()
+#         self.x_colname = "query"
+#         self.y_colname = "response"
+
+#     def tokenize_E(self, tokenizer):
+#         def tokenize(sample):
+#             tokenized_q = tokenizer(self.few_shot_cot_prompt + sample['query'], truncation=True)
+#             answer_text = sample['response'].split('The answer is: ')[-1].strip()
+#             answer = f"The answer is {answer_text}."
+#             tokenized_a = tokenizer(answer, truncation=True)
+#             sample["input_ids_q"] = tokenized_q["input_ids"]
+#             sample["attention_mask_q"] = tokenized_q["attention_mask"]
+#             sample["input_ids_a"] = tokenized_a["input_ids"]
+#             sample["attention_mask_a"] = tokenized_a["attention_mask"]
+#             return sample
+
+#         return tokenize
+
+#     def inference_tokenize(self):
+#         def tokenize(sample):
+#             answer_text = sample['response'].split("The answer is")[-1].strip()
+#             sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['query']
+#             sample["answer_text"] = f"The answer is {answer_text}."
+#             return sample
+
+#         return tokenize
+
 class Config_Math_MetaMath(Config_Math):
     def __init__(self):
         super(Config_Math_MetaMath, self).__init__()
@@ -72,25 +105,21 @@ class Config_Math_MetaMath(Config_Math):
 
     def tokenize_E(self, tokenizer):
         def tokenize(sample):
-            tokenized_q = tokenizer(self.few_shot_cot_prompt + sample['query'], truncation=True)
+            #tokenized_q = tokenizer(self.few_shot_cot_prompt + sample['query'], truncation=True)
+            input = [{"role": "user", "content": sample['query']}]
+            q = tokenizer.apply_chat_template(input, tokenize=False, add_generation_prompt=True)
+            tokenized_q = tokenizer(q, truncation=True)
             answer_text = sample['response'].split('The answer is: ')[-1].strip()
             answer = f"The answer is {answer_text}."
+            input_answer = [{"role": "user", "content": sample['query']}, {"role": "assistant", "content": answer}]
+            # print(tokenized_q, tokenizer.apply_chat_template(input_answer, tokenize=True))
+            answer = tokenizer.apply_chat_template(input_answer, tokenize=False).replace(q, '')
             tokenized_a = tokenizer(answer, truncation=True)
             sample["input_ids_q"] = tokenized_q["input_ids"]
             sample["attention_mask_q"] = tokenized_q["attention_mask"]
             sample["input_ids_a"] = tokenized_a["input_ids"]
             sample["attention_mask_a"] = tokenized_a["attention_mask"]
             return sample
-
-        return tokenize
-
-    def inference_tokenize(self):
-        def tokenize(sample):
-            answer_text = sample['response'].split("The answer is")[-1].strip()
-            sample["few_shot_cot_question"] = self.few_shot_cot_prompt + sample['query']
-            sample["answer_text"] = f"The answer is {answer_text}."
-            return sample
-
         return tokenize
 
 

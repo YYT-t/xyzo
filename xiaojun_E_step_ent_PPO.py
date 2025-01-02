@@ -300,6 +300,10 @@ def main(script_args):
     tokenizer.truncation_side = "left"
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
+    if "llama" in script_args.model_name:
+        stop_strings = ["<|eot_id|>"]
+        # stop_tokens = [tokenizer(stop_string) for stop_string in stop_strings]
+        # print(stop_tokens)
 
 
     base_model_name = script_args.model_name.split("/")[1]
@@ -364,7 +368,18 @@ def main(script_args):
         max_min_length = prompt_length + script_args.max_length
         with torch.no_grad():
             # Generate
-            seq = model.generate(input_ids=prompt_input_ids.to(model.device), attention_mask=prompt_attention_mask.to(model.device), max_length=max_min_length, pad_token_id=tokenizer.pad_token_id, do_sample=True)
+            seq = model.generate(input_ids=prompt_input_ids.to(model.device), 
+                                 attention_mask=prompt_attention_mask.to(model.device), 
+                                 max_length=max_min_length, 
+                                 pad_token_id=tokenizer.pad_token_id, 
+                                 do_sample=True,
+                                 stop_strings=stop_strings,
+                                 tokenizer=tokenizer,
+                                 )
+            # if seq[0][-1] in stop_tokens:
+                # seq = seq[:,:-1]
+            print("seq=", seq)
+            print(tokenizer.decode(seq[0]))
             seq_attention_mask = seq.not_equal(tokenizer.pad_token_id).long()
             seq_attention_mask[:,:prompt_length] = prompt_attention_mask
 

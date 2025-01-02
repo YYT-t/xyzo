@@ -289,7 +289,7 @@ def main(script_args):
     Devices = [f"cuda:{i}" for i in cuda_visible_devices]
     print(f"Devices: {Devices}")
 
-
+    print("script_args.task_type=", script_args.task_type)
     task_config = task_config_check(script_args.task_type)
     train_set_path, train_dataset = task_data_set(script_args.task_type)
 

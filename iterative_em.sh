@@ -18,7 +18,7 @@ company="meta-llama"
 model_name="Meta-Llama-3-8B-Instruct"
 critic_model_name="${company}/${model_name}"
 task_pre="math"
-task_suf="metamath"
+task_suf="gsm"
 # conda init bash
 num_samples=1000
 path="./${model_name}-${task_suf}_sample_${num_samples}_tp"

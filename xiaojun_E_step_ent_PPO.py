@@ -187,10 +187,14 @@ def calc_reward_with_nll(ref_model, tokenizer, xz_leftpad, y_rightpad):
         prompt_length = xz_length + 4
         assert y_txt.startswith('The answer is')
         # TODO: The length is approximate and may not be correct, so the assert below may fail... just ignoring it for now.
-        #assert tokenizer.decode(concat_toks['input_ids'][0][xz_length:prompt_length]) == 'The answer is ', [tokenizer.decode(concat_toks['input_ids'][0][xz_length:prompt_length])]
-
+        # assert tokenizer.decode(concat_toks['input_ids'][0][xz_length:prompt_length]) == 'The answer is', [tokenizer.decode(concat_toks['input_ids'][0][xz_length:prompt_length])]
         output = ref_model.forward(concat_toks['input_ids'].to(ref_model.device), attention_mask=concat_toks['attention_mask'].to(ref_model.device))
+        if output.logits.shape[1] <= prompt_length:
+            prompt_length = output.logits.shape[1] - 1
         print(concat_toks['input_ids'].size(), y_txt)
+        print("concat_toks['input_ids'].shape[1]-prompt_length=", concat_toks['input_ids'].shape[1]-prompt_length)
+        print("output.logits.shape[1]=", output.logits.shape[1])
+        print("prompt_length=", prompt_length)
         shift_logits = output.logits[:,prompt_length-1:-1].view(concat_toks['input_ids'].shape[1]-prompt_length,-1)
         shift_labels = concat_toks['input_ids'][:,prompt_length:].view(concat_toks['input_ids'].shape[1]-prompt_length).to(ref_model.device)
         loss = loss_fn(shift_logits, shift_labels)
@@ -252,7 +256,7 @@ def calc_PPO_loss(model, critic_model, seq, attention_mask, prompts, reward_scor
         old_rewards = -kl_ctl * (logprobs - ref_logprobs)  # KL reg
         reward_clip = torch.clamp(reward_score, -rew_clip_val, rew_clip_val)
         for i in range(len(old_rewards)):
-            old_rewards[i,start:ends[i]][-1] += reward_clip[i]
+            old_rewards[i,start:ends[i]][-1] += reward_clip[i].to(old_rewards.device)
             old_rewards[i,ends[i]:] = 0
             old_values[i,ends[i]:] = 0
 
@@ -278,11 +282,13 @@ def calc_PPO_loss(model, critic_model, seq, attention_mask, prompts, reward_scor
 
 
 def main(script_args):
-    if torch.cuda.device_count() == 1:
-        DEVICE0 = DEVICE1 = "cuda:0"
-    else:
-        DEVICE0 = "cuda:0"
-        DEVICE1 = "cuda:1"
+    # get cuda_visible_devices
+    cuda_visible_devices = os.getenv("CUDA_VISIBLE_DEVICES", "")
+    # print(f"cuda_visible_devices: {cuda_visible_devices}")
+    cuda_visible_devices = cuda_visible_devices.split(",")
+    Devices = [f"cuda:{i}" for i in cuda_visible_devices]
+    print(f"Devices: {Devices}")
+
 
     task_config = task_config_check(script_args.task_type)
     train_set_path, train_dataset = task_data_set(script_args.task_type)
@@ -319,7 +325,8 @@ def main(script_args):
     for key in ('dropout', 'attention_dropout', 'hidden_dropout', 'activation_dropout'):
         if hasattr(model_config, key):
             setattr(model_config, key, 0.0)
-    model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE0).train()
+    
+    model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(Devices[0]).train()
     if script_args.use_lora:
         lora_config = LoraConfig(
             r=32,
@@ -336,11 +343,11 @@ def main(script_args):
     optimizer = torch.optim.AdamW(model.parameters(), lr=script_args.learning_rate, weight_decay=0, betas=(0.9, 0.95))
     scheduler = get_scheduler(name='cosine', optimizer=optimizer, num_warmup_steps=min(100,0.1*train_steps), num_training_steps=train_steps)
 
-    ref_model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE1).eval()
+    ref_model = AutoModelForCausalLM.from_pretrained(script_args.model_name, config=model_config, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(Devices[1]).eval()
     ref_model.requires_grad = False
 
-    critic_base_model = AutoModel.from_pretrained(script_args.critic_model_name, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(DEVICE1)
-    critic_model = CriticModel(critic_base_model).to(DEVICE1).eval()
+    critic_base_model = AutoModel.from_pretrained(script_args.critic_model_name, torch_dtype=torch.bfloat16, use_flash_attention_2=False).to(Devices[2])
+    critic_model = CriticModel(critic_base_model).to(Devices[3]).eval()
     optimizer_critic = torch.optim.AdamW(critic_model.parameters(), lr=script_args.critic_lr, weight_decay=0, betas=(0.9, 0.95))
     scheduler_critic = get_scheduler(name='cosine', optimizer=optimizer_critic, num_warmup_steps=min(100,0.1*train_steps), num_training_steps=train_steps)
 
@@ -348,21 +355,21 @@ def main(script_args):
     prompt_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=script_args.per_device_train_batch_size, collate_fn=MyDataCollatorWithPadding(tokenizer=tokenizer, padding=True))
     tb_writer = SummaryWriter(log_dir='%s/tb_log/'%script_args.model_path)
     for step, batch in tqdm(enumerate(prompt_dataloader), total=len(prompt_dataloader)):
-        prompt_input_ids = batch["input_ids_q_l"].to(DEVICE0)
-        prompt_attention_mask = batch["attention_mask_q_l"].to(DEVICE0)
+        prompt_input_ids = batch["input_ids_q_l"]
+        prompt_attention_mask = batch["attention_mask_q_l"]
         prompt_length = prompt_input_ids.shape[1]
-        answer_input_ids = batch["input_ids_a_r"].to(DEVICE0)
+        answer_input_ids = batch["input_ids_a_r"]
 
         model.eval()
         max_min_length = prompt_length + script_args.max_length
         with torch.no_grad():
             # Generate
-            seq = model.generate(input_ids=prompt_input_ids, attention_mask=prompt_attention_mask, max_length=max_min_length, pad_token_id=tokenizer.pad_token_id, do_sample=True)
+            seq = model.generate(input_ids=prompt_input_ids.to(model.device), attention_mask=prompt_attention_mask.to(model.device), max_length=max_min_length, pad_token_id=tokenizer.pad_token_id, do_sample=True)
             seq_attention_mask = seq.not_equal(tokenizer.pad_token_id).long()
             seq_attention_mask[:,:prompt_length] = prompt_attention_mask
 
             # Evaluate reward and other info
-            reward_score = calc_reward_with_nll(ref_model, tokenizer, seq.to(DEVICE1), answer_input_ids.to(DEVICE1)).to(DEVICE0)
+            reward_score = calc_reward_with_nll(ref_model, tokenizer, seq.to(ref_model.device), answer_input_ids.to(ref_model.device))
             print (reward_score)
             # TODO: hard-coded reward normalization here. May try other methods.
             #reward_score = (reward_score+4.5)*2
@@ -372,14 +379,16 @@ def main(script_args):
             len_reward = []
             for i, one_seq in enumerate(seq):
                 cur_len = one_seq.not_equal(tokenizer.pad_token_id).nonzero().max() - prompt_length
-                reward_score[i] = reward_score[i] + 0.05*min(cur_len,40)
+                print("cur_len.device: ", cur_len.device)
+                print("reward_score[i].device: ", reward_score[i].device)
+                reward_score[i] = reward_score[i] + 0.05*min(cur_len.to(reward_score[i].device),40)
 
 
             print ("Using a hard-coded simple normalization")
             output = model(seq, attention_mask=seq_attention_mask)
-            output_ref = ref_model(seq.to(DEVICE1), attention_mask=seq_attention_mask.to(DEVICE1))
+            output_ref = ref_model(seq.to(ref_model.device), attention_mask=seq_attention_mask.to(ref_model.device))
             logprobs = gather_log_probs(output.logits[:,:-1,:],seq[:,1:])
-            ref_logprobs = gather_log_probs(output_ref.logits[:,:-1,:].to(DEVICE0),seq[:,1:])
+            ref_logprobs = gather_log_probs(output_ref.logits[:,:-1,:].to(seq.device),seq[:,1:])
 
         # Calculate actor loss and critic loss with standard PPO
         model.train()
@@ -392,7 +401,7 @@ def main(script_args):
         # add KL div to track the current model
         with torch.no_grad():
             prob_p = torch.nn.functional.softmax(output.logits, -1)
-            prob_q = torch.nn.functional.softmax(output_ref.logits, -1).to(DEVICE0)
+            prob_q = torch.nn.functional.softmax(output_ref.logits, -1).to(prob_p.device)
             kl_position_loss = -prob_p * torch.log(prob_q+1e-6)
             position_weight = torch.zeros_like(kl_position_loss)
             position_weight[:,prompt_length:] = 1

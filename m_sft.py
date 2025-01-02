@@ -149,8 +149,8 @@ metrics["train_samples"] = len(train_dataset)
 trainer.log_metrics("train", metrics)
 trainer.save_metrics("train", metrics)
 trainer.save_state()
-trainer.save_model(training_args.output_dir)
-print(f"Model saved to {training_args.output_dir}")
+trainer.save_model(f"{training_args.output_dir}/final_checkpoint")
+print(f"Model saved to {training_args.output_dir}/final_checkpoint")
 
 if trainer.accelerator.is_main_process:
     # Restore k,v cache for fast inference

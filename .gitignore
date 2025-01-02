@@ -1,6 +1,0 @@
-local_debug.ipynb
-Q_models/
-wandb/
-__pycache__/
-*.pyc
-local_scripts_for_run/

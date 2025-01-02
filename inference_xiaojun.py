@@ -53,6 +53,7 @@ def main(args):
     print ("Loaded")
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_path) #AutoTokenizer
+    tokenizer.pad_token = tokenizer.eos_token
 
     column_names = list(train_dataset.features)
     task_config = task_config_check(args.task_type)

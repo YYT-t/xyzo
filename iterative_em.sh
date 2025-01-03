@@ -18,9 +18,9 @@ company="meta-llama"
 model_name="Meta-Llama-3-8B-Instruct"
 critic_model_name="${company}/${model_name}"
 task_pre="math"
-task_suf="gsm"
+task_suf="metamath"
 # conda init bash
-num_samples=7000
+num_samples=1000
 path="./${model_name}-${task_suf}_sample_${num_samples}_tp"
 export HF_TOKEN=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
 
@@ -45,11 +45,11 @@ for i in $(seq 1 $iter_num); do
     else
         split="[$((num_samples*2)):$((num_samples*3))]"
     fi
-    python xiaojun_E_step_ent_PPO.py --model_name $e_input_model --critic_model_name $critic_model_name --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
+    # python xiaojun_E_step_ent_PPO.py --model_name $e_input_model --critic_model_name $critic_model_name --task_type "${task_pre}_${task_suf}${split}" --model_path $e_model_dir || exit 1
     
-    huggingface-cli upload "ZhangShenao/$e_hub_id" "${e_model_dir}/final_checkpoint" --token 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
+    # huggingface-cli upload "ZhangShenao/$e_hub_id" "${e_model_dir}/final_checkpoint" --token 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
     
-    python inference.py --model_path "${e_model_dir}/final_checkpoint" --task_type "${task_pre}_${task_suf}" --dataset_path $dataset_path --iter $i --dataset_fraction $split || exit 1
+    python inference.py --model_path "${e_model_dir}/final_checkpoint" --task_type "${task_pre}_${task_suf}" --dataset_path $dataset_path --dataset_fraction $split || exit 1
     # accelerate launch  m_sft.py --deepspeed deepspeed_configs/deepspeed_3.json --num_train_epochs 3 --model_name $e_input_model  --per_device_train_batch_size 8 --gradient_accumulation_steps 4 --train_set_path $dataset_path --output_dir $m_model_dir --hub_model_id $m_hub_id || exit 1
     # huggingface-cli upload "ZhangShenao/${m_hub_id}_msft" "${m_model_dir}/final_checkpoint" --token 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
     python inference_xiaojun.py --model_path $e_input_model --dataset_path $dataset_path --save_prefix $m_model_dir --sft_data_type zq_raw --train_step $num_samples  --task_type  "${task_pre}_${task_suf}" || exit 1

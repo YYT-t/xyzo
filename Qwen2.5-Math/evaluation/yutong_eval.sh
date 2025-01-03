@@ -10,5 +10,5 @@
 export HF_TOKEN=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
 export CUDA_VISIBLE_DEVICES="1,3"
 PROMPT_TYPE="llama-3-8b-it"
-MODEL_NAME_OR_PATH="ZhangShenao/Meta-Llama-3-8B-Instruct-m-iter-1_sample_1000_tp"
+MODEL_NAME_OR_PATH="/opt/tiger/xyzo/Meta-Llama-3-8B-Instruct-metamath_sample_1000_tp/sft_model_zq_raw"
 bash sh/my_eval.sh $PROMPT_TYPE $MODEL_NAME_OR_PATH

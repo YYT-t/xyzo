@@ -20,7 +20,7 @@ critic_model_name="${company}/${model_name}"
 task_pre="math"
 task_suf="gsm"
 # conda init bash
-num_samples=1000
+num_samples=7000
 path="./${model_name}-${task_suf}_sample_${num_samples}_tp"
 export HF_TOKEN=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
 
@@ -30,9 +30,9 @@ for i in $(seq 1 $iter_num); do
     e_input_model="${path}/m-iter-$((i-1))_zq_raw"
     e_model_dir="${path}/e-iter-$i"
     m_model_dir="${path}/m-iter-$i"
-    e_hub_id="${model_name}-e-iter-${i}_sample_${num_samples}_tp"
-    m_hub_id="${model_name}-m-iter-${i}_sample_${num_samples}_tp"
-    dataset_path="ZhangShenao/new-${model_name}-iter${i}_sample_${num_samples}_tp"
+    e_hub_id="${task_pre}_${task_suf}-${model_name}-e-iter-${i}_sample_${num_samples}_tp"
+    m_hub_id="${task_pre}_${task_suf}-${model_name}-m-iter-${i}_sample_${num_samples}_tp"
+    dataset_path="ZhangShenao/${task_pre}_${task_suf}-${model_name}-iter${i}_sample_${num_samples}_tp"
     if [ "$i" -eq 1 ]; then
         e_input_model="${company}/${model_name}"
     else

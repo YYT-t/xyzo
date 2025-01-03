@@ -45,6 +45,7 @@ def parse_args():
         "--dataset_fraction",
         type=str
     )
+    parser.add_argument("--for_sft", action='store_true')
     return parser.parse_args()
 
 
@@ -78,6 +79,7 @@ if __name__ == "__main__":
     task_config = task_config_check(args.task_type)
     train_path, dataset_ = task_data_set(args.task_type)
     
+
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     if "Llama" in model_name:
         stop_strings = ["<|eot_id|>"]
@@ -85,7 +87,8 @@ if __name__ == "__main__":
         for stop_string in stop_strings:
             stop_tokens += tokenizer(stop_string)["input_ids"]
         print(stop_tokens)
-    dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
+    _, dataset_ = task_data_set(args.task_type+dataset_fraction)
+    # dataset_ = load_dataset(train_path, split="train"+ dataset_fraction)
     dataset_ = dataset_.map(task_config.inference_tokenize(tokenizer), num_proc=16)
     # dataset_ = dataset_.select(range(10))
     questions = dataset_["template_question"]
@@ -110,17 +113,21 @@ if __name__ == "__main__":
         rational_answer = [rational[i].outputs[0].text + answer_text for i, answer_text in enumerate(answers)]
         return rational_answer
 
-    print("Start inference")
-    rational_answer = run_inference_multi_gpu(questions, answers)
-    print("Inference done")
     num_train_data = len(dataset_)
     gathered_data = []
-    for i in range(num_train_data):
-        tmp_data = {"question": dataset_[i][task_config.x_colname], "answer": dataset_[i][task_config.y_colname],
-                    "rational_answer": rational_answer[i]}
-        gathered_data.append(tmp_data)
+    if not args.for_sft:
+        print("Start inference")
+        rational_answer = run_inference_multi_gpu(questions, answers)
+        print("Inference done")
+        for i in range(num_train_data):
+            tmp_data = {"question": dataset_[i][task_config.x_colname], "answer": dataset_[i][task_config.y_colname],
+                        "rational_answer": rational_answer[i]}
+            gathered_data.append(tmp_data)
+    else:
+        for i in range(num_train_data):
+            tmp_data = {"question": dataset_[i][task_config.x_colname],
+                        "rational_answer": dataset_[i][task_config.y_colname]}
+            gathered_data.append(tmp_data)
     print("gathered_data:", gathered_data)
-    with open("./out.json", "w", encoding="utf8") as f:
-        json.dump(gathered_data, f, ensure_ascii=False)
     dataset = Dataset.from_list(gathered_data)
     dataset.push_to_hub(args.dataset_path, private=False)

@@ -23,13 +23,6 @@ def parse_args():
         help="The path of output dataset.",
     )
     parser.add_argument(
-        "--iter",
-        type=int,
-        choices=[1, 2, 3],
-        required=True,
-        help="Indicates which fraction of the data to use: 1 (first third), 2 (second third), or 3 (last third).",
-    )
-    parser.add_argument(
         "--prompt_path",
         type=str,
         default="prompts/math_prompt.txt",

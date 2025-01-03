@@ -1,6 +1,5 @@
 from transformers import PreTrainedModel
 
-print()
 class AC_Model(PreTrainedModel):
     def __init__(self, config, actor, critic, ref):
         super(AC_Model, self).__init__(config)

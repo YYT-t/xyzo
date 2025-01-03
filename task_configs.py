@@ -32,6 +32,8 @@ class Config_Math():
 class Config_Math_GSM(Config_Math):
     def __init__(self):
         super(Config_Math_GSM, self).__init__()
+        self.x_colname = "question"
+        self.y_colname = "answer"
 
     def tokenize_E(self, tokenizer):
         def tokenize(sample):
@@ -74,6 +76,9 @@ class Config_Math_GSM(Config_Math):
 class Config_Math_MetaMath(Config_Math):
     def __init__(self):
         super(Config_Math_MetaMath, self).__init__()
+        self.x_colname = "query"
+        self.y_colname = "response"
+
 
     def tokenize_E(self, tokenizer):
         def tokenize(sample):
@@ -119,6 +124,9 @@ class Config_Math_MetaMath(Config_Math):
 class Config_Math_Math(Config_Math):
     def __init__(self):
         super(Config_Math_Math, self).__init__()
+        self.x_colname = "problem"
+        self.y_colname = "solution"
+
     def extract_boxed_content(self, s):
         start_idx = s.rfind('\\boxed{')
         if start_idx == -1:
@@ -195,7 +203,7 @@ class Config_Math_Math(Config_Math):
     
     def sft_tokenize(self, tokenizer):
         def tokenize(sample):
-            input = [{"role": "user", "content": sample['problem']}]
+            input = [{"role": "user", "content": sample['question']}]
             q = tokenizer.apply_chat_template(input, tokenize=False, add_generation_prompt=True)
             sample["question"] = q
             return sample
@@ -292,7 +300,7 @@ def task_data_set(task_name):
         train_set_path = "lighteval/MATH"
         split = task_name.split("math_math")[-1]
         if split == "":
-            data = load_dataset(train_set_path, "main")["train"]
+            data = load_dataset(train_set_path, "all")["train"]
         else:
             sp = [0 if i=='' else int(i) for i in split.strip("[]").split(":")]
             data = load_dataset(train_set_path, "all")["train"].select(range(sp[0], sp[1]))

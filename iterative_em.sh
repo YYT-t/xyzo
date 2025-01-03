@@ -20,7 +20,7 @@ critic_model_name="${company}/${model_name}"
 task_pre="math"
 task_suf="math"
 # conda init bash
-num_samples=1000
+num_samples=7000
 path="./${model_name}-${task_suf}_sample_${num_samples}_tp"
 export HF_TOKEN=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
 
